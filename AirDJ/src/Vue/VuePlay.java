@@ -1,10 +1,16 @@
 package Vue;
 
-public class VuePlay
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+public class VuePlay extends JPanel
 {
 	public VuePlay()
 	{
-		
+		setBackground(Color.ORANGE);
+		setPreferredSize(new Dimension(100, 100));
 	}
 
 	public void setPlay()

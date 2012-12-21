@@ -1,10 +1,16 @@
 package Vue;
 
-public class VueCrossfinder
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+
+public class VueCrossfinder extends JPanel
 {
 	public VueCrossfinder()
 	{
-		
+		setBackground(Color.BLUE);
+		setPreferredSize(new Dimension(100, 100));
 	}
 
 	public void displayVolumeP1(int left, int right)
