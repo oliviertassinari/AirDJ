@@ -10,7 +10,7 @@ public class VueCrossfinder extends JPanel
 	public VueCrossfinder()
 	{
 		setBackground(Color.BLUE);
-		setPreferredSize(new Dimension(100, 100));
+		setPreferredSize(new Dimension(1000, 100));
 	}
 
 	public void displayVolumeP1(int left, int right)

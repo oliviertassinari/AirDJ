@@ -1,5 +1,7 @@
 package Modele;
 
+import java.io.File;
+
 public class ModeleBrowser
 {
 	private Modele modele;
@@ -7,5 +9,17 @@ public class ModeleBrowser
 	public ModeleBrowser(Modele modele)
 	{
 		this.modele = modele;
+	}
+	
+	public String getExtension(String filePath)
+	{
+		if(filePath.lastIndexOf(".") != -1)
+		{
+			return filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+		}
+		else
+		{
+			return "";
+		}	
 	}
 }

@@ -74,6 +74,9 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="EEnum0"/>
     <eClassifiers xsi:type="ecore:EDataType" name="EDataType0"/>
+    <eClassifiers xsi:type="ecore:EClass" name="ModeleFieTree">
+      <eOperations name="VueFileTree"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Controle">
     <eClassifiers xsi:type="ecore:EClass" name="Controle"/>
@@ -96,6 +99,9 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleBrowser">
       <eOperations name="ModeleBrowser"/>
+      <eOperations name="getExtension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModelePlay">
@@ -135,6 +141,9 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleKinect">
       <eOperations name="ModeleKinect"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ModeleFileTree">
+      <eOperations name="ModeleFileTree"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Kinect">

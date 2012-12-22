@@ -10,6 +10,6 @@ public class VueKinect extends JPanel
 	public VueKinect()
 	{
 		setBackground(Color.RED);
-		setPreferredSize(new Dimension(100, 100));
+		setPreferredSize(new Dimension(1000, 200));
 	}
 }
