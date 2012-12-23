@@ -10,7 +10,7 @@ public class VuePlay extends JPanel
 	public VuePlay()
 	{
 		setBackground(Color.ORANGE);
-		setPreferredSize(new Dimension(300, 100));
+		setPreferredSize(new Dimension((1000-250)/2, 300));
 	}
 
 	public void setPlay()

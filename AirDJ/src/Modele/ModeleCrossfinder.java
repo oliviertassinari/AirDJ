@@ -4,8 +4,8 @@ public class ModeleCrossfinder
 {
 	private Modele modele;
 	private int crossfinder = 0;
-	private int volumeP1 = 0;
-	private int volumeP2 = 0;
+	private int volumeP1 = 100;
+	private int volumeP2 = 100;
 
 	public ModeleCrossfinder(Modele modele)
 	{

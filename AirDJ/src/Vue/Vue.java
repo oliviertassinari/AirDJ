@@ -18,34 +18,30 @@ public class Vue extends JFrame
 
 	public Vue()
 	{
+		setTitle("AirDJ");
+		setSize(1000, 700);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setIconImage(new ImageIcon("image/icon.png").getImage());
+
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(0x181613));
+		panel.setLayout(new BorderLayout());
+		getContentPane().add(panel);
+
 		vueBrowser = new VueBrowser();
 		vueCrossfinder = new VueCrossfinder();
 		vueKinect = new VueKinect();
 		vuePlayP1 = new VuePlay();
-		vuePlayP2 = new VuePlay();
-
-		setTitle("AirDJ");
-		setSize(1000, 700);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setIconImage(new ImageIcon("image/icon.png").getImage());
-		setVisible(true);
-
-		BorderLayout borderLayout = new BorderLayout();
-		borderLayout.setHgap(5);
-		borderLayout.setVgap(5);
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0x262221));
-		panel.setLayout(borderLayout);
-		getContentPane().add(panel);
+		vuePlayP2 = new VuePlay();		
 
 		panel.add(vueBrowser, BorderLayout.NORTH);
 		panel.add(vueCrossfinder, BorderLayout.CENTER);
 		panel.add(vueKinect, BorderLayout.SOUTH);
 		panel.add(vuePlayP1, BorderLayout.WEST);
 		panel.add(vuePlayP2, BorderLayout.EAST);
+
+		setVisible(true);
 	}
 
 	public VueBrowser getVueBrowser()

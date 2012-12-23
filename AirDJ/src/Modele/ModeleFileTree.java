@@ -21,7 +21,7 @@ public class ModeleFileTree implements TreeModel
 	{
 		return root;
 	}
-	
+
 	public Object getChild(Object parent, int index)
 	{
 		ModeleFile parentModelFile = (ModeleFile) parent;
@@ -36,11 +36,11 @@ public class ModeleFileTree implements TreeModel
 			return new ModeleFile(listFiles[index].getPath(), listFiles[index].getName());
 		}
 	}
-	
+
 	public int getChildCount(Object parent)
 	{
 		ModeleFile parentModelFile = (ModeleFile) parent;
-		
+
 		if(parentModelFile.getPath() == "root")
 		{
 			return listRouts.length;
@@ -107,11 +107,11 @@ public class ModeleFileTree implements TreeModel
 	public void addTreeModelListener(TreeModelListener l)
 	{
 	}
-	
+
 	public void removeTreeModelListener(TreeModelListener l)
 	{
 	}
-	
+
 	public void valueForPathChanged(TreePath path, Object newValue)
 	{
 	}
