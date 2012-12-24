@@ -20,7 +20,7 @@ public class Modele
 		modelePlayP2 = new ModelePlay(this);
 	}
 
-	public ModeleCrossfinder getModelCrossfinder()
+	public ModeleCrossfinder getModeleCrossfinder()
 	{
 		return modeleCrossfinder;
 	}

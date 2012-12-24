@@ -53,6 +53,15 @@
       <eOperations name="VueKinect"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueCrossfinder">
+      <eOperations name="setCrossfinder">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setVolumeP1">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setVolumeP2">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
       <eOperations name="displayVolumeP1">
         <eParameters name="left" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
         <eParameters name="right" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -61,18 +70,14 @@
         <eParameters name="left" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
         <eParameters name="right" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
-      <eOperations name="setVolumeP1">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="setVolumeP2">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
       <eOperations name="VueCorssfinder"/>
       <eOperations name="paintComponent"/>
-      <eOperations name="setCrossfinder">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueCrossfinderOver"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossfiner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP1"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP2"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="EEnum0"/>
     <eClassifiers xsi:type="ecore:EDataType" name="EDataType0"/>
@@ -96,25 +101,45 @@
         <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
       <eOperations name="displayVolumeP2"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossfiner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP1"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP2"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Controle">
-    <eClassifiers xsi:type="ecore:EClass" name="Controle"/>
+    <eClassifiers xsi:type="ecore:EClass" name="Controle">
+      <eOperations name="Controle">
+        <eParameters name="vue" eType="#//Vue/Vue"/>
+        <eParameters name="modele" eType="#//Modele/Modele"/>
+      </eOperations>
+      <eOperations name="getVue" upperBound="2" eType="#//Vue/Vue"/>
+      <eOperations name="getModele" upperBound="2" eType="#//Modele/Modele"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ControleCrossfinder">
+      <eOperations name="ControleCrossfinder">
+        <eParameters name="controle" eType="#//Controle/Controle"/>
+      </eOperations>
+      <eOperations name="mouseClicked"/>
+      <eOperations name="mousePressed"/>
+      <eOperations name="mouseReleased"/>
+      <eOperations name="mouseEntered"/>
+      <eOperations name="mouseExited"/>
+      <eOperations name="mouseMoved"/>
+      <eOperations name="mouseDragged"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="modeleCrossfinder"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueCrossfinder"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Modele">
     <eClassifiers xsi:type="ecore:EClass" name="Modele">
-      <eOperations name="Modele"/>
+      <eOperations name="Modele" lowerBound="1" upperBound="2">
+        <eParameters name="vue" eType="#//Vue/Vue"/>
+      </eOperations>
       <eOperations name="getModeleCrossfinder"/>
       <eOperations name="getModelePlayP1"/>
       <eOperations name="getModelePlayP2"/>
       <eOperations name="getModeleBrowser"/>
       <eOperations name="getModeleKinect"/>
-      <eOperations name="getVue"/>
+      <eOperations name="getVue" upperBound="2" eType="#//Vue/Vue"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modeleCrossfinder"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelePlayP1"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelePlayP2"/>
@@ -123,7 +148,9 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleBrowser">
-      <eOperations name="ModeleBrowser"/>
+      <eOperations name="ModeleBrowser">
+        <eParameters name="modele" eType="#//Modele/Modele"/>
+      </eOperations>
       <eOperations name="getExtension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
@@ -159,6 +186,9 @@
       <eOperations name="setVolumeP2">
         <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
+      <eOperations name="getCrossfinder" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getVolumeP1" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getVolumeP2" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossfinder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumrP2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
