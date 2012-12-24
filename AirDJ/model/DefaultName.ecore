@@ -82,10 +82,19 @@
     <eClassifiers xsi:type="ecore:EClass" name="VueCrossfinderOver">
       <eOperations name="VueCrossfinderOver"/>
       <eOperations name="paintComponent"/>
-      <eOperations name="displayVolumeP1"/>
-      <eOperations name="setVolumeP1"/>
-      <eOperations name="setVolumeP2"/>
-      <eOperations name="setCrossfinder"/>
+      <eOperations name="displayVolumeP1">
+        <eParameters name="left" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="right" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setVolumeP1">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setVolumeP2">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setCrossfinder">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
       <eOperations name="displayVolumeP2"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossfiner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>

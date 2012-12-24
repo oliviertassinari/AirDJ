@@ -10,11 +10,11 @@ import javax.swing.JPanel;
 
 public class VueCrossfinderOver extends JPanel
 {
-	private int crossfinder = 100;
-	private int volumeP1 = 0;
+	private int crossfinder = 0;
+	private int volumeP1 = 100;
 	private int volumeP2 = 100;
-	private int[] displayVolumeP1 = {10, 40};
-	private int[] displayVolumeP2 = {0, 30};
+	private int[] displayVolumeP1 = {0, 0};
+	private int[] displayVolumeP2 = {0, 0};
 
 	public VueCrossfinderOver()
 	{
@@ -30,20 +30,20 @@ public class VueCrossfinderOver extends JPanel
 
 		Image imageCrossfinderCursor = new ImageIcon("image/crossfinderCursor.png").getImage();
 		g.drawImage(imageCrossfinderCursor, (int)(116+crossfinder*0.5), 238, null);
-		
+
 		g.setColor(new Color(0x28acff));
 		g.fillRect(34, 53+120-(int)(displayVolumeP1[0]*1.2), 9, (int)(displayVolumeP1[0]*1.2));
 		g.fillRect(44, 53+120-(int)(displayVolumeP1[1]*1.2), 9, (int)(displayVolumeP1[1]*1.2));
-		
+
 		g.setColor(new Color(0xff171a));
 		g.fillRect(197, 53+120-(int)(displayVolumeP2[0]*1.2), 9, (int)(displayVolumeP2[0]*1.2));
 		g.fillRect(207, 53+120-(int)(displayVolumeP2[1]*1.2), 9, (int)(displayVolumeP2[1]*1.2));
-		
+
 		Image imageDisplayVolumeOver = new ImageIcon("image/displayVolumeOver.png").getImage();
 		g.drawImage(imageDisplayVolumeOver, 34, 53, null);
 		g.drawImage(imageDisplayVolumeOver, 197, 53, null);
 	}
-	
+
 	public void displayVolumeP1(int left, int right)
 	{
 		displayVolumeP1[0] = left;
