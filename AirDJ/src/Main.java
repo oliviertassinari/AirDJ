@@ -11,5 +11,7 @@ public class Main
 		Audio audio = new Audio();
 		Modele modele = new Modele(vue);
 		Controle controle = new Controle(vue, modele);
+		
+		modele.getModelePlayP1().setFilePath("lol");
 	}
 }

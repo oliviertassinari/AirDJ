@@ -3,6 +3,7 @@ package Vue;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,21 +20,23 @@ public class Vue extends JFrame
 	public Vue()
 	{
 		setTitle("AirDJ");
-		setSize(1000 + 8, 700 + 4);
+		setSize(1000 + 8 + 9, 700 + 4 + 14);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(new ImageIcon("image/icon.png").getImage());
 
+		
+
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0x181613));
 		panel.setLayout(new BorderLayout());
-		getContentPane().add(panel);
+		panel.setBorder(BorderFactory.createMatteBorder(7, 7, 7, 2, new Color(0x181613)));
+		getContentPane().add(panel);	
 
 		vueBrowser = new VueBrowser();
 		vueCrossfinder = new VueCrossfinder();
 		vueKinect = new VueKinect();
-		vuePlayP1 = new VuePlay();
-		vuePlayP2 = new VuePlay();		
+		vuePlayP1 = new VuePlay(0); //blue
+		vuePlayP2 = new VuePlay(1);	//red
 
 		panel.add(vueBrowser, BorderLayout.NORTH);
 		panel.add(vueCrossfinder, BorderLayout.CENTER);

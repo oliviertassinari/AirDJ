@@ -2,7 +2,6 @@ package Vue;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -15,15 +14,15 @@ import javax.swing.JPanel;
 
 public class VueCrossfinder extends JPanel
 {
-	BufferedImage imageBackground;
+	private BufferedImage imageBackground;
+	private Image imageVolumeCursor;
+	private Image imageCrossfinderCursor;
+	private Image imageDisplayVolumeOver;
 	private int crossfinder = 0;
 	private int volumeP1 = 100;
 	private int volumeP2 = 100;
 	private int[] displayVolumeP1 = {0, 0};
 	private int[] displayVolumeP2 = {0, 0};
-	private Image imageVolumeCursor;
-	private Image imageCrossfinderCursor;
-	private Image imageDisplayVolumeOver;
 
 	public VueCrossfinder()
 	{
@@ -31,7 +30,7 @@ public class VueCrossfinder extends JPanel
 		imageCrossfinderCursor = new ImageIcon("image/crossfinderCursor.png").getImage();
 		imageDisplayVolumeOver = new ImageIcon("image/displayVolumeOver.png").getImage();
 
-		//Background
+
 		imageBackground = new BufferedImage(250, 300, BufferedImage.TRANSLUCENT);
         Graphics g = imageBackground.getGraphics();
 		g.setColor(new Color(0x181613));
@@ -55,27 +54,25 @@ public class VueCrossfinder extends JPanel
         g2d.setComposite(ac);  
   
 		//Border
-		GradientPaint gp4 = new GradientPaint(0, 0, new Color(0x42413d), 0, 300, new Color(0x42413d));
-		g2d.setPaint(gp4);
-		g2d.fillRect(0, 0, 1, 292);
-		g2d.fillRect(245, 0, 1, 292);
-
 		g.setColor(new Color(0x42413d));
-		g.drawLine(0, 292, 245, 292);
-		
+		g.drawLine(0, 0, 0, 292);
+		g.drawLine(244, 0, 244, 292);
+		g.drawLine(0, 292, 244, 292);
+		g.drawLine(1, 0, 244, 0);
+
 		//Background
 		GradientPaint gp1 = new GradientPaint(0, 0, new Color(0x383839), 0, 300, new Color(0x171718));
 		g2d.setPaint(gp1);
-		g2d.fillRect(1, 0, 244, 292);
+		g2d.fillRect(1, 1, 243, 291);
 
 		GradientPaint gp2 = new GradientPaint(0, 0, new Color(0x272726), 0, 220, new Color(0x0a0909));
 		g2d.setPaint(gp2);
-		g2d.fillRect(85, 0, 80, 220);
+		g2d.fillRect(85, 1, 80, 219);
 
 		GradientPaint gp3 = new GradientPaint(0, 0, new Color(0x242423), 0, 220, new Color(0x090808));
 		g2d.setPaint(gp3);
-		g2d.fillRect(85, 0, 1, 220);
-		g2d.fillRect(165, 0, 1, 220);
+		g2d.fillRect(85, 1, 1, 219);
+		g2d.fillRect(165, 1, 1, 219);
 
 		g.setColor(new Color(0x090808));
 		g.drawLine(85, 220, 165, 220);
@@ -91,6 +88,7 @@ public class VueCrossfinder extends JPanel
 		Image imageVolumeGrid = new ImageIcon("image/displayVolumeGrid.png").getImage();
 		g.drawImage(imageVolumeGrid, 30, 50, null);
 		g.drawImage(imageVolumeGrid, 193, 50, null);
+		
         g.dispose();
 	}
 

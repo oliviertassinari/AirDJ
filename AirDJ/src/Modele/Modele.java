@@ -9,6 +9,7 @@ public class Modele
 	ModeleCrossfinder modeleCrossfinder;
 	ModelePlay modelePlayP1;
 	ModelePlay modelePlayP2;
+	ModeleKinect modeleKinect;
 
 	public Modele(Vue vue)
 	{
@@ -16,8 +17,19 @@ public class Modele
 
 		modeleBrowser = new ModeleBrowser(this);
 		modeleCrossfinder = new ModeleCrossfinder(this);
-		modelePlayP1 = new ModelePlay(this);
-		modelePlayP2 = new ModelePlay(this);
+		modelePlayP1 = new ModelePlay(this, vue.getVuePlayP1());
+		modelePlayP2 = new ModelePlay(this, vue.getVuePlayP2());
+		modeleKinect = new ModeleKinect(this);
+	}
+
+	public Vue getVue()
+	{
+		return vue;
+	}
+
+	public ModeleBrowser getModeleBrowser()
+	{
+		return modeleBrowser;
 	}
 
 	public ModeleCrossfinder getModeleCrossfinder()
@@ -35,8 +47,8 @@ public class Modele
 		return modelePlayP2;
 	}
 
-	public Vue getVue()
+	public ModeleKinect getModeleKinect()
 	{
-		return vue;
+		return modeleKinect;
 	}
 }

@@ -1,7 +1,5 @@
 package Modele;
 
-import java.io.File;
-
 public class ModeleBrowser
 {
 	private Modele modele;
