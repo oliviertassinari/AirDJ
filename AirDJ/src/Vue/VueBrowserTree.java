@@ -20,11 +20,12 @@ public class VueBrowserTree extends JPanel
 	private Image imageTree;
 	private Image imageScrollBar;
 	private BufferedImage imageBackground;
-	private int x = 0;
-	private int y = 0;
+	private int x;
+	private int y;
 	private int length = 0;
 	private int scroll = 0;
 	private int[] scrollBarState = {0, 0};
+	private ModeleBrowserTree root;
 
 	public VueBrowserTree()
 	{
@@ -37,35 +38,16 @@ public class VueBrowserTree extends JPanel
 		setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(0x4E4C4B)));
 
 		//Background
-		ModeleBrowserTree root = new ModeleBrowserTree("root", "Ordinateur", 0);
 		length = 1;
+		root = new ModeleBrowserTree("root", "Ordinateur", true, false);
 		buildNode(root);
 
-		if(length*16 > 161)
-		{
-			imageBackground = new BufferedImage(334, length*16, BufferedImage.TRANSLUCENT);
-		}
-		else
-		{
-			imageBackground = new BufferedImage(334, 161, BufferedImage.TRANSLUCENT);
-		}
-
-        Graphics gi = imageBackground.getGraphics();
-		gi.setColor(Color.BLACK);
-		gi.fillRect(0, 0, imageBackground.getWidth(), imageBackground.getHeight());
-
-	    gi.setFont(new Font("sansserif", Font.BOLD, 11));
-		gi.setColor(Color.WHITE);
-
-        paintNode(root, gi);
-
-        gi.dispose();
+		paintRoot();
 	}
 
 	protected void paintComponent(Graphics g)
 	{
 		g.drawImage(imageBackground, 1, 1, 333, 162, 0, scroll, 334, 161 + scroll, this);
-
 
 		//ScrollBar
 		g.setColor(Color.BLACK);
@@ -111,35 +93,79 @@ public class VueBrowserTree extends JPanel
 		}
 	}
 
+	public void paintRoot()
+	{
+        x = 0;
+        y = 0;
+
+		if(length*16 > 161)
+		{
+			imageBackground = new BufferedImage(334, length*16, BufferedImage.TRANSLUCENT);
+		}
+		else
+		{
+			imageBackground = new BufferedImage(334, 161, BufferedImage.TRANSLUCENT);
+		}
+ 
+		Graphics gi = imageBackground.getGraphics();
+		gi.setColor(Color.BLACK);
+		gi.fillRect(0, 0, imageBackground.getWidth(), imageBackground.getHeight());
+
+	    gi.setFont(new Font("sansserif", Font.BOLD, 11));
+		gi.setColor(Color.WHITE);
+
+        paintNode(root, gi);
+
+        gi.dispose();
+
+		repaint();
+	}
+
 	public void paintNode(ModeleBrowserTree node, Graphics g)
 	{
-		g.drawImage(imageTree, x, y, 16 + x, 12 + y, 0, 0, 16, 12, null);
-		g.drawString(node.getName(), x+19, y+11);
+		if(!node.isExpanded())
+		{
+			g.drawImage(imageTree, x + 13, y, x + 29, 12 + y, 0, 0, 16, 12, null);
+		}
+		else
+		{
+			g.drawImage(imageTree, x + 13, y, x + 29, 12 + y, 0, 12, 16, 24, null);
+		}
+
+		if(!node.isLeaf())
+		{
+			if(!node.isExpanded())
+			{
+				g.drawImage(imageTree, x + 2, y + 2, x + 11, y + 11, 16, 0, 25, 9, null);
+			}
+			else
+			{
+				g.drawImage(imageTree, x + 2, y + 2, x + 11, y + 11, 16, 9, 25, 18, null);
+			}
+		}
+
+		g.drawString(node.getName(), x+32, y+11);
 
 		x += 13;
+
 		int childCount = node.getChildCount();
 
 		for(int i = 0; i < childCount; i++)
 		{
 			y += 16;
-			paintNode(node.getChildren().get(i), g);
+			paintNode(node.getChild(i), g);
 			x -= 13;
 		}
 	}
 
 	public void buildNode(ModeleBrowserTree node)
 	{
-		if(node.getLength() < 1)
-		{
-			int childCount = getChildCount(node);
+		int childCount = getChildCount(node);
 
-			for(int i = 0; i < childCount; i++)
-			{
-				length += 1;
-				ModeleBrowserTree child = getChild(node, i);
-				node.addChild(child);
-				buildNode(child);
-			}
+		for(int i = 0; i < childCount; i++)
+		{
+			length += 1;
+			node.addChild(getChild(node, i));
 		}
 	}
 
@@ -175,31 +201,35 @@ public class VueBrowserTree extends JPanel
 	{
 		if(node.getPath() == "root")
 		{
-			return new ModeleBrowserTree(listRouts[index].getPath(), listRouts[index].getPath(), 1);
+			String path = listRouts[index].getPath();			
+			return new ModeleBrowserTree(path, path, false, isLeaf(path));
 		}
 		else
 		{
 			File[] listFiles = new File(node.getPath()).listFiles();
 			File file = listFiles[index];
-			return new ModeleBrowserTree(file.getPath(), file.getName(), node.getLength() + 1);
+			return new ModeleBrowserTree(file.getPath(), file.getName(), false, isLeaf(file.getPath()));
 		}
 	}
 
-	public boolean isLeaf(ModeleBrowserTree node)
+	public boolean isLeaf(String path)
 	{
-		if(node.getPath() == "root")
-		{
-			return false;
-		}
-		else
-		{
-			return new File(node.getPath()).isFile();
-		}
+		return new File(path).isFile();
+	}
+
+	public ModeleBrowserTree getNode(int lineGoal)
+	{
+		return root.getNode(lineGoal, 1);
 	}
 
 	public int getLength()
 	{
 		return length;
+	}
+
+	public void setLength(int value)
+	{
+		length = value;
 	}
 
 	public int getScroll()

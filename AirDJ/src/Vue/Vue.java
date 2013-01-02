@@ -40,7 +40,7 @@ public class Vue extends JFrame
 
 		panel.add(vueBrowser, BorderLayout.NORTH);
 		panel.add(vueCrossfinder, BorderLayout.CENTER);
-		panel.add(vueKinect, BorderLayout.SOUTH);
+		//panel.add(vueKinect, BorderLayout.SOUTH);
 		panel.add(vuePlayP1, BorderLayout.WEST);
 		panel.add(vuePlayP2, BorderLayout.EAST);
 

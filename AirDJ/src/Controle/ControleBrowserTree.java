@@ -9,6 +9,7 @@ import java.awt.event.MouseWheelListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import Modele.ModeleBrowserTree;
 import Vue.VueBrowserTree;
 
 public class ControleBrowserTree implements MouseListener, MouseMotionListener, MouseWheelListener
@@ -67,6 +68,41 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 			blockSelected = 1;
 			mouseDragged(e);
 			vueBrowserTree.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		}
+		else //Tree
+		{
+			int x = e.getX();
+			int y = e.getY();
+			int scroll = vueBrowserTree.getScroll();
+			int length = vueBrowserTree.getLength();
+			int line = (int)((scroll+y)/16)+1;
+
+			if(line <= length)
+			{
+				ModeleBrowserTree node = vueBrowserTree.getNode(line);
+
+				System.out.println(node.getName());
+
+				if(!node.isLeaf())
+				{
+					if(node.isExpanded())
+					{
+						node.setExpanded(false);
+						vueBrowserTree.setLength(vueBrowserTree.getLength()-node.removeChildren());
+					}
+					else
+					{
+						node.setExpanded(true);
+
+						if(node.getChildCount() == 0)
+						{
+							vueBrowserTree.buildNode(node);
+						}
+					}
+
+					vueBrowserTree.paintRoot();
+				}
+			}
 		}
 	}
 
