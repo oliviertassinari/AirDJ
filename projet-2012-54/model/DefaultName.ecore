@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname"
-    nsURI="http://defaultname/1.0" nsPrefix="defaultname">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname" nsURI="http://defaultname/1.0" nsPrefix="defaultname">
   <eClassifiers xsi:type="ecore:EDataType" name="EDataType0">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="baseType" value="EDataType0"/>
@@ -31,6 +29,10 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueBrowser">
       <eOperations name="VueBrowser"/>
+      <eOperations name="getVueBrowserTree"/>
+      <eOperations name="getVueBrowserTable"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueBrowserTree"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueBrowserTable"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VuePlay">
       <eOperations name="setPlay">
@@ -129,6 +131,41 @@
       </eOperations>
       <eOperations name="displayVolumeP2"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VueBrowserTree">
+      <eOperations name="VueBrowserTree"/>
+      <eOperations name="paintComponent"/>
+      <eOperations name="paintRoot"/>
+      <eOperations name="paintNode"/>
+      <eOperations name="buildNode"/>
+      <eOperations name="getChildCount"/>
+      <eOperations name="getChild"/>
+      <eOperations name="isLeaf" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="getNode"/>
+      <eOperations name="getLength" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="setLength">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="getScroll" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="setScroll">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="getScrollBarState"/>
+      <eOperations name="setScrollBarState"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="listRouts"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageTree"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageScrollBar"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="x"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="y"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="length"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="scroll"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="scrollBarState"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="root"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VueBrowserTable">
+      <eOperations name="VueBrowserTable"/>
+      <eOperations name="paintComponent"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Controle">
     <eClassifiers xsi:type="ecore:EClass" name="Controle">
@@ -153,6 +190,7 @@
       <eOperations name="mouseExited"/>
       <eOperations name="mouseMoved"/>
       <eOperations name="mouseDragged"/>
+      <eOperations name="mouseWheelMoved"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modeleCrossfinder"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueCrossfinder"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockOver" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -171,11 +209,30 @@
       <eOperations name="mouseExited"/>
       <eOperations name="mouseMoved"/>
       <eOperations name="mouseDragged"/>
+      <eOperations name="mouseWheelMoved"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vuePlay"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelePlay"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockOver" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockSelected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ControleBrowserTree">
+      <eOperations name="ControleBrowserTree">
+        <eParameters name="controle" eType="#//Controle/Controle"/>
+      </eOperations>
+      <eOperations name="mouseClicked"/>
+      <eOperations name="mousePressed"/>
+      <eOperations name="mouseReleased"/>
+      <eOperations name="mouseEntered"/>
+      <eOperations name="mouseExited"/>
+      <eOperations name="mouseMoved"/>
+      <eOperations name="mouseDragged"/>
+      <eOperations name="mouseWheelMoved"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueBrowserTree"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockOver" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockSelected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="timer"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Modele">
@@ -270,6 +327,28 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleFile">
       <eOperations name="ModeleFile"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ModeleBrowserTree">
+      <eOperations name="ModeleBrowserTree"/>
+      <eOperations name="addChild"/>
+      <eOperations name="setExpanded"/>
+      <eOperations name="getPath" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getName" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getChild"/>
+      <eOperations name="getChildCount" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNode"/>
+      <eOperations name="isExpanded" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="isLeaf" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="removeChildren"/>
+      <eOperations name="getLeafCount" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="children"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="childCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="parent"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="childIndex" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="expanded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="leaf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Kinect">
