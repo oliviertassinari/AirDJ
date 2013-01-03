@@ -25,7 +25,6 @@ public class Vue extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(new ImageIcon("image/icon.png").getImage());
 
-		
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
