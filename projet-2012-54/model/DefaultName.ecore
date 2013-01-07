@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname" nsURI="http://defaultname/1.0" nsPrefix="defaultname">
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname"
+    nsURI="http://defaultname/1.0" nsPrefix="defaultname">
   <eClassifiers xsi:type="ecore:EDataType" name="EDataType0">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="baseType" value="EDataType0"/>
@@ -14,7 +16,7 @@
   <eSubpackages name="Vue">
     <eClassifiers xsi:type="ecore:EClass" name="Vue">
       <eOperations name="Vue"/>
-      <eOperations name="getVueBorwser" upperBound="2" eType="#//Vue/VueBrowser"/>
+      <eOperations name="getVueBrowser" upperBound="2" eType="#//Vue/VueBrowser"/>
       <eOperations name="getVueCrossfinder" upperBound="2" eType="#//Vue/VueCrossfinder"/>
       <eOperations name="getVueKinect" upperBound="2" eType="#//Vue/VueKinect"/>
       <eOperations name="getVuePlayP1" upperBound="2" eType="#//Vue/VuePlay"/>
@@ -355,13 +357,56 @@
     <eClassifiers xsi:type="ecore:EClass" name="Kinect">
       <eOperations name="Kinect"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="MainPosition">
+      <eOperations name="MainPosition"/>
+      <eOperations name="add">
+        <eParameters name="long" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+        <eParameters name="center"/>
+        <eParameters name="depth" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      </eOperations>
+      <eOperations name="add">
+        <eParameters name="depth" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+      </eOperations>
+      <eOperations name="get">
+        <eParameters name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="positions"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Audio">
     <eClassifiers xsi:type="ecore:EClass" name="Audio">
       <eOperations name="setPlay"/>
       <eOperations name="setPause"/>
-      <eOperations name="setVolume"/>
-      <eOperations name="Audio"/>
+      <eOperations name="setVolume">
+        <eParameters name="gain" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      </eOperations>
+      <eOperations name="Audio">
+        <eParameters name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      </eOperations>
+      <eOperations name="setVitesse">
+        <eParameters name="vitesse" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      </eOperations>
+      <eOperations name="setPosition">
+        <eParameters name="MicroSecond" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      </eOperations>
+      <eOperations name="getPosition"/>
+      <eOperations name="run"/>
+      <eOperations name="init"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gain" upperBound="2"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vitesse" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="file"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="position" upperBound="2"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="runner"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" upperBound="2"
+          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="audioInputStream"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="audioFormat"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="info"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="line"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gainControl"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="EPackage0"/>
