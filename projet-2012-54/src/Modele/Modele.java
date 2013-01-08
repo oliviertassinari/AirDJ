@@ -11,15 +11,20 @@ public class Modele
 	ModelePlay modelePlayP2;
 	ModeleKinect modeleKinect;
 
-	public Modele(Vue vue)
+	public Modele()
 	{
-		this.vue = vue;
-
 		modeleBrowser = new ModeleBrowser(this);
 		modeleCrossfinder = new ModeleCrossfinder(this);
-		modelePlayP1 = new ModelePlay(this, vue.getVuePlayP1());
-		modelePlayP2 = new ModelePlay(this, vue.getVuePlayP2());
+		modelePlayP1 = new ModelePlay(this);
+		modelePlayP2 = new ModelePlay(this);
 		modeleKinect = new ModeleKinect(this);
+	}
+
+	public void setVue(Vue vue)
+	{
+		this.vue = vue;
+		modelePlayP1.setVuePlay(vue.getVuePlayP1());
+		modelePlayP2.setVuePlay(vue.getVuePlayP2());
 	}
 
 	public Vue getVue()

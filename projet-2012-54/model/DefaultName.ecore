@@ -15,12 +15,15 @@
   </eClassifiers>
   <eSubpackages name="Vue">
     <eClassifiers xsi:type="ecore:EClass" name="Vue">
-      <eOperations name="Vue"/>
+      <eOperations name="Vue">
+        <eParameters name="modele" eType="#//Modele/Modele"/>
+      </eOperations>
       <eOperations name="getVueBrowser" upperBound="2" eType="#//Vue/VueBrowser"/>
       <eOperations name="getVueCrossfinder" upperBound="2" eType="#//Vue/VueCrossfinder"/>
       <eOperations name="getVueKinect" upperBound="2" eType="#//Vue/VueKinect"/>
       <eOperations name="getVuePlayP1" upperBound="2" eType="#//Vue/VuePlay"/>
       <eOperations name="getVuePlayP2" upperBound="2" eType="#//Vue/VuePlay"/>
+      <eOperations name="getModele"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Vue/Vue"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Vue/VueBrowser"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueBrowser"/>
@@ -28,87 +31,56 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueCrossfinder"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vuePlayP1"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vuePlayP2"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueBrowser">
-      <eOperations name="VueBrowser"/>
+      <eOperations name="VueBrowser">
+        <eParameters name="vue" eType="#//Vue/Vue"/>
+      </eOperations>
       <eOperations name="getVueBrowserTree"/>
       <eOperations name="getVueBrowserTable"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueBrowserTree"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueBrowserTable"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VuePlay">
-      <eOperations name="setPlay">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="setPause">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="setPitch">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="setInfo">
-        <eParameters name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="album" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-        <eParameters name="bpm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-        <eParameters name="total" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="setCurrent">
-        <eParameters name="current" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
       <eOperations name="VuePlay">
         <eParameters name="couleur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="vue" eType="#//Vue/Vue"/>
+        <eParameters name="modelePlay" eType="#//Modele/ModelePlay"/>
       </eOperations>
       <eOperations name="paintComponent"/>
       <eOperations name="getFormatMMSS" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
+      <eOperations name="repaint"/>
+      <eOperations name="getImageBackground"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePitchCursor"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pitch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="artist" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="bpm" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="total" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="current" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePlayCursor"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePlayCurrent"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="couleur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageButton"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="play" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelePlay"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueKinect">
-      <eOperations name="VueKinect"/>
+      <eOperations name="VueKinect">
+        <eParameters name="vue" eType="#//Vue/Vue"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueCrossfinder">
-      <eOperations name="setCrossfinder">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="VueCorssfinder">
+        <eParameters name="vue" eType="#//Vue/Vue"/>
       </eOperations>
-      <eOperations name="setVolumeP1">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="setVolumeP2">
-        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="displayVolumeP1">
-        <eParameters name="left" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-        <eParameters name="right" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="displayVolumeP2">
-        <eParameters name="left" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-        <eParameters name="right" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      </eOperations>
-      <eOperations name="VueCorssfinder"/>
       <eOperations name="paintComponent"/>
+      <eOperations name="repaint"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageVolumeCursor"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossfiner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP1"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP2"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageCrossfinderCursor"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageDisplayVolumeOver"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="EEnum0"/>
     <eClassifiers xsi:type="ecore:EDataType" name="EDataType0"/>
@@ -239,24 +211,22 @@
   </eSubpackages>
   <eSubpackages name="Modele">
     <eClassifiers xsi:type="ecore:EClass" name="Modele">
-      <eOperations name="Modele" lowerBound="1" upperBound="2">
-        <eParameters name="vue" eType="#//Vue/Vue"/>
-        <eParameters name="audio" eType="#//Audio/Audio"/>
-      </eOperations>
+      <eOperations name="Modele" lowerBound="1" upperBound="2"/>
       <eOperations name="getVue" upperBound="2" eType="#//Vue/Vue"/>
       <eOperations name="getModeleBrowser" upperBound="2" eType="#//Modele/ModeleBrowser"/>
       <eOperations name="getModeleCrossfinder" upperBound="2" eType="#//Modele/ModeleCrossfinder"/>
       <eOperations name="getModelePlayP1" upperBound="2" eType="#//Modele/ModelePlay"/>
       <eOperations name="getModelePlayP2" upperBound="2" eType="#//Modele/ModelePlay"/>
       <eOperations name="getModeleKinect" upperBound="2" eType="#//Modele/ModeleKinect"/>
-      <eOperations name="getAudio" upperBound="2" eType="#//Audio/Audio"/>
+      <eOperations name="setVue">
+        <eParameters name="vue" eType="#//Vue/Vue"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modeleBrowser"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modeleCrossfinder"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelePlayP1"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelePlayP2"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modeleKinect"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="audio"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="Modele -> Vue" eType="#//Vue/Vue"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleBrowser">
@@ -276,7 +246,6 @@
       <eOperations name="setPause"/>
       <eOperations name="ModelePlay">
         <eParameters name="modele" eType="#//Modele/Modele"/>
-        <eParameters name="vuePlay" eType="#//Vue/VuePlay"/>
       </eOperations>
       <eOperations name="setPitch">
         <eParameters name="pitch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -286,6 +255,15 @@
       </eOperations>
       <eOperations name="getPitch" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="getTotal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="setVuePlay">
+        <eParameters name="vuePlay" eType="#//Vue/VuePlay"/>
+      </eOperations>
+      <eOperations name="getTitle"/>
+      <eOperations name="getArtist"/>
+      <eOperations name="getBpm"/>
+      <eOperations name="getCurrent"/>
+      <eOperations name="getPlay"/>
+      <eOperations name="getPause"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="pitch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -296,6 +274,8 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="total" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vuePlay"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="play" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleCrossfinder">
       <eOperations name="setCrossfinder">
@@ -313,10 +293,14 @@
       <eOperations name="getCrossfinder" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="getVolumeP1" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="getVolumeP2" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getDisplayVolumeP1"/>
+      <eOperations name="getDisplayVolumeP2"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossfinder" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumeP1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="volumrP2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP1"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP2"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleKinect">
       <eOperations name="ModeleKinect">
@@ -393,15 +377,12 @@
       <eOperations name="getPosition"/>
       <eOperations name="run"/>
       <eOperations name="init"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gain" upperBound="2"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gain" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vitesse" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="file"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="position" upperBound="2"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="runner"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" upperBound="2"
-          eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="audioInputStream"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="audioFormat"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="info"/>

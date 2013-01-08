@@ -9,11 +9,15 @@ import javax.swing.JPanel;
 
 public class VueBrowser extends JPanel
 {
+	private Vue vue;
+
 	private VueBrowserTree vueBrowserTree;
 	private VueBrowserTable vueBrowserTable;
 
-	public VueBrowser()
+	public VueBrowser(Vue vue)
 	{
+		this.vue = vue;
+
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setPreferredSize(new Dimension(1000, 170));
 		setBorder(BorderFactory.createMatteBorder(0, 0, 7, 5, new Color(0x181613)));

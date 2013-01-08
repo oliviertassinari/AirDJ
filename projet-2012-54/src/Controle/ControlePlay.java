@@ -94,8 +94,8 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 				if(blockOver != 2)
 				{
 					blockOver = 2; 
-					vuePlay.setPause(1);
-					vuePlay.setPlay(0);
+					modelePlay.setPause(1);
+					modelePlay.setPlay(0);
 					vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
@@ -104,8 +104,8 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 				if(blockOver != 3)
 				{
 					blockOver = 3; 
-					vuePlay.setPause(0);
-					vuePlay.setPlay(1);
+					modelePlay.setPause(0);
+					modelePlay.setPlay(1);
 					vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
@@ -121,11 +121,11 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 			{
 				if(blockOver == 2)
 				{
-					vuePlay.setPause(0);
+					modelePlay.setPause(0);
 				}
 				else if(blockOver == 3)
 				{
-					vuePlay.setPlay(0);
+					modelePlay.setPlay(0);
 				}
 	
 				blockOver = 0;

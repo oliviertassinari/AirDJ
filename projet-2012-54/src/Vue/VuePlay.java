@@ -14,26 +14,26 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import Modele.ModeleCrossfinder;
+import Modele.ModelePlay;
+
 public class VuePlay extends JPanel
 {
 	private int couleur; // 0 = blue, 1 = red
+	private Vue vue;
+	private ModelePlay modelePlay;
+
 	private BufferedImage imageBackground;
 	private Image imagePitchCursor;
 	private Image imagePlayerCursor;
 	private Image imagePlayerCurrent;
 	private Image imageButton;
-	private int pitch = 0;
-	private String title = "Drag a song on this desk to load it";
-	private String artist = "";
-	private double bpm = 0;
-	private int total = 0;
-	private int current = 0;
-	private int play = 0;
-	private int pause = 0;
 
-	public VuePlay(int couleur)
+	public VuePlay(int couleur, Vue vue, ModelePlay modelePlay)
 	{
 		this.couleur = couleur;
+		this.vue = vue;
+		this.modelePlay = modelePlay;
 		setPreferredSize(new Dimension((1000-250)/2, 300));
 
 		imagePitchCursor = new ImageIcon("image/pitchCursor.png").getImage();
@@ -48,9 +48,14 @@ public class VuePlay extends JPanel
 		{
 			imageButton = new ImageIcon("image/buttonRed.png").getImage();
 		}
+		
+		imageBackground = getImageBackground();
+	}
 
-		imageBackground = new BufferedImage(375, 300, BufferedImage.TRANSLUCENT);
-        Graphics g = imageBackground.getGraphics();
+	public BufferedImage getImageBackground()
+	{
+		BufferedImage image = new BufferedImage(375, 300, BufferedImage.TRANSLUCENT);
+        Graphics g = image.getGraphics();
 		g.setColor(new Color(0x181613));
 		g.fillRect(0, 0, 375, 300);
 
@@ -101,10 +106,21 @@ public class VuePlay extends JPanel
 		g.drawImage(imagePlayButton, 120, 170, null);
 
         g.dispose();
-	}
 
+        return image;
+	}
+	
 	protected void paintComponent(Graphics g)
 	{
+		int pitch = modelePlay.getPitch();
+		String title = modelePlay.getTitle();
+		String artist = modelePlay.getArtist();
+		double bpm = modelePlay.getBpm();
+		int total = modelePlay.getTotal();
+		int current = modelePlay.getCurrent();
+		int play = modelePlay.getPlay();
+		int pause = modelePlay.getPause();		
+
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING , RenderingHints.VALUE_ANTIALIAS_ON);
 
@@ -166,39 +182,6 @@ public class VuePlay extends JPanel
 		{
 			g.drawImage(imageButton, 162, 174, 162+39, 174+23, 36, 46, 75, 69, null);
 		}
-	}
-
-	public void setPlay(int value)
-	{
-		play = value;
-		repaint();
-	}
-
-	public void setPause(int value)
-	{
-		pause = value;
-		repaint();
-	}
-
-	public void setPitch(int value)
-	{
-		pitch = value;
-		repaint();
-	}
-
-	public void setInfo(String title, String artist, double bpm, int total)
-	{
-		this.title = title;
-		this.artist = artist;
-		this.bpm = bpm;
-		this.total = total;
-		repaint();
-	}
-
-	public void setCurrent(int value)
-	{
-		current = value;
-		repaint();
 	}
 
 	public String getFormatMMSS(int value)

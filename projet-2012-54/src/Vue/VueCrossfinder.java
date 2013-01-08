@@ -12,27 +12,32 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import Modele.ModeleCrossfinder;
+
 public class VueCrossfinder extends JPanel
 {
+	private Vue vue;
+	
 	private BufferedImage imageBackground;
 	private Image imageVolumeCursor;
 	private Image imageCrossfinderCursor;
 	private Image imageDisplayVolumeOver;
-	private int crossfinder = 0;
-	private int volumeP1 = 100;
-	private int volumeP2 = 100;
-	private int[] displayVolumeP1 = {0, 0};
-	private int[] displayVolumeP2 = {0, 0};
 
-	public VueCrossfinder()
+	public VueCrossfinder(Vue vue)
 	{
+		this.vue = vue;
+
 		imageVolumeCursor = new ImageIcon("image/volumeCursor.png").getImage();
 		imageCrossfinderCursor = new ImageIcon("image/crossfinderCursor.png").getImage();
 		imageDisplayVolumeOver = new ImageIcon("image/displayVolumeOver.png").getImage();
 
+		imageBackground = getImageBackground();
+	}
 
-		imageBackground = new BufferedImage(250, 300, BufferedImage.TRANSLUCENT);
-        Graphics g = imageBackground.getGraphics();
+	public BufferedImage getImageBackground()
+	{
+		BufferedImage image = new BufferedImage(250, 300, BufferedImage.TRANSLUCENT);
+        Graphics g = image.getGraphics();
 		g.setColor(new Color(0x181613));
 		g.fillRect(0, 0, 250, 300);
 
@@ -88,12 +93,22 @@ public class VueCrossfinder extends JPanel
 		Image imageVolumeGrid = new ImageIcon("image/displayVolumeGrid.png").getImage();
 		g.drawImage(imageVolumeGrid, 30, 50, null);
 		g.drawImage(imageVolumeGrid, 193, 50, null);
-		
-        g.dispose();
-	}
 
+        g.dispose();
+
+        return image;
+	}
+	
 	protected void paintComponent(Graphics g)
 	{
+		ModeleCrossfinder modeleCrossfinder = vue.getModele().getModeleCrossfinder();
+
+		int crossfinder = modeleCrossfinder.getCrossfinder();
+		int volumeP1 = modeleCrossfinder.getVolumeP1();
+		int volumeP2 = modeleCrossfinder.getVolumeP2();
+		int[] displayVolumeP1 = modeleCrossfinder.getDisplayVolumeP1();
+		int[] displayVolumeP2 = modeleCrossfinder.getDisplayVolumeP2();
+
 		g.drawImage(imageBackground, 0, 0, this);
 
 		//volumeCursor
@@ -113,37 +128,5 @@ public class VueCrossfinder extends JPanel
 
 		g.drawImage(imageDisplayVolumeOver, 34, 53, null);
 		g.drawImage(imageDisplayVolumeOver, 197, 53, null);
-	}
-
-	public void setCrossfinder(int value)
-	{
-		crossfinder = value;
-		repaint();
-	}
-
-	public void setVolumeP1(int value)
-	{
-		volumeP1 = value;
-		repaint();
-	}
-
-	public void setVolumeP2(int value)
-	{
-		volumeP2 = value;
-		repaint();
-	}
-
-	public void displayVolumeP1(int left, int right)
-	{
-		displayVolumeP1[0] = left;
-		displayVolumeP1[1] = right;
-		repaint();
-	}
-
-	public void displayVolumeP2(int left, int right)
-	{
-		displayVolumeP2[0] = left;
-		displayVolumeP2[1] = right;
-		repaint();
 	}
 }

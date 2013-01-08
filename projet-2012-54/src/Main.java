@@ -7,11 +7,15 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		Vue vue = new Vue();
+		Modele modele = new Modele();
+
+		Vue vue = new Vue(modele);
+		modele.setVue(vue);
+
 		Audio audio = new Audio();
-		Modele modele = new Modele(vue);
+
 		Controle controle = new Controle(vue, modele);
-		
+
 		modele.getModelePlayP1().setFilePath("lol");
 	}
 }

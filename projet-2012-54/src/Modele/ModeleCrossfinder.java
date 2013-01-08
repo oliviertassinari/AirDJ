@@ -6,6 +6,8 @@ public class ModeleCrossfinder
 	private int crossfinder = 0;
 	private int volumeP1 = 100;
 	private int volumeP2 = 100;
+	private int[] displayVolumeP1 = {0, 0};
+	private int[] displayVolumeP2 = {0, 0};
 
 	public ModeleCrossfinder(Modele modele)
 	{
@@ -24,7 +26,7 @@ public class ModeleCrossfinder
 		}
 
 		crossfinder = value;
-		modele.getVue().getVueCrossfinder().setCrossfinder(value);
+		modele.getVue().getVueCrossfinder().repaint();
 	}
 
 	public void setVolumeP1(int value)
@@ -39,7 +41,7 @@ public class ModeleCrossfinder
 		}
 
 		volumeP1 = value;
-		modele.getVue().getVueCrossfinder().setVolumeP1(value);
+		modele.getVue().getVueCrossfinder().repaint();
 	}
 
 	public void setVolumeP2(int value)
@@ -54,7 +56,7 @@ public class ModeleCrossfinder
 		}
 
 		volumeP2 = value;
-		modele.getVue().getVueCrossfinder().setVolumeP2(value);
+		modele.getVue().getVueCrossfinder().repaint();
 	}
 
 	public int getCrossfinder()
@@ -70,5 +72,15 @@ public class ModeleCrossfinder
 	public int getVolumeP2()
 	{
 		return volumeP2;
+	}
+
+	public int[] getDisplayVolumeP1()
+	{
+		return displayVolumeP1;
+	}
+
+	public int[] getDisplayVolumeP2()
+	{
+		return displayVolumeP2;
 	}
 }

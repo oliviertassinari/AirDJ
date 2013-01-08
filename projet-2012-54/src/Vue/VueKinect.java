@@ -8,12 +8,16 @@ import javax.swing.JPanel;
 
 public class VueKinect extends JPanel
 {
-	public VueKinect()
+	private Vue vue;
+
+	public VueKinect(Vue vue)
 	{
+		this.vue = vue;
+
 		setBackground(Color.RED);
 		setPreferredSize(new Dimension(1000, 200));
 	}
-	
+
 	protected void paintComponent(Graphics g)
 	{
 		
