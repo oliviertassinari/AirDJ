@@ -13,6 +13,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="Main">
     <eOperations name="Main"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IPlayer">
+    <eOperations name="setPlay"/>
+    <eOperations name="setPause"/>
+    <eOperations name="setVolume"/>
+    <eOperations name="setVitesse"/>
+    <eOperations name="setPosition"/>
+    <eOperations name="getPosition"/>
+  </eClassifiers>
   <eSubpackages name="Vue">
     <eClassifiers xsi:type="ecore:EClass" name="Vue">
       <eOperations name="Vue">
@@ -363,7 +371,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="positions"/>
     </eClassifiers>
   </eSubpackages>
-  <eSubpackages name="Audio">
+  <eSubpackages name="Player">
     <eClassifiers xsi:type="ecore:EClass" name="Audio">
       <eOperations name="setPlay"/>
       <eOperations name="setPause"/>
