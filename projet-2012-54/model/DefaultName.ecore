@@ -129,10 +129,10 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageTree"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageScrollBar"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="x"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="y"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="length"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="scroll"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="scroll" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="scrollBarState"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="root"/>
     </eClassifiers>
@@ -264,6 +264,12 @@
       <eOperations name="getCurrent"/>
       <eOperations name="getPlay"/>
       <eOperations name="getPause"/>
+      <eOperations name="setPlay">
+        <eParameters name="state" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setPause">
+        <eParameters name="state" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="pitch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

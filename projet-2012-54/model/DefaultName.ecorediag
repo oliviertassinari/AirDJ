@@ -835,9 +835,17 @@
             <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Modele/ModelePlay/setPlay"/>
             <layoutConstraint xmi:type="notation:Location" xmi:id="_Z0LYYTf3EeK2baJjHLxAVw"/>
           </children>
+          <children xmi:type="notation:Node" xmi:id="_vHYyYVmYEeK_w_7zK6oNsA" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Modele/ModelePlay/setPlay.1"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_vHYyYlmYEeK_w_7zK6oNsA"/>
+          </children>
           <children xmi:type="notation:Node" xmi:id="_d994QDf3EeK2baJjHLxAVw" type="2002">
             <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Modele/ModelePlay/setPause"/>
             <layoutConstraint xmi:type="notation:Location" xmi:id="_d994QTf3EeK2baJjHLxAVw"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_1nUqQFmYEeK_w_7zK6oNsA" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Modele/ModelePlay/setPause.1"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_1nUqQVmYEeK_w_7zK6oNsA"/>
           </children>
           <children xmi:type="notation:Node" xmi:id="__xFm8E4QEeKN64RVBueDyg" type="2002">
             <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Modele/ModelePlay/setPitch"/>
