@@ -13,14 +13,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Main">
     <eOperations name="Main"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IPlayer">
-    <eOperations name="setPlay"/>
-    <eOperations name="setPause"/>
-    <eOperations name="setVolume"/>
-    <eOperations name="setVitesse"/>
-    <eOperations name="setPosition"/>
-    <eOperations name="getPosition"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IPlayer"/>
   <eSubpackages name="Vue">
     <eClassifiers xsi:type="ecore:EClass" name="Vue">
       <eOperations name="Vue">
@@ -371,8 +364,8 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="positions"/>
     </eClassifiers>
   </eSubpackages>
-  <eSubpackages name="Player">
-    <eClassifiers xsi:type="ecore:EClass" name="Audio">
+  <eSubpackages name="Audio">
+    <eClassifiers xsi:type="ecore:EClass" name="Player">
       <eOperations name="setPlay"/>
       <eOperations name="setPause"/>
       <eOperations name="setVolume">
@@ -388,10 +381,9 @@
       <eOperations name="setPosition">
         <eParameters name="MicroSecond" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
       </eOperations>
-      <eOperations name="getPosition"/>
+      <eOperations name="getPosition" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
       <eOperations name="run"/>
       <eOperations name="init"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="gain" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vitesse" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="file"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
@@ -399,9 +391,22 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="audioInputStream"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="audioFormat"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="info"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="line"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="gainControl"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Audio/Player"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IPlayer">
+      <eOperations name="setPlay"/>
+      <eOperations name="setPause"/>
+      <eOperations name="setVolume">
+        <eParameters name="volume" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      </eOperations>
+      <eOperations name="setVitesse">
+        <eParameters name="volume" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      </eOperations>
+      <eOperations name="setPosition">
+        <eParameters name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      </eOperations>
+      <eOperations name="getPosition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="EPackage0"/>
