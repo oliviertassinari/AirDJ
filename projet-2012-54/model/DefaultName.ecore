@@ -171,6 +171,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockOver" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockSelected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/IModeleCrossfiner"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ControlePlay">
       <eOperations name="ControlePlay">
@@ -190,6 +191,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockOver" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockSelected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/IModelePlay"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ControleBrowserTree">
       <eOperations name="ControleBrowserTree">
@@ -208,6 +210,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockSelected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="timer"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/IModeleCrossfiner"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Modele">
@@ -283,6 +286,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vuePlay"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="play" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="pause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Audio/IPlayer"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleCrossfinder">
       <eOperations name="setCrossfinder">
@@ -343,10 +347,39 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="expanded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="leaf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IModeleCrossfiner">
+      <eOperations name="setCrossfinder">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setVolumeP1">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setVolumeP2">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="getCrossfinder" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getVolumeP1" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getVolumeP2" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/ModeleCrossfinder"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="IModelePlay">
+      <eOperations name="setPlay"/>
+      <eOperations name="setPause"/>
+      <eOperations name="setPitch">
+        <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="setCurrent"/>
+      <eOperations name="getPitch" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getCurrent" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/ModelePlay"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Controle/ControlePlay"/>
+    </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Kinect">
     <eClassifiers xsi:type="ecore:EClass" name="Kinect">
       <eOperations name="Kinect"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/IModeleCrossfiner"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/IModelePlay"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="MainPosition">
       <eOperations name="MainPosition"/>
@@ -407,6 +440,7 @@
         <eParameters name="position" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
       </eOperations>
       <eOperations name="getPosition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Audio/Player"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="EPackage0"/>
