@@ -1448,34 +1448,6 @@
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QYBIwFmdEeK_w_7zK6oNsA" id="(0.07547169811320754,0.3816793893129771)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QYBIwVmdEeK_w_7zK6oNsA" id="(0.9961977186311787,0.19831223628691982)"/>
   </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_YSo18FmdEeK_w_7zK6oNsA" type="3002" source="_2ANOcE3eEeKaGd4hT8ndag" target="_NzEVMFmcEeK_w_7zK6oNsA">
-    <children xmi:type="notation:Node" xmi:id="_YSo19FmdEeK_w_7zK6oNsA" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_YSo19VmdEeK_w_7zK6oNsA" x="-10" y="-10"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_YSpdAFmdEeK_w_7zK6oNsA" type="4012">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_YSpdAVmdEeK_w_7zK6oNsA" x="10" y="10"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_YSo18VmdEeK_w_7zK6oNsA" lineColor="4210752"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_YSo18lmdEeK_w_7zK6oNsA" fontColor="4210752" fontName="Sans" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="DefaultName.ecore#//Controle/ControleCrossfinder/"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_YSo181mdEeK_w_7zK6oNsA" points="[-32, 73, 192, -429]$[-223, 501, 1, -1]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_YSrSMFmdEeK_w_7zK6oNsA" id="(0.13865546218487396,0.4782608695652174)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_YSrSMVmdEeK_w_7zK6oNsA" id="(0.5277777777777778,0.0196078431372549)"/>
-  </edges>
-  <edges xmi:type="notation:Edge" xmi:id="_eIAt4FmdEeK_w_7zK6oNsA" type="3002" source="_tqf4ME4UEeKN64RVBueDyg" target="_9snZkFmcEeK_w_7zK6oNsA">
-    <children xmi:type="notation:Node" xmi:id="_eIBU8FmdEeK_w_7zK6oNsA" type="4011">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_eIBU8VmdEeK_w_7zK6oNsA" x="-10" y="-10"/>
-    </children>
-    <children xmi:type="notation:Node" xmi:id="_eIBU8lmdEeK_w_7zK6oNsA" type="4012">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_eIBU81mdEeK_w_7zK6oNsA" x="10" y="10"/>
-    </children>
-    <styles xmi:type="notation:ConnectorStyle" xmi:id="_eIAt4VmdEeK_w_7zK6oNsA" lineColor="4210752"/>
-    <styles xmi:type="notation:FontStyle" xmi:id="_eIAt4lmdEeK_w_7zK6oNsA" fontColor="4210752" fontName="Sans" fontHeight="10"/>
-    <element xmi:type="ecore:EReference" href="DefaultName.ecore#//Controle/ControlePlay/"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_eIAt41mdEeK_w_7zK6oNsA" points="[-1, 7, 111, -443]$[-110, 412, 2, -38]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_eIDKIFmdEeK_w_7zK6oNsA" id="(0.007751937984496124,0.8143939393939394)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_eIDKIVmdEeK_w_7zK6oNsA" id="(0.8427672955974843,0.3893129770992366)"/>
-  </edges>
   <edges xmi:type="notation:Edge" xmi:id="_kSvx0FmdEeK_w_7zK6oNsA" type="3002" source="_wwlboDeoEeKRg-vIx6Yw5w" target="_9snZkFmcEeK_w_7zK6oNsA">
     <children xmi:type="notation:Node" xmi:id="_kSwY4FmdEeK_w_7zK6oNsA" type="4011">
       <layoutConstraint xmi:type="notation:Location" xmi:id="_kSwY4VmdEeK_w_7zK6oNsA" x="-10" y="-10"/>
