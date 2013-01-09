@@ -359,6 +359,7 @@
       <eOperations name="getVolumeP1" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="getVolumeP2" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/ModeleCrossfinder"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Modele/ModeleCrossfinder"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="IModelePlay">
       <eOperations name="setPlay"/>
@@ -371,6 +372,7 @@
       <eOperations name="getCurrent" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/ModelePlay"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Controle/ControlePlay"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/ModelePlay"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Kinect">

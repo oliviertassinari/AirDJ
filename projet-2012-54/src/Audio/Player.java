@@ -24,7 +24,7 @@ public class Player implements Runnable, IPlayer
 	{
 		this.init();
 	}
-	
+
 	public Player (String fileName, float position, int vitesse) //initialisation du player
 	{
 		this.position=position;
@@ -33,7 +33,7 @@ public class Player implements Runnable, IPlayer
 		this.vitesse = vitesse;
 		runner = new Thread(this, "player");
 	}
-		
+
 	public void setPlay()
 	{
 		if(status == 1)

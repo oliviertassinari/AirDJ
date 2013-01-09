@@ -1,6 +1,11 @@
 package Modele;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import Vue.VuePlay;
+import Audio.IPlayer;
+import Audio.Player;
 
 public class ModelePlay
 {
@@ -35,6 +40,18 @@ public class ModelePlay
 		bpm = 108.83;
 		total = 2621;
 		current = 0;
+
+		Player player = new Player("data/Aerodynamic.wav", 0, 1);
+		player.setPlay();
+
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask(){
+			public void run()
+			{
+				bpm = 100;
+				vuePlay.repaint();
+			}
+		}, 500, 100);
 
 		vuePlay.repaint();
 	}
