@@ -42,6 +42,14 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 			mouseDragged(e);
 			vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
+		else if(blockOver == 2) //Pause
+		{
+			modelePlay.setPause();
+		}
+		else if(blockOver == 3) //Play
+		{
+			modelePlay.setPlay();
+		}
 		else if(blockOver == 4) //player
 		{
 			blockSelected = 4;

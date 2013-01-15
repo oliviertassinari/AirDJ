@@ -1,5 +1,10 @@
 package Modele;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import Audio.Player;
+
 public class ModeleCrossfinder
 {
 	private Modele modele;
@@ -8,6 +13,7 @@ public class ModeleCrossfinder
 	private int volumeP2 = 100;
 	private int[] displayVolumeP1 = {0, 0};
 	private int[] displayVolumeP2 = {0, 0};
+	
 
 	public ModeleCrossfinder(Modele modele)
 	{

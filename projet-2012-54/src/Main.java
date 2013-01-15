@@ -16,6 +16,6 @@ public class Main
 
 		Controle controle = new Controle(vue, modele);
 
-		modele.getModelePlayP1().setFilePath("lol");
+		modele.getModelePlayP1().setFilePath("data/Aerodynamic.wav");
 	}
 }

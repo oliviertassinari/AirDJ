@@ -15,15 +15,20 @@ public class ModelePlay
 	private int pitch = 0;
 	private String title = "Drag a song on this desk to load it";
 	private String artist = "";
-	private double bpm = 0;
+	//
+	private int bpm = 0;
+	//private double bpm = 0;
 	private int total = 0;
 	private int current = 0;
 	private int play = 0;
 	private int pause = 0;
+	private Player player;
+	private int cote; // 0 gauche - 1 droite
 
-	public ModelePlay(Modele modele)
+	public ModelePlay(Modele modele, int cote)
 	{
 		this.modele = modele;
+		this.cote = cote;
 	}
 
 	public void setVuePlay(VuePlay vuePlay)
@@ -35,31 +40,24 @@ public class ModelePlay
 	{
 		filePath = value;
 
-		title = "Mozart: Allegreto In B Flat For St...";
-		artist = "Academy Of St. Martin In The ...";
-		bpm = 108.83;
+		player = new Player(value, 0, 1);
+		
+		title = value;
+		artist = value;
+
+		bpm = 108;
 		total = 2621;
+
 		current = 0;
-
-		Player player = new Player("data/Aerodynamic.wav", 0, 1);
-		player.setPlay();
-
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask(){
-			public void run()
-			{
-				bpm = 100;
-				vuePlay.repaint();
-			}
-		}, 500, 100);
 
 		vuePlay.repaint();
 	}
 
 	public void setPlay()
 	{
+		player.setPlay();
 	}
-	
+
 	public void setPlay(int value)
 	{
 		play = value;
@@ -68,6 +66,7 @@ public class ModelePlay
 
 	public void setPause()
 	{
+		player.setPause();
 	}
 
 	public void setPause(int value)
@@ -75,8 +74,7 @@ public class ModelePlay
 		pause = value;
 		vuePlay.repaint();
 	}
-	
-	
+
 	public void setPitch(int value)
 	{
 		if(value > 100)
@@ -89,6 +87,9 @@ public class ModelePlay
 		}
 
 		pitch = value;
+
+		player.setVitesse(pitch);
+
 		vuePlay.repaint();
 	}
 
@@ -104,6 +105,9 @@ public class ModelePlay
 		}
 
 		current = value;
+
+		player.setPosition(current);
+
 		vuePlay.repaint();
 	}
 
