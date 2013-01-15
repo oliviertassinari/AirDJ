@@ -15,14 +15,14 @@ public class ModelePlay
 	private int pitch = 0;
 	private String title = "Drag a song on this desk to load it";
 	private String artist = "";
-	//
+
 	private int bpm = 0;
-	//private double bpm = 0;
 	private int total = 0;
 	private int current = 0;
+	private int state = 0; //0 pause - 1 play
 	private int play = 0;
 	private int pause = 0;
-	private Player player;
+	private IPlayer player;
 	private int cote; // 0 gauche - 1 droite
 
 	public ModelePlay(Modele modele, int cote)
@@ -40,8 +40,8 @@ public class ModelePlay
 	{
 		filePath = value;
 
-		player = new Player(value, 0, 1);
-		
+		player = new Player(value);
+
 		title = value;
 		artist = value;
 
@@ -62,6 +62,26 @@ public class ModelePlay
 	{
 		play = value;
 		vuePlay.repaint();
+		
+		Timer timer1 = new Timer();
+		timer1.schedule(new TimerTask()
+		{
+			public void run()
+			{
+				current = Math.round((player.getPosition()/100000));
+				vuePlay.repaint();
+			}
+		}, 100, 100);
+
+		Timer timer2 = new Timer();
+		timer2.schedule(new TimerTask()
+		{
+			public void run()
+			{
+				
+				modele.getVue().getVueCrossfinder().repaint();
+			}
+		}, 100, 100);
 	}
 
 	public void setPause()
@@ -105,10 +125,17 @@ public class ModelePlay
 		}
 
 		current = value;
-
-		player.setPosition(current);
+		player.setPosition(current*100000);
 
 		vuePlay.repaint();
+	}
+
+	public void setVolume(int volume)
+	{
+		if(filePath != "")
+		{
+			player.setVolume(volume);
+		}
 	}
 
 	public int getPitch()

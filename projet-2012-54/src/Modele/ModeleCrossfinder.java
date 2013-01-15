@@ -32,6 +32,16 @@ public class ModeleCrossfinder
 		}
 
 		crossfinder = value;
+
+		if(crossfinder < 0)
+		{
+			modele.getModelePlayP2().setVolume((int)(volumeP2*getCoefVolumeP2()));
+		}
+		else
+		{
+			modele.getModelePlayP1().setVolume((int)(volumeP1*getCoefVolumeP1()));
+		}
+
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
@@ -47,6 +57,7 @@ public class ModeleCrossfinder
 		}
 
 		volumeP1 = value;
+		modele.getModelePlayP1().setVolume((int)(volumeP1*getCoefVolumeP1()));
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
@@ -62,9 +73,34 @@ public class ModeleCrossfinder
 		}
 
 		volumeP2 = value;
+		modele.getModelePlayP2().setVolume((int)(volumeP2*getCoefVolumeP2()));
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
+	public float getCoefVolumeP1()
+	{
+		if(crossfinder < 0)
+		{
+			return 1;
+		}
+		else
+		{
+			return (float)(100-crossfinder)/100;
+		}
+	}
+	
+	public float getCoefVolumeP2()
+	{
+		if(crossfinder > 0)
+		{
+			return 1;
+		}
+		else
+		{
+			return (float)(100+crossfinder)/100;
+		}
+	}
+	
 	public int getCrossfinder()
 	{
 		return crossfinder;
