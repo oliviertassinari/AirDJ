@@ -44,10 +44,12 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 		}
 		else if(blockOver == 2) //Pause
 		{
+			modelePlay.setPause(2);
 			modelePlay.setPause();
 		}
 		else if(blockOver == 3) //Play
 		{
+			modelePlay.setPlay(3);
 			modelePlay.setPlay();
 		}
 		else if(blockOver == 4) //player
@@ -60,6 +62,15 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 
 	public void mouseReleased(MouseEvent e)
 	{
+		if(blockOver == 2)
+		{
+			modelePlay.setPause(1);
+		}
+		else if(blockOver == 3)
+		{
+			modelePlay.setPlay(2);
+		}
+		
 		blockSelected = 0;
 		offset = 0;
 		mouseMoved(e);

@@ -72,8 +72,10 @@ public class Player implements Runnable, IPlayer
 	
 	public void setPause()
 	{
+		if (status !=0) {
 		this.status=2;
 		runner.suspend();
+		}
 	}
 	
 	public void setVolume(float volume) //volume de 0 a 100

@@ -56,13 +56,7 @@ public class ModelePlay
 	public void setPlay()
 	{
 		player.setPlay();
-	}
 
-	public void setPlay(int value)
-	{
-		play = value;
-		vuePlay.repaint();
-		
 		Timer timer1 = new Timer();
 		timer1.schedule(new TimerTask()
 		{
@@ -82,6 +76,12 @@ public class ModelePlay
 				modele.getVue().getVueCrossfinder().repaint();
 			}
 		}, 100, 100);
+	}
+
+	public void setPlay(int value)
+	{
+		play = value;
+		vuePlay.repaint();
 	}
 
 	public void setPause()
