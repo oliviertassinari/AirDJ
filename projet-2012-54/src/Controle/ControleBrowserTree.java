@@ -106,7 +106,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 					vueBrowserTree.paintRoot();
 				}
 
-				vueBrowserTable.paintLeaf(node);
+				vueBrowserTable.paintNode(node);
 			}
 		}
 	}

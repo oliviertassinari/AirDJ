@@ -1,5 +1,6 @@
 package Modele;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,7 +23,7 @@ public class ModelePlay
 	private int state = 0; //0 pause - 1 play
 	private int play = 0;
 	private int pause = 0;
-	private IPlayer player;
+	private IPlayer player = null;
 	private int cote; // 0 gauche - 1 droite
 
 	public ModelePlay(Modele modele, int cote)
@@ -38,44 +39,64 @@ public class ModelePlay
 
 	public void setFilePath(String value)
 	{
+		if(player != null && state == 1)
+		{
+			player.setPause();
+		}
+
 		filePath = value;
 
-		player = new Player(value);
+		File file = new File(filePath);
 
-		title = value;
-		artist = value;
+		player = new Player(value);
+		if(cote == 0)
+		{	
+			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP1()*modele.getModeleCrossfinder().getCoefVolumeP1()));
+		}
+		else
+		{
+			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP2()*modele.getModeleCrossfinder().getCoefVolumeP2()));
+		}
+
+		title = file.getName();
+		artist = file.getName();
 
 		bpm = 108;
 		total = 2621;
 
 		current = 0;
+		state = 0;
 
 		vuePlay.repaint();
 	}
 
 	public void setPlay()
 	{
-		player.setPlay();
-
-		Timer timer1 = new Timer();
-		timer1.schedule(new TimerTask()
+		if(player != null && state == 0)
 		{
-			public void run()
+			state = 1;
+			player.setPlay();
+	
+			Timer timer1 = new Timer();
+			timer1.schedule(new TimerTask()
 			{
-				current = Math.round((player.getPosition()/100000));
-				vuePlay.repaint();
-			}
-		}, 100, 100);
-
-		Timer timer2 = new Timer();
-		timer2.schedule(new TimerTask()
-		{
-			public void run()
+				public void run()
+				{
+					current = Math.round((player.getPosition()/100000));
+					vuePlay.repaint();
+				}
+			}, 100, 100);
+	
+			Timer timer2 = new Timer();
+			timer2.schedule(new TimerTask()
 			{
-				
-				modele.getVue().getVueCrossfinder().repaint();
-			}
-		}, 100, 100);
+				public void run()
+				{
+					
+					modele.getVue().getVueCrossfinder().repaint();
+				}
+			}, 100, 100);
+		}
 	}
 
 	public void setPlay(int value)
@@ -86,7 +107,11 @@ public class ModelePlay
 
 	public void setPause()
 	{
-		player.setPause();
+		if(player != null && state == 1)
+		{
+			state = 0;
+			player.setPause();
+		}
 	}
 
 	public void setPause(int value)
@@ -108,7 +133,10 @@ public class ModelePlay
 
 		pitch = value;
 
-		player.setVitesse(pitch);
+		if(player != null)
+		{
+			player.setVitesse(pitch);
+		}
 
 		vuePlay.repaint();
 	}
@@ -132,7 +160,7 @@ public class ModelePlay
 
 	public void setVolume(int volume)
 	{
-		if(filePath != "")
+		if(player != null)
 		{
 			player.setVolume(volume);
 		}

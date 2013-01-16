@@ -32,8 +32,15 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 	{
 		if(blockOver == 1) //pitch
 		{
-			blockSelected = 1;
-			offset = (int)(181+(0.57*modelePlay.getPitch())) - e.getY();
+			if(e.getClickCount() > 1)
+			{
+				modelePlay.setPitch(0);
+			}
+			else
+			{
+				blockSelected = 1;
+				offset = (int)(181+(0.57*modelePlay.getPitch())) - e.getY();
+			}
 		}
 		else if(blockOver == 11) //pitch All
 		{

@@ -62,8 +62,15 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 		}
 		else if(blockOver == 3) //crossfinder
 		{
-			blockSelected = 3;
-			offset = (int)((116+crossfinder*0.5) - x);
+			if(e.getClickCount() > 1)
+			{
+				modeleCrossfinder.setCrossfinder(0);
+			}
+			else
+			{
+				blockSelected = 3;
+				offset = (int)((116+crossfinder*0.5) - x);
+			}
 		}
 		else if(blockOver == 31) //crossfinder All
 		{
@@ -167,10 +174,21 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 			int y = e.getY();
 			modeleCrossfinder.setVolumeP2((int)((148-y+offset)/0.78));
 		}
-		else if(blockSelected == 3)
+		else if(blockSelected == 3) //crossfinder
 		{
 			int x = e.getX();
-			modeleCrossfinder.setCrossfinder(2*(x+offset-116));
+			
+			int crossfinder = modeleCrossfinder.getCrossfinder();
+			int value = 2*(x+offset-116);
+			
+			if(-20 < value && value < -15 && value > crossfinder)
+			{
+				modeleCrossfinder.setCrossfinder(0);
+			}
+			else
+			{
+				modeleCrossfinder.setCrossfinder(2*(x+offset-116));
+			}
 		}
 	}
 

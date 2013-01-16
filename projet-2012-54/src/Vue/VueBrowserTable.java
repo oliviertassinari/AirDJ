@@ -25,6 +25,7 @@ public class VueBrowserTable extends JPanel
 	private int scroll = 0;
 	private int[] scrollBarState = {0, 0};
 	private int[] tableOver = {-1, -1};
+	private ModeleBrowserTree nodeDrawed;
 
 	public VueBrowserTable()
 	{
@@ -35,7 +36,7 @@ public class VueBrowserTable extends JPanel
 		setPreferredSize(new Dimension(645, 163));
 		setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, new Color(0x4E4C4B)));
 
-		paintLeaf(null);
+		paintNode(null);
 	}
 
 	protected void paintComponent(Graphics g)
@@ -105,8 +106,10 @@ public class VueBrowserTable extends JPanel
 		}
 	}
 
-	public void paintLeaf(ModeleBrowserTree node)
+	public void paintNode(ModeleBrowserTree node)
 	{
+		nodeDrawed = node;
+
 		int x = 0;
 
 		if(node != null)
@@ -226,5 +229,10 @@ public class VueBrowserTable extends JPanel
 	{
 		tableOver = value;
 		repaint();
+	}
+
+	public ModeleBrowserTree getNodeDrawed()
+	{
+		return nodeDrawed;
 	}
 }
