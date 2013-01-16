@@ -2,6 +2,7 @@ package Controle;
 
 import Modele.Modele;
 import Vue.Vue;
+import Vue.VueBrowserTable;
 import Vue.VueBrowserTree;
 import Vue.VueCrossfinder;
 import Vue.VuePlay;
@@ -21,6 +22,12 @@ public class Controle
 		vueBrowserTree.addMouseListener(controleBrowserTree);
 		vueBrowserTree.addMouseMotionListener(controleBrowserTree);
 		vueBrowserTree.addMouseWheelListener(controleBrowserTree);
+		
+		ControleBrowserTable controleBrowserTable = new ControleBrowserTable(this);
+		VueBrowserTable vueBrowserTable = vue.getVueBrowser().getVueBrowserTable();
+		vueBrowserTable.addMouseListener(controleBrowserTable);
+		vueBrowserTable.addMouseMotionListener(controleBrowserTable);
+		vueBrowserTable.addMouseWheelListener(controleBrowserTable);
 
 		ControleCrossfinder controleCrossfinder = new ControleCrossfinder(this);
 		VueCrossfinder vueCrossfinder = vue.getVueCrossfinder();

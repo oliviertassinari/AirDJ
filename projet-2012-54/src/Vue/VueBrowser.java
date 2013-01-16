@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 public class VueBrowser extends JPanel
 {
 	private Vue vue;
-
 	private VueBrowserTree vueBrowserTree;
 	private VueBrowserTable vueBrowserTable;
 

@@ -89,7 +89,14 @@ public class VueBrowserTree extends JPanel
 				g.drawImage(imageScrollBar, 336, 147, 346, 159, 20, 12, 30, 24, this);
 			}
 
-			g.fillRoundRect(339, 20 + (int)(123*scroll/(16*length)), 4, (int)(123*160/(16*length)), 0, 0);
+			int longeur = (int)(123*160/(16*length));
+			
+			if(longeur < 5)
+			{
+				longeur = 5;
+			}
+			
+			g.fillRoundRect(339, 20 + (int)(123*scroll/(16*length)), 4, longeur, 0, 0);
 		}
 	}
 
@@ -117,7 +124,6 @@ public class VueBrowserTree extends JPanel
         paintNode(root, gi);
 
         gi.dispose();
-
 		repaint();
 	}
 

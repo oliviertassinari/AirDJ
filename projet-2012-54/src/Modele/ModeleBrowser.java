@@ -8,16 +8,4 @@ public class ModeleBrowser
 	{
 		this.modele = modele;
 	}
-	
-	public String getExtension(String filePath)
-	{
-		if(filePath.lastIndexOf(".") != -1)
-		{
-			return filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
-		}
-		else
-		{
-			return "";
-		}	
-	}
 }
