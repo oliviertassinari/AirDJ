@@ -54,10 +54,9 @@ public class Player implements Runnable, IPlayer
 			line.drain(); //On attend que le buffer soit vide
 			line.stop();
 			line.close(); //Fermeture de la ligne
-			
 		}
-		catch(IOException e) {
-				e.printStackTrace();
+		catch(IOException e){
+			e.printStackTrace();
 		}
 	}
 
@@ -69,25 +68,28 @@ public class Player implements Runnable, IPlayer
 		this.byteFromBeginning = 0;
 		runner = new Thread(this, "player");
 
-		try {
-		//Creation du flux audio, recuperation de la bonne line et demarrage de celle ci
-		audioInputStream = AudioSystem.getAudioInputStream(file);
-		audioFormat = audioInputStream.getFormat();
-		DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-		line = (SourceDataLine) AudioSystem.getLine(info);
-		line.open(audioFormat);
-
-		System.out.println(info.toString());
-
-		//Recuperation et initialisation du volume
-		gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
-		this.setVolume(50);
-
-		} catch (UnsupportedAudioFileException e) {
+		try
+		{
+			//Creation du flux audio, recuperation de la bonne line et demarrage de celle ci
+			audioInputStream = AudioSystem.getAudioInputStream(file);
+			audioFormat = audioInputStream.getFormat();
+			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+			line = (SourceDataLine) AudioSystem.getLine(info);
+			line.open(audioFormat);
+	
+			System.out.println(info.toString());
+	
+			//Recuperation et initialisation du volume
+			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
+			this.setVolume(50);
+		}
+		catch(UnsupportedAudioFileException e){
 			e.printStackTrace();	
-		} catch (IOException e) {
+		}
+		catch(IOException e){
 			e.printStackTrace();
-		} catch (LineUnavailableException e) {
+		}
+		catch(LineUnavailableException e){
 			e.printStackTrace();
 		}
 	}
@@ -102,8 +104,10 @@ public class Player implements Runnable, IPlayer
 		{
 			runner.resume();
 		}
-		status = 1;
+
 		line.start();
+
+		status = 1;
 	}
 
 	public void setPause()
@@ -111,7 +115,7 @@ public class Player implements Runnable, IPlayer
 		if(status != 0)
 		{
 			this.status = 2;
-			line.stop();
+			//line.stop();
 			runner.suspend();
 		}
 	}
@@ -138,17 +142,30 @@ public class Player implements Runnable, IPlayer
 
 	public void setPosition(float position) //lance le morceau a partir d'un temps donnee en seconde
 	{
-		try{
-			if(status == 1){ this.setPause(); status = 1; }
+		try
+		{
+			if(status == 1)
+			{
+				setPause();
+				status = 1;
+				//line.flush();
+			}
+
 			audioInputStream.close();
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			long n = (long) (position * audioFormat.getFrameRate() * audioFormat.getFrameSize());
 			byteFromBeginning = (int)n;
 			audioInputStream.skip(n);
-			if(status == 1) this.setPlay();		
-		} catch (IOException e) {
+
+			if(status == 1)
+			{
+				this.setPlay();		
+			}
+		}
+		catch(IOException e){
 			e.printStackTrace();
-		} catch (UnsupportedAudioFileException e) {
+		}
+		catch(UnsupportedAudioFileException e){
 			e.printStackTrace();
 		}	
 	}
