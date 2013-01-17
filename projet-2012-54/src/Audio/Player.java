@@ -22,7 +22,43 @@ public class Player implements Runnable, IPlayer
 
 	public void run() //methode appelee par le thread lorsqu'il start
 	{
-		this.lecture();
+		try
+		{
+			//Lecture
+	 		int frameSize = audioFormat.getFrameSize();
+			byte bytes1[] = new byte[5*frameSize*10];
+			byte bytes2[] = new byte[5*frameSize];
+			int bytesRead=0;
+			int temp1 = 0;
+
+			while(((bytesRead = audioInputStream.read(bytes1, 0, 5*frameSize*vitesse)) != -1))
+			{
+				byteFromBeginning += 5*frameSize*vitesse;
+
+				for(int i =0; i<5;i++)
+				{
+					for(int j=0; j<frameSize;j++)
+					{
+						byte temp2 = bytes1[i*frameSize*vitesse+j];
+						Byte temp3 = new Byte(temp2);
+						temp1 =  ((i*frameSize+j)*temp1 + Math.abs(temp3.intValue()))/(i*frameSize+j+1);
+						bytes2[frameSize*i+j] = temp2;
+					}
+				}
+
+				line.write(bytes2, 0, bytes2.length);
+				currentVolume = temp1;
+				temp1 = 0;
+			}
+
+			line.drain(); //On attend que le buffer soit vide
+			line.stop();
+			line.close(); //Fermeture de la ligne
+			
+		}
+		catch(IOException e) {
+				e.printStackTrace();
+		}
 	}
 
 	public Player(String fileName) //initialisation du player
@@ -120,43 +156,6 @@ public class Player implements Runnable, IPlayer
 	public float getCurrentVolume()
 	{
 		return this.currentVolume;
-	}
-
-	public void lecture() //initialisation du stream audio
-	{
-		try {
-			//Lecture
-	 		int frameSize = audioFormat.getFrameSize();
-			byte bytes1[] = new byte[5*frameSize*10];
-			byte bytes2[] = new byte[5*frameSize];
-			int bytesRead=0;
-			int temp1 = 0;
-
-			while(((bytesRead = audioInputStream.read(bytes1, 0, 5*frameSize*vitesse)) != -1))
-			{
-				byteFromBeginning += 5*frameSize*vitesse;
-
-				for(int i =0; i<5;i++)
-				{
-					for(int j=0; j<frameSize;j++)
-					{
-						byte temp2 = bytes1[i*frameSize*vitesse+j];
-						Byte temp3 = new Byte(temp2);
-						temp1 =  ((i*frameSize+j)*temp1 + Math.abs(temp3.intValue()))/(i*frameSize+j+1);
-						bytes2[frameSize*i+j] = temp2;
-					}
-				}
-
-				line.write(bytes2, 0, bytes2.length);
-				currentVolume = temp1;
-				temp1 = 0;
-			}
-
-			line.close(); //Fermeture de la ligne
-			
-		} catch (IOException e) {
-				e.printStackTrace();
-		} 	
 	}
 
 	public float getLength() //longeur du morcheau en seconde
