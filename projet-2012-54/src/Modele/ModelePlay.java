@@ -62,7 +62,7 @@ public class ModelePlay
 		artist = file.getName();
 
 		bpm = 108;
-		total = player.getLength();
+		total = Math.round(player.getLength()*10);
 
 		current = 0;
 		state = 0;
@@ -133,7 +133,7 @@ public class ModelePlay
 		}
 
 		current = value;
-		player.setPosition(current*100000);
+		player.setPosition(current/10);
 
 		vuePlay.repaint();
 	}
@@ -142,7 +142,7 @@ public class ModelePlay
 	{
 		if(player != null)
 		{
-			int currentNew = Math.round(player.getPosition()/100000);
+			int currentNew = Math.round(player.getPosition()*10);
 
 			if(currentNew != current)
 			{

@@ -9,7 +9,6 @@ public class Player implements Runnable, IPlayer
 	/*attributs dedies aux caracteristiques du morceau joue*/
 	private File file; //fichier joue
 	private int vitesse; //vitesse de lecture par rapport a� la vitesse initiale
-	private float position; //position actuelle
 	private int currentVolume; //volume du sample joue actuellement
 
 	/*attributs caches*/
@@ -19,6 +18,7 @@ public class Player implements Runnable, IPlayer
 	private SourceDataLine line;
 	private AudioFormat audioFormat;
 	private FloatControl gainControl; //controleur pour le volume
+	private int byteFromBeginning; //nbr de bytes debut le debut
 
 	public void run() //methode appelee par le thread lorsqu'il start
 	{
@@ -27,10 +27,10 @@ public class Player implements Runnable, IPlayer
 
 	public Player(String fileName) //initialisation du player
 	{
-		this.position = 0;
 		this.status = 0;
 		this.file = new File(fileName);
 		this.vitesse = 1;
+		this.byteFromBeginning = 0;
 		runner = new Thread(this, "player");
 
 		try {
@@ -68,7 +68,7 @@ public class Player implements Runnable, IPlayer
 		}
 		status = 1;
 	}
-	
+
 	public void setPause()
 	{
 		if(status !=0) {
@@ -76,7 +76,7 @@ public class Player implements Runnable, IPlayer
 		runner.suspend();
 		}
 	}
-	
+
 	public void setVolume(float volume) //volume de 0 a 100
 	{
 		if (volume >= 100) volume = 100;
@@ -86,27 +86,27 @@ public class Player implements Runnable, IPlayer
 		float temp2 = (float) (20*Math.log10(temp1));
 		gainControl.setValue(temp2);
 	}
-	
+
 	public void setVitesse(int vitesse)
 	{
-		this.vitesse=vitesse;
+		this.vitesse = vitesse;
 	}
-	
-	public float getPosition() //elapsed time en microseconde
+
+	public float getPosition() //elapsed time en seconde
 	{
-		return this.position;
+		return byteFromBeginning/(audioFormat.getFrameRate() * audioFormat.getFrameSize());
 	}
-	
-	public void setPosition(float position) //lance le morceau a partir d'un temps donnee en microseconde
+
+	public void setPosition(float position) //lance le morceau a partir d'un temps donnee en seconde
 	{
-		try {
-			this.position=position;
-			if (status==1) {this.setPause(); status=1;}
+		try{
+			if(status == 1){ this.setPause(); status = 1; }
 			audioInputStream.close();
 			audioInputStream = AudioSystem.getAudioInputStream(file);
-			long n = (long) (position / 1000000.0f * audioFormat.getFrameRate() * audioFormat.getFrameSize());
+			long n = (long) (position * audioFormat.getFrameRate() * audioFormat.getFrameSize());
+			byteFromBeginning = (int)n;
 			audioInputStream.skip(n);
-			if (status==1) this.setPlay();
+			if (status==1) this.setPlay();		
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {
@@ -128,9 +128,10 @@ public class Player implements Runnable, IPlayer
 			byte bytes2[] = new byte[5*frameSize];
 			int bytesRead=0;
 			int temp1 = 0;
-			while (((bytesRead = audioInputStream.read(bytes1, 0,5*frameSize*vitesse)) != -1))
+			while(((bytesRead = audioInputStream.read(bytes1, 0, 5*frameSize*vitesse)) != -1))
 			{
-				this.position=this.position + 5*vitesse/audioFormat.getFrameRate()*1000000.0f;
+				byteFromBeginning += 5*frameSize*vitesse;
+
 				for (int i =0; i<5;i++)
 				{
 					for (int j=0; j<frameSize;j++)
@@ -145,7 +146,7 @@ public class Player implements Runnable, IPlayer
 				currentVolume = temp1;
 				temp1 = 0;
 			}
-			
+
 			//Fermeture de la ligne
 			line.close();
 			
@@ -154,8 +155,8 @@ public class Player implements Runnable, IPlayer
 		} 	
 	}
 
-	public int getLength()
+	public float getLength() //longeur du morcheau en seconde
 	{
-	    return Math.round((file.length()/(audioFormat.getFrameSize()*audioFormat.getFrameRate())) * 10);
+	    return file.length()/(audioFormat.getFrameSize()*audioFormat.getFrameRate());
 	}
 }

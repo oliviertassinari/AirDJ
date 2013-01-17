@@ -9,5 +9,5 @@ public interface IPlayer
 	public float getPosition();
 	public void setPosition(float position);
 	public float getCurrentVolume();
-	public int getLength();
+	public float getLength();
 }
