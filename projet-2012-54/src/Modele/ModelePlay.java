@@ -76,26 +76,6 @@ public class ModelePlay
 		{
 			state = 1;
 			player.setPlay();
-	
-			Timer timer1 = new Timer();
-			timer1.schedule(new TimerTask()
-			{
-				public void run()
-				{
-					current = Math.round((player.getPosition()/100000));
-					vuePlay.repaint();
-				}
-			}, 100, 100);
-	
-			Timer timer2 = new Timer();
-			timer2.schedule(new TimerTask()
-			{
-				public void run()
-				{
-					
-					modele.getVue().getVueCrossfinder().repaint();
-				}
-			}, 100, 100);
 		}
 	}
 
@@ -158,11 +138,39 @@ public class ModelePlay
 		vuePlay.repaint();
 	}
 
+	public void updateCurrent()
+	{
+		if(player != null)
+		{
+			int currentNew = Math.round(player.getPosition()/100000);
+
+			if(currentNew != current)
+			{
+				current = currentNew;
+				vuePlay.repaint();
+			}
+		}
+	}
+
 	public void setVolume(int volume)
 	{
 		if(player != null)
 		{
 			player.setVolume(volume);
+		}
+	}
+
+	public int[] getDisplayVolume()
+	{
+		if(player != null)
+		{
+			int[] displayVolume = {(int)player.getCurrentVolume(), (int)player.getCurrentVolume()};
+			return displayVolume;
+		}
+		else
+		{
+			int[] displayVolume = {0, 0};
+			return displayVolume;
 		}
 	}
 

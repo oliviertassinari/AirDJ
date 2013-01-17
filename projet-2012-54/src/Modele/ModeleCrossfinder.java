@@ -13,11 +13,28 @@ public class ModeleCrossfinder
 	private int volumeP2 = 100;
 	private int[] displayVolumeP1 = {0, 0};
 	private int[] displayVolumeP2 = {0, 0};
-	
 
 	public ModeleCrossfinder(Modele modele)
 	{
 		this.modele = modele;
+
+		Timer timer1 = new Timer();
+		timer1.schedule(new TimerTask()
+		{
+			public void run()
+			{
+				ModelePlay modelePlayP1 = ModeleCrossfinder.this.modele.getModelePlayP1();
+				ModelePlay modelePlayP2 = ModeleCrossfinder.this.modele.getModelePlayP2();
+
+				modelePlayP1.updateCurrent();
+				modelePlayP2.updateCurrent();
+
+				displayVolumeP1 = modelePlayP1.getDisplayVolume();
+				displayVolumeP2 = modelePlayP2.getDisplayVolume();
+
+				ModeleCrossfinder.this.modele.getVue().getVueCrossfinder().repaint();
+			}
+		}, 1000, 100);
 	}
 
 	public void setCrossfinder(int value)
