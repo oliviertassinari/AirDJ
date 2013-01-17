@@ -40,7 +40,7 @@ public class Player implements Runnable, IPlayer
 		DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 		line = (SourceDataLine) AudioSystem.getLine(info);
 		line.open(audioFormat);
-		line.start();
+
 		System.out.println(info.toString());
 
 		//Recuperation et initialisation du volume
@@ -67,13 +67,16 @@ public class Player implements Runnable, IPlayer
 			runner.resume();
 		}
 		status = 1;
+		line.start();
 	}
 
 	public void setPause()
 	{
-		if(status !=0) {
-		this.status=2;
-		runner.suspend();
+		if(status != 0)
+		{
+			this.status = 2;
+			line.stop();
+			runner.suspend();
 		}
 	}
 
@@ -106,7 +109,7 @@ public class Player implements Runnable, IPlayer
 			long n = (long) (position * audioFormat.getFrameRate() * audioFormat.getFrameSize());
 			byteFromBeginning = (int)n;
 			audioInputStream.skip(n);
-			if (status==1) this.setPlay();		
+			if(status == 1) this.setPlay();		
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {
@@ -128,13 +131,14 @@ public class Player implements Runnable, IPlayer
 			byte bytes2[] = new byte[5*frameSize];
 			int bytesRead=0;
 			int temp1 = 0;
+
 			while(((bytesRead = audioInputStream.read(bytes1, 0, 5*frameSize*vitesse)) != -1))
 			{
 				byteFromBeginning += 5*frameSize*vitesse;
 
-				for (int i =0; i<5;i++)
+				for(int i =0; i<5;i++)
 				{
-					for (int j=0; j<frameSize;j++)
+					for(int j=0; j<frameSize;j++)
 					{
 						byte temp2 = bytes1[i*frameSize*vitesse+j];
 						Byte temp3 = new Byte(temp2);
@@ -142,13 +146,13 @@ public class Player implements Runnable, IPlayer
 						bytes2[frameSize*i+j] = temp2;
 					}
 				}
+
 				line.write(bytes2, 0, bytes2.length);
 				currentVolume = temp1;
 				temp1 = 0;
 			}
 
-			//Fermeture de la ligne
-			line.close();
+			line.close(); //Fermeture de la ligne
 			
 		} catch (IOException e) {
 				e.printStackTrace();
