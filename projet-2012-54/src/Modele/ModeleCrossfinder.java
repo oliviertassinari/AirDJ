@@ -17,9 +17,12 @@ public class ModeleCrossfinder
 	public ModeleCrossfinder(Modele modele)
 	{
 		this.modele = modele;
+	}
 
-		Timer timer1 = new Timer();
-		timer1.schedule(new TimerTask()
+	public void setTimer()
+	{
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask()
 		{
 			public void run()
 			{
@@ -34,9 +37,9 @@ public class ModeleCrossfinder
 
 				ModeleCrossfinder.this.modele.getVue().getVueCrossfinder().repaint();
 			}
-		}, 1000, 100);
+		}, 0, 100);
 	}
-
+	
 	public void setCrossfinder(int value)
 	{
 		if(value > 100)

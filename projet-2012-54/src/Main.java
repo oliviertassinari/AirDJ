@@ -11,8 +11,7 @@ public class Main
 
 		Vue vue = new Vue(modele);
 		modele.setVue(vue);
-
-
+		modele.getModeleCrossfinder().setTimer();
 
 		Controle controle = new Controle(vue, modele);
 

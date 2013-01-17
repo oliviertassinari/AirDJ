@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.sound.sampled.*;
 
-
 public class Player implements Runnable, IPlayer
 {
 	/*attributs dedies aux caracteristiques du morceau joue*/
@@ -20,20 +19,20 @@ public class Player implements Runnable, IPlayer
 	private SourceDataLine line;
 	private AudioFormat audioFormat;
 	private FloatControl gainControl; //controleur pour le volume
-	
+
 	public void run() //methode appelee par le thread lorsqu'il start
 	{
 		this.lecture();
 	}
 
-	public Player (String fileName) //initialisation du player
+	public Player(String fileName) //initialisation du player
 	{
-		this.position=0;
-		this.status=0;
+		this.position = 0;
+		this.status = 0;
 		this.file = new File(fileName);
 		this.vitesse = 1;
 		runner = new Thread(this, "player");
-		
+
 		try {
 		//Creation du flux audio, recuperation de la bonne line et demarrage de celle ci
 		audioInputStream = AudioSystem.getAudioInputStream(file);
@@ -43,7 +42,7 @@ public class Player implements Runnable, IPlayer
 		line.open(audioFormat);
 		line.start();
 		System.out.println(info.toString());
-		
+
 		//Recuperation et initialisation du volume
 		gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
 		this.setVolume(50);
@@ -72,7 +71,7 @@ public class Player implements Runnable, IPlayer
 	
 	public void setPause()
 	{
-		if (status !=0) {
+		if(status !=0) {
 		this.status=2;
 		runner.suspend();
 		}
@@ -114,12 +113,12 @@ public class Player implements Runnable, IPlayer
 			e.printStackTrace();
 		}	
 	}
-	
-	public float getCurrentVolume ()
+
+	public float getCurrentVolume()
 	{
 		return this.currentVolume;
 	}
-	
+
 	public void lecture() //initialisation du stream audio
 	{
 		try {
@@ -138,7 +137,7 @@ public class Player implements Runnable, IPlayer
 					{
 						byte temp2 = bytes1[i*frameSize*vitesse+j];
 						Byte temp3 = new Byte(temp2);
-						if (Math.abs(temp3.intValue()-127)>temp1) temp1 = temp3;
+						temp1 =  ((i*frameSize+j)*temp1 + Math.abs(temp3.intValue()))/(i*frameSize+j+1);
 						bytes2[frameSize*i+j] = temp2;
 					}
 				}
@@ -154,5 +153,9 @@ public class Player implements Runnable, IPlayer
 				e.printStackTrace();
 		} 	
 	}
-		
+
+	public int getLength()
+	{
+	    return Math.round((file.length()/(audioFormat.getFrameSize()*audioFormat.getFrameRate())) * 10);
+	}
 }
