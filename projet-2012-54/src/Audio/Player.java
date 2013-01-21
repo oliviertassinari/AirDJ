@@ -158,9 +158,15 @@ public class Player implements Runnable, IPlayer
 
 			if(status == 1)
 			{
-				status = 0;
 				line.flush();
+				status = 0;
 				isPlayed = true;
+			}
+			else
+			{
+				line.start();
+				line.flush();
+				line.stop();
 			}
 
 			long n = (long)(position * audioFormat.getFrameRate() * audioFormat.getFrameSize());
