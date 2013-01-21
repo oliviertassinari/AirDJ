@@ -8,7 +8,7 @@ public class Player implements Runnable, IPlayer
 {
 	/*attributs dedies aux caracteristiques du morceau joue*/
 	private File file; //fichier joue
-	private int vitesse; //vitesse de lecture par rapport aï¿½ la vitesse initiale
+	private int vitesse; //vitesse de lecture par rapport a la vitesse initiale
 	private int currentVolume; //volume du sample joue actuellement
 
 	/*attributs caches*/
@@ -131,7 +131,7 @@ public class Player implements Runnable, IPlayer
 		status = 0;
 	}
 
-	public void setVolume(float volume) //volume de 0 à 100
+	public void setVolume(float volume) //volume de 0 a 100
 	{
 		float max = (float)Math.pow(10.0, gainControl.getMaximum()/20);
 		float temp1 = max*volume/100;
@@ -140,17 +140,17 @@ public class Player implements Runnable, IPlayer
 		gainControl.setValue(temp2);
 	}
 
-	public void setVitesse(int vitesse)
+	public void setVitesse(int vitesse) //vitesse entiere positive: a modifier
 	{
 		this.vitesse = vitesse;
 	}
 
-	public float getPosition() //position en seconde
+	public float getPosition() //retourne la position en seconde
 	{
 		return byteFromBeginning/(audioFormat.getFrameRate() * audioFormat.getFrameSize());
 	}
 
-	public void setPosition(float position) //lance le morceau a partir d'un temps donnee en seconde
+	public void setPosition(float position) //avance a la position souhaite en seconde
 	{
 		try
 		{
@@ -185,12 +185,12 @@ public class Player implements Runnable, IPlayer
 		}	
 	}
 
-	public float getCurrentVolume()
+	public float getCurrentVolume() //volume du sample en cours
 	{
 		return currentVolume;
 	}
 
-	public float getLength() //longeur du morcheau en seconde
+	public float getLength() //duree totale du morceau
 	{
 	    return file.length()/(audioFormat.getFrameSize()*audioFormat.getFrameRate());
 	}
