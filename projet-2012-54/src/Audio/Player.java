@@ -26,11 +26,16 @@ public class Player implements Runnable, IPlayer
 		{
 			//Lecture
 	 		int frameSize = audioFormat.getFrameSize();
+	 		int frameRate = (int) audioFormat.getFrameRate();
 			byte bytes1[] = new byte[5*frameSize*10];
 			byte bytes2[] = new byte[5*frameSize];
 			int bytesRead=0;
 			int temp1 = 0;
 
+			int bytesDixiemeSeconde = frameSize * frameRate / 10;
+			int t1 = 0;
+			int t2 = 0;
+			
 			synchronized(this)
 			{
 				while(((bytesRead = audioInputStream.read(bytes1, 0, 5*frameSize*vitesse)) != -1))
@@ -55,9 +60,10 @@ public class Player implements Runnable, IPlayer
 					{
 						line.start();
 					}
-
+					
+					t1 = byteFromBeginning % bytesDixiemeSeconde;
+					if (t1 == 0) {currentVolume = (int) (3*t2); t2 = 0;}
 					byteFromBeginning += 5*frameSize*vitesse;
-	
 					for(int i =0; i<5;i++)
 					{
 						for(int j=0; j<frameSize;j++)
@@ -70,7 +76,7 @@ public class Player implements Runnable, IPlayer
 					}
 	
 					line.write(bytes2, 0, bytes2.length);
-					currentVolume = temp1;
+					t2 = (t2*t1 +  temp1*5*frameSize)/(t1+5*frameSize);
 					temp1 = 0;
 				}
 	
