@@ -19,6 +19,7 @@ public class Player implements Runnable, IPlayer
 	private AudioFormat audioFormat;
 	private FloatControl gainControl; //controleur pour le volume
 	private int byteFromBeginning; //nbr de bytes debut le debut
+	private byte volume[];
 
 	public void run() //methode appelee par le thread lorsqu'il start
 	{
@@ -26,19 +27,19 @@ public class Player implements Runnable, IPlayer
 		{
 			//Lecture
 	 		int frameSize = audioFormat.getFrameSize();
-	 		int frameRate = (int) audioFormat.getFrameRate();
-			byte bytes1[] = new byte[5*frameSize*10];
-			byte bytes2[] = new byte[5*frameSize];
+	 		float frameRate = audioFormat.getFrameRate();
+			byte bytes[] = new byte[5*frameSize];
 			int bytesRead=0;
-			int temp1 = 0;
-
-			int bytesDixiemeSeconde = frameSize * frameRate / 10;
-			int t1 = 0;
-			int t2 = 0;
+			int bytesDixiemeSeconde = (int) (frameSize * frameRate / 10);
+			
+			int tmp1 = 0;
+			int tmp2 = 0;
+			int tmp3 = 0;
+			int tmp4 = 0;
 			
 			synchronized(this)
 			{
-				while(((bytesRead = audioInputStream.read(bytes1, 0, 5*frameSize*vitesse)) != -1))
+				while(((bytesRead = audioInputStream.read(bytes, 0, 5*frameSize)) != -1))
 				{
 					while(status != 1)
 					{
@@ -61,23 +62,22 @@ public class Player implements Runnable, IPlayer
 						line.start();
 					}
 					
-					t1 = byteFromBeginning % bytesDixiemeSeconde;
-					if (t1 == 0) {currentVolume = (int) (3*t2); t2 = 0;}
-					byteFromBeginning += 5*frameSize*vitesse;
-					for(int i =0; i<5;i++)
+					tmp3 = byteFromBeginning % bytesDixiemeSeconde;
+					if (tmp3 == 0)
 					{
-						for(int j=0; j<frameSize;j++)
-						{
-							byte temp2 = bytes1[i*frameSize*vitesse+j];
-							Byte temp3 = new Byte(temp2);
-							temp1 =  ((i*frameSize+j)*temp1 + Math.abs(temp3.intValue()))/(i*frameSize+j+1);
-							bytes2[frameSize*i+j] = temp2;
-						}
+						currentVolume = (int) (currentVolume*0.5 + 0.5*3*tmp2);
+						tmp2 = 0;
+					}
+					byteFromBeginning += 5*frameSize;
+					for(int i =0; i<bytes.length;i++)
+					{
+							Byte temp0 = new Byte(bytes[i]);
+							tmp1 += Math.abs(temp0.intValue())/(bytes.length);
 					}
 	
-					line.write(bytes2, 0, bytes2.length);
-					t2 = (t2*t1 +  temp1*5*frameSize)/(t1+5*frameSize);
-					temp1 = 0;
+					line.write(bytes, 0, bytes.length);
+					tmp2 = (tmp2*tmp3 +  tmp1*5*frameSize)/(tmp3+5*frameSize);
+					tmp1 = 0;
 				}
 	
 				line.drain(); //On attend que le buffer soit vide
@@ -92,6 +92,7 @@ public class Player implements Runnable, IPlayer
 
 	public Player(String fileName) //initialisation du player
 	{
+		this.volume = new byte[(int) (this.getLength()*20+5)];
 		this.status = 0;
 		this.file = new File(fileName);
 		this.vitesse = 1;
@@ -106,8 +107,6 @@ public class Player implements Runnable, IPlayer
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			line = (SourceDataLine) AudioSystem.getLine(info);
 			line.open(audioFormat);
-
-			System.out.println(info.toString());
 
 			//Recuperation et initialisation du volume
 			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
@@ -146,7 +145,7 @@ public class Player implements Runnable, IPlayer
 		gainControl.setValue(temp2);
 	}
 
-	public void setVitesse(int vitesse) //vitesse entiere positive: a modifier
+	public void setVitesse(int vitesse) //non fonctionnelle pour l'instant
 	{
 		this.vitesse = vitesse;
 	}
