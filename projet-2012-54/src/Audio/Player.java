@@ -223,7 +223,7 @@ public class Player implements Runnable, IPlayer
 						i += 5*frameSize;
 					}
 					if (pos == 0) volumeArray[pos] = tmp1;
-					if (pos != 0) volumeArray[pos]=(int) (0.4 * volumeArray[pos-1] + 1.5 * tmp2);
+					if (pos != 0) volumeArray[pos]=(int) (0.2 * volumeArray[pos-1] + 2 * tmp2);
 					pos ++;
 					i = 0;
 					tmp2 = 0;
