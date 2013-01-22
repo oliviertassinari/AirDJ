@@ -18,7 +18,7 @@ public class Player implements Runnable, IPlayer
 	private SourceDataLine line;
 	private AudioFormat audioFormat;
 	private FloatControl gainControl; //controleur pour le volume
-	private int byteFromBeginning; //nbr de bytes debut le debut
+	private int byteFromBeginning; //nbre de bytes debut le debut
 
 	public void run() //methode appelee par le thread lorsqu'il start
 	{
