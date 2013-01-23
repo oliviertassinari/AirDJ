@@ -6,27 +6,75 @@ import javax.sound.sampled.*;
 
 public class Player implements Runnable, IPlayer
 {
-	/** Attributs dedies aux caracteristiques du morceau joue
+	//Attributs dedies aux caracteristiques du morceau joue
+	
+	/** Fichier joue
 	 * 
 	 */
 	private File file;
+	
+	/** NON FONCTIONELLE
+	 * @deprecated
+	 */
 	private int vitesse;
-	private int currentVolume; //volume du sample joue actuellement
+	
+	/** Volume de la tranche de 0.05 sec joue
+	 * 
+	 */
+	private int currentVolume;
+	
+	/** Tableau contenant tous les volumes des tranches de 0.05 sec
+	 * 
+	 */
 	private int[] volumeArray;
+	
+	/** Taux dechantillonage
+	 * 
+	 */
 	private float frameRate;
+	
+	/** Taille d une frame
+	 * 
+	 */
 	private int frameSize;
 
 	
 	
-	/** Attributs caches
+	// Attributs caches
+	
+	/** Thread gerant pause / play
 	 * 
 	 */
 	Thread runner;
-	private int status; //0 pause - 1 play
+	
+	/** 0 pause - 1 play
+	 * 
+	 */
+	private int status;
+	
+	/**
+	 * 
+	 */
 	private AudioInputStream audioInputStream;
+	
+	/**
+	 * 
+	 */
 	private SourceDataLine line;
+	
+	/**
+	 * 
+	 */
 	private AudioFormat audioFormat;
+	
+	/** COntroleur du gain
+	 * 
+	 */
 	private FloatControl gainControl;
+	
+	/** Nombres de bytes depuis le debut
+	 * 
+	 */
 	private int byteFromBeginning;
 
 	
@@ -251,7 +299,7 @@ public class Player implements Runnable, IPlayer
 	
 	
 	
-	/** Rempli le tableau ou chaque case correspond au volume d'une tranche de 0.05 seconde
+	/** Rempli le tableau ou chaque case correspond au volume d une tranche de 0.05 seconde
 	 * 
 	 */
 	public void fillVolumeArray() 
