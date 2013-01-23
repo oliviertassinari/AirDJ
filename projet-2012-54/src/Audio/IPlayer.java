@@ -2,12 +2,48 @@ package Audio;
 
 public interface IPlayer
 {
+	/**
+	 * 
+	 */
 	public void setPause();
+	
+	/**
+	 * 
+	 */
 	public void setPlay();
-	public void setVolume(float volume); //volume de 0 a 100
-	public void setVitesse(int vitesse); //non fonctionelle
-	public float getPosition(); //retourne la position en seconde
-	public void setPosition(float position); //avance a la position souhaite en seconde
-	public float getCurrentVolume(); //volume du sample en cours:en cours de modification
-	public float getLength(); //duree totale du morceau
+	
+	/** Regle le volume
+	 * @param volume de 0 a 100
+	 */
+	public void setVolume(float volume);
+	
+	/** NON FONCTIONELLE
+	 * @deprecated
+	 * @param vitesse
+	 */
+	public void setVitesse(int vitesse);
+	
+	/** Retourne la position
+	 * 
+	 * @return en seconde
+	 */
+	public float getPosition();
+	
+	/** Avance a la position souhaite
+	 * 
+	 * @param position en seconde
+	 */
+	public void setPosition(float position);
+	
+	/**
+	 * 
+	 * @return volume du sample en cours
+	 */
+	public float getCurrentVolume();
+	
+	/**
+	 * 
+	 * @return duree totale du morceau en seconde
+	 */
+	public float getLength();
 }

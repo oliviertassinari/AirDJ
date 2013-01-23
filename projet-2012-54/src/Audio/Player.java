@@ -6,29 +6,38 @@ import javax.sound.sampled.*;
 
 public class Player implements Runnable, IPlayer
 {
-	/*attributs dedies aux caracteristiques du morceau joue*/
-	private File file; //fichier joue
-	private int vitesse; //vitesse de lecture par rapport a la vitesse initiale
+	/** Attributs dedies aux caracteristiques du morceau joue
+	 * 
+	 */
+	private File file;
+	private int vitesse;
 	private int currentVolume; //volume du sample joue actuellement
 	private int[] volumeArray;
 	private float frameRate;
 	private int frameSize;
 
-	/*attributs caches*/
-	Thread runner; //thread dedie a la lecture du morceau via le buffer
+	
+	
+	/** Attributs caches
+	 * 
+	 */
+	Thread runner;
 	private int status; //0 pause - 1 play
 	private AudioInputStream audioInputStream;
 	private SourceDataLine line;
 	private AudioFormat audioFormat;
-	private FloatControl gainControl; //controleur pour le volume
-	private int byteFromBeginning; //nbre de bytes debut le debut
+	private FloatControl gainControl;
+	private int byteFromBeginning;
 
-
-	public void run() //methode appelee par le thread lorsqu'il start
+	
+	
+	/** Methode appelee par le thread lorsque celui commence, qui gere la lecture de la piste audio
+	 * 
+	 */
+	public void run()
 	{
 		try
 		{
-			//Lecture
 			byte bytes[] = new byte[5*frameSize];
 			int bytesRead=0;
 			
@@ -64,9 +73,9 @@ public class Player implements Runnable, IPlayer
 					line.write(bytes, 0, bytes.length);
 				}
 	
-				line.drain(); //On attend que le buffer soit vide
+				line.drain();
 				line.stop();
-				line.close(); //Fermeture de la ligne
+				line.close();
 			}
 		}
 		catch(IOException e){
@@ -74,7 +83,13 @@ public class Player implements Runnable, IPlayer
 		}
 	}
 
-	public Player(String fileName) //initialisation du player
+	
+	
+	/** Constructeur qui initialise le player avec les differents parametres standards
+	 *
+	 * @param fileName Chemin du fichier qui sera joue
+	 */
+	public Player(String fileName)
 	{
 		this.status = 0;
 		this.file = new File(fileName);
@@ -112,18 +127,33 @@ public class Player implements Runnable, IPlayer
 		}
 	}
 
+	
+	
+	/** Methode permettant de mettre le morceau en lecture s'il est en pause
+	 * 
+	 */
 	public synchronized void setPlay()
 	{
 		status = 1;
 		notify();
 	}
 
+	
+	
+	/** Methode permettant de mettre le morceau en pause s'il est en lecture
+	 * 
+	 */
 	public void setPause()
 	{
 		status = 0;
 	}
 
-	public void setVolume(float volume) //volume de 0 a 100
+	
+	
+	/** Methode qui regle le volume
+	 * @param volume Valeur de 0 a 100
+	 */
+	public void setVolume(float volume) 
 	{
 		float max = (float)Math.pow(10.0, gainControl.getMaximum()/20);
 		float temp1 = max*volume/100;
@@ -132,17 +162,32 @@ public class Player implements Runnable, IPlayer
 		gainControl.setValue(temp2);
 	}
 
-	public void setVitesse(int vitesse) //non fonctionnelle pour l'instant
+	
+	
+	/** Methode non fonctionelle
+	 * @deprecated NON FONCTIONELLE
+	 */
+	public void setVitesse(int vitesse)
 	{
 		this.vitesse = vitesse;
 	}
 
-	public float getPosition() //retourne la position en seconde
+	
+	
+	/** Retourne la position dans la piste audio
+	 * @return Position en seconde
+	 */
+	public float getPosition()
 	{
 		return byteFromBeginning/(frameRate * frameSize);
 	}
 
-	public void setPosition(float position) //avance a la position souhaite en seconde
+	
+	
+	/** Met la piste audio a un certain temps donne
+	 * @param position Position souhaitee en seconde
+	 */
+	public void setPosition(float position)
 	{
 		try
 		{
@@ -183,17 +228,32 @@ public class Player implements Runnable, IPlayer
 		}	
 	}
 
-	public float getCurrentVolume() //volume du sample en cours
+	
+	
+	/** Retourne le volume du sample jouee par tranche de 0.05 seconde
+	 * @return 
+	 */
+	public float getCurrentVolume()
 	{
 		if (status == 0) {return 0;}
 		else {return currentVolume;}
 	}
 
-	public float getLength() //duree totale du morceau
+	
+	
+	/** Retourne la duree totale du morceau en seconde
+	 * @return Duree totale du morceau en seconde
+	 */
+	public float getLength()
 	{
 	    return file.length()/(frameSize*frameRate);
 	}
 	
+	
+	
+	/** Rempli le tableau ou chaque case correspond au volume d'une tranche de 0.05 seconde
+	 * 
+	 */
 	public void fillVolumeArray() 
 	{
 		try {
