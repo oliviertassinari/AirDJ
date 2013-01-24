@@ -119,12 +119,12 @@ public class VueCrossfinder extends JPanel
 
 		//displayVolume
 		g.setColor(new Color(0x28acff));
-		g.fillRect(34, 53+120-(int)(displayVolumeP1[0]*1.2), 9, (int)(displayVolumeP1[0]*1.2));
-		g.fillRect(44, 53+120-(int)(displayVolumeP1[1]*1.2), 9, (int)(displayVolumeP1[1]*1.2));
+		g.fillRect(34, 53+120-(int)(displayVolumeP1[0]*1.2/100*modeleCrossfinder.getVolumeP1()), 9, (int)(displayVolumeP1[0]*1.2/100*modeleCrossfinder.getVolumeP1()));
+		g.fillRect(44, 53+120-(int)(displayVolumeP1[1]*1.2/100*modeleCrossfinder.getVolumeP1()), 9, (int)(displayVolumeP1[1]*1.2/100*modeleCrossfinder.getVolumeP1()));
 
 		g.setColor(new Color(0xff171a));
-		g.fillRect(197, 53+120-(int)(displayVolumeP2[0]*1.2), 9, (int)(displayVolumeP2[0]*1.2));
-		g.fillRect(207, 53+120-(int)(displayVolumeP2[1]*1.2), 9, (int)(displayVolumeP2[1]*1.2));
+		g.fillRect(197, 53+120-(int)(displayVolumeP2[0]*1.2/100*modeleCrossfinder.getVolumeP2()), 9, (int)(displayVolumeP2[0]*1.2/100*modeleCrossfinder.getVolumeP2()));
+		g.fillRect(207, 53+120-(int)(displayVolumeP2[1]*1.2/100*modeleCrossfinder.getVolumeP2()), 9, (int)(displayVolumeP2[1]*1.2/100*modeleCrossfinder.getVolumeP2()));
 
 		g.drawImage(imageDisplayVolumeOver, 34, 53, null);
 		g.drawImage(imageDisplayVolumeOver, 197, 53, null);

@@ -326,12 +326,14 @@ public class Player implements Runnable, IPlayer
 							Byte temp0 = new Byte(bytes[i+j]);
 							tmp1 += Math.abs(temp0.intValue())/(5*frameSize);
 						}
+						if (tmp1 < 10) tmp1 = 0;
 						tmp2 = (5*frameSize*tmp1 + tmp2*i )/(5*frameSize + i);
 						tmp1 = 0;
 						i += 5*frameSize;
 					}
 					if (pos == 0) volumeArray[pos] = tmp1;
-					if (pos != 0) volumeArray[pos]=(int) (0.2 * volumeArray[pos-1] + 2 * tmp2);
+					if (pos != 0) volumeArray[pos]=(int) (0.5 * volumeArray[pos-1] + 2 * tmp2);
+					//System.out.println(volumeArray[pos]);
 					pos ++;
 					i = 0;
 					tmp2 = 0;
