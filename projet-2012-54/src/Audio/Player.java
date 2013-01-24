@@ -6,7 +6,9 @@ import javax.sound.sampled.*;
 
 public class Player implements Runnable, IPlayer
 {
-	//Attributs dedies aux caracteristiques du morceau joue
+	/************************************************************
+						ATTRIBUTS
+	 ************************************************************/
 	
 	/** Fichier joue
 	 * 
@@ -38,10 +40,6 @@ public class Player implements Runnable, IPlayer
 	 */
 	private int frameSize;
 
-	
-	
-	// Attributs caches
-	
 	/** Thread gerant pause / play
 	 * 
 	 */
@@ -67,7 +65,7 @@ public class Player implements Runnable, IPlayer
 	 */
 	private AudioFormat audioFormat;
 	
-	/** COntroleur du gain
+	/** Controleur du gain
 	 * 
 	 */
 	private FloatControl gainControl;
@@ -78,6 +76,11 @@ public class Player implements Runnable, IPlayer
 	private int byteFromBeginning;
 
 	
+	
+	
+	/************************************************************
+							THREAD
+	 ************************************************************/
 	
 	/** Methode appelee par le thread lorsque celui commence, qui gere la lecture de la piste audio
 	 * 
@@ -133,6 +136,10 @@ public class Player implements Runnable, IPlayer
 
 	
 	
+	/************************************************************
+						CONSTRUCTEUR
+	 ************************************************************/
+	
 	/** Constructeur qui initialise le player avec les differents parametres standards
 	 *
 	 * @param fileName Chemin du fichier qui sera joue
@@ -177,6 +184,13 @@ public class Player implements Runnable, IPlayer
 
 	
 	
+	
+	
+	
+	/************************************************************
+						METHODE DE CLASSE
+	************************************************************/
+	
 	/** Methode permettant de mettre le morceau en lecture s'il est en pause
 	 * 
 	 */
@@ -199,7 +213,7 @@ public class Player implements Runnable, IPlayer
 	
 	
 	/** Methode qui regle le volume
-	 * @param volume Valeur de 0 a 100
+	 * @param volume de 0 a 100
 	 */
 	public void setVolume(float volume) 
 	{
@@ -212,8 +226,9 @@ public class Player implements Runnable, IPlayer
 
 	
 	
-	/** Methode non fonctionelle
-	 * @deprecated NON FONCTIONELLE
+	/** NON FONCTIONELLE
+	 * @deprecated
+	 * @param vitesse
 	 */
 	public void setVitesse(int vitesse)
 	{
@@ -223,7 +238,8 @@ public class Player implements Runnable, IPlayer
 	
 	
 	/** Retourne la position dans la piste audio
-	 * @return Position en seconde
+	 * 
+	 * @return en seconde
 	 */
 	public float getPosition()
 	{
@@ -232,8 +248,9 @@ public class Player implements Runnable, IPlayer
 
 	
 	
-	/** Met la piste audio a un certain temps donne
-	 * @param position Position souhaitee en seconde
+	/** Avance a la position souhaite
+	 * 
+	 * @param position en seconde
 	 */
 	public void setPosition(float position)
 	{
@@ -278,8 +295,9 @@ public class Player implements Runnable, IPlayer
 
 	
 	
-	/** Retourne le volume du sample jouee par tranche de 0.05 seconde
-	 * @return 
+	/**
+	 * 
+	 * @return volume du sample en cours
 	 */
 	public float getCurrentVolume()
 	{
@@ -289,8 +307,9 @@ public class Player implements Runnable, IPlayer
 
 	
 	
-	/** Retourne la duree totale du morceau en seconde
-	 * @return Duree totale du morceau en seconde
+	/**
+	 * 
+	 * @return duree totale du morceau en seconde
 	 */
 	public float getLength()
 	{
@@ -333,7 +352,6 @@ public class Player implements Runnable, IPlayer
 					}
 					if (pos == 0) volumeArray[pos] = tmp1;
 					if (pos != 0) volumeArray[pos]=(int) (0.5 * volumeArray[pos-1] + 2 * tmp2);
-					//System.out.println(volumeArray[pos]);
 					pos ++;
 					i = 0;
 					tmp2 = 0;
@@ -344,5 +362,6 @@ public class Player implements Runnable, IPlayer
 			e.printStackTrace();
 		}
 	}
+	 
 }
 

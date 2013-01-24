@@ -150,7 +150,7 @@ public class VuePlay extends JPanel
 		if(total != 0)
 		{
 			g.drawString(getFormatMMSS(current), 68, 60);
-			g.drawString(getFormatMMSS(total), 190, 60);
+			g.drawString(getFormatMMSS(total-current), 190, 60);
 		}
 
 		//Player
