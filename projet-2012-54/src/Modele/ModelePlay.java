@@ -204,6 +204,11 @@ public class ModelePlay
 		{
 			int currentNew = Math.round(player.getPosition()*10);
 
+			if(currentNew == total)
+			{
+				reset();
+			}
+
 			if(currentNew != current)
 			{
 				current = currentNew;
@@ -231,6 +236,17 @@ public class ModelePlay
 		{
 			int[] displayVolume = {0, 0};
 			return displayVolume;
+		}
+	}
+	
+	public void reset()
+	{
+		if(player.reset())
+		{
+			state = 0;
+			buttonPlay = 0;
+			buttonPause = 2;
+			vuePlay.repaint();
 		}
 	}
 
