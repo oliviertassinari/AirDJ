@@ -105,7 +105,7 @@ public class ModelePlay
 	{
 		if(state == "over")
 		{
-			if(this.state == 0)
+			if(this.state == 0 || player == null)
 			{
 				buttonPlay = 1;
 			}
@@ -121,7 +121,7 @@ public class ModelePlay
 		}
 		else if(state == "out")
 		{
-			if(this.state == 0)
+			if(this.state == 0  || player == null)
 			{
 				buttonPlay = 0;
 			}
@@ -134,7 +134,7 @@ public class ModelePlay
 	{
 		if(state == "over")
 		{
-			if(this.state == 1)
+			if(this.state == 1  || player == null)
 			{
 				buttonPause = 1;
 			}
@@ -150,7 +150,7 @@ public class ModelePlay
 		}
 		else if(state == "out")
 		{
-			if(this.state == 1)
+			if(this.state == 1 || player == null)
 			{
 				buttonPause = 0;
 			}
