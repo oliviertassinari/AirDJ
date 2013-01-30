@@ -53,6 +53,8 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 		{
 			modelePlay.setPause(2);
 			modelePlay.setPause();
+			
+			
 		}
 		else if(blockOver == 3) //Play
 		{
