@@ -90,7 +90,7 @@ public class Player implements Runnable, IPlayer
 		try
 		{
 			byte bytes[] = new byte[5*frameSize];
-			int bytesRead=0;
+			int bytesRead = 0;
 			
 			synchronized(this)
 			{
@@ -129,7 +129,8 @@ public class Player implements Runnable, IPlayer
 				line.close();
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -146,10 +147,10 @@ public class Player implements Runnable, IPlayer
 	 */
 	public Player(String fileName)
 	{
-		this.status = 0;
-		this.file = new File(fileName);
-		this.vitesse = 1;
-		this.byteFromBeginning = 0;
+		status = 0;
+		file = new File(fileName);
+		vitesse = 1;
+		byteFromBeginning = 0;
 		runner = new Thread(this, "player");
 
 		try
@@ -166,18 +167,21 @@ public class Player implements Runnable, IPlayer
 	 		
 			//Recuperation et initialisation du volume
 			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
-			this.setVolume(50);
-			
-			this.fillVolumeArray();
+			setVolume(50);
+
+			fillVolumeArray();
 			runner.start();
 		}
-		catch(UnsupportedAudioFileException e){
+		catch(UnsupportedAudioFileException e)
+		{
 			e.printStackTrace();	
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 			e.printStackTrace();
 		}
-		catch(LineUnavailableException e){
+		catch(LineUnavailableException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -285,10 +289,12 @@ public class Player implements Runnable, IPlayer
 				setPlay();
 			}
 		}
-		catch(IOException e){
+		catch(IOException e)
+		{
 			e.printStackTrace();
 		}
-		catch(UnsupportedAudioFileException e){
+		catch(UnsupportedAudioFileException e)
+		{
 			e.printStackTrace();
 		}	
 	}
@@ -301,8 +307,14 @@ public class Player implements Runnable, IPlayer
 	 */
 	public float getCurrentVolume()
 	{
-		if (status == 0) {return 0;}
-		else {return currentVolume;}
+		if(status == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return currentVolume;
+		}
 	}
 
 	
@@ -323,7 +335,8 @@ public class Player implements Runnable, IPlayer
 	 */
 	public void fillVolumeArray() 
 	{
-		try {
+		try
+		{
 			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
 			
 			int bytesDemiDixiemeSeconde = (int) (frameSize * frameRate / 20);
@@ -337,31 +350,33 @@ public class Player implements Runnable, IPlayer
 			int tmp2 = 0;
 
 			while(((bytesRead = ais.read(bytes, 0, bytes.length)) != -1))
+			{
+				while(i<bytes.length)
 				{
-					while(i<bytes.length)
+					for(int j=0;j<5*frameSize;j++)
 					{
-						for(int j=0;j<5*frameSize;j++)
-						{
-							Byte temp0 = new Byte(bytes[i+j]);
-							tmp1 += Math.abs(temp0.intValue())/(5*frameSize);
-						}
-						if (tmp1 < 10) tmp1 = 0;
-						tmp2 = (5*frameSize*tmp1 + tmp2*i )/(5*frameSize + i);
-						tmp1 = 0;
-						i += 5*frameSize;
+						Byte temp0 = new Byte(bytes[i+j]);
+						tmp1 += Math.abs(temp0.intValue())/(5*frameSize);
 					}
-					if (pos == 0) volumeArray[pos] = tmp1;
-					if (pos != 0) volumeArray[pos]=(int) (0.5 * volumeArray[pos-1] + 2 * tmp2);
-					pos ++;
-					i = 0;
-					tmp2 = 0;
+					if (tmp1 < 10) tmp1 = 0;
+					tmp2 = (5*frameSize*tmp1 + tmp2*i )/(5*frameSize + i);
+					tmp1 = 0;
+					i += 5*frameSize;
 				}
-		}catch (UnsupportedAudioFileException e) {
+				if (pos == 0) volumeArray[pos] = tmp1;
+				if (pos != 0) volumeArray[pos]=(int) (0.5 * volumeArray[pos-1] + 2 * tmp2);
+				pos ++;
+				i = 0;
+				tmp2 = 0;
+			}
+		}
+		catch(UnsupportedAudioFileException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
-	 
 }
-
