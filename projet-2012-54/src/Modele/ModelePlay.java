@@ -21,10 +21,11 @@ public class ModelePlay
 	private int total = 0;
 	private int current = 0;
 	private int state = 0; //0 pause - 1 play
-	private int play = 0;
-	private int pause = 0;
+	private int buttonPlay = 0;
+	private int buttonPause = 0;
 	private IPlayer player = null;
 	private int cote; // 0 gauche - 1 droite
+	private int startFrom = 0;
 
 	public ModelePlay(Modele modele, int cote)
 	{
@@ -67,22 +68,28 @@ public class ModelePlay
 		current = 0;
 		state = 0;
 
+		buttonPlay = 0;
+		buttonPause = 2;
+
+		startFrom = 0;
+
 		vuePlay.repaint();
 	}
 
 	public void setPlay()
 	{
-		if(player != null && state == 0)
+		if(player != null)
 		{
-			state = 1;
-			player.setPlay();
+			if(state == 0)
+			{
+				state = 1;
+				player.setPlay();
+			}	
+			else
+			{
+				player.setPosition(startFrom/10);
+			}
 		}
-	}
-
-	public void setPlay(int value)
-	{
-		play = value;
-		vuePlay.repaint();
 	}
 
 	public void setPause()
@@ -94,12 +101,64 @@ public class ModelePlay
 		}
 	}
 
-	public void setPause(int value)
+	public void setButtonPlay(String state)
 	{
-		pause = value;
+		if(state == "over")
+		{
+			if(this.state == 0)
+			{
+				buttonPlay = 1;
+			}
+		}
+		else if(state == "press")
+		{
+			buttonPlay = 3;
+			buttonPause = 0;
+		}
+		else if(state == "release")
+		{
+			buttonPlay = 2;
+		}
+		else if(state == "out")
+		{
+			if(this.state == 0)
+			{
+				buttonPlay = 0;
+			}
+		}
+
 		vuePlay.repaint();
 	}
 
+	public void setButtonPause(String state)
+	{
+		if(state == "over")
+		{
+			if(this.state == 1)
+			{
+				buttonPause = 1;
+			}
+		}
+		else if(state == "press")
+		{
+			buttonPlay = 0;
+			buttonPause = 3;
+		}
+		else if(state == "release")
+		{
+			buttonPause = 2;
+		}
+		else if(state == "out")
+		{
+			if(this.state == 1)
+			{
+				buttonPause = 0;
+			}
+		}
+
+		vuePlay.repaint();
+	}
+	
 	public void setPitch(int value)
 	{
 		if(value > 100)
@@ -133,6 +192,7 @@ public class ModelePlay
 		}
 
 		current = value;
+		startFrom = value;
 		player.setPosition(current/10);
 
 		vuePlay.repaint();
@@ -204,13 +264,13 @@ public class ModelePlay
 		return current;
 	}
 
-	public int getPlay()
+	public int getButtonPlay()
 	{
-		return play;
+		return buttonPlay;
 	}
 
-	public int getPause()
+	public int getButtonPause()
 	{
-		return pause;
+		return buttonPause;
 	}
 }

@@ -51,14 +51,12 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 		}
 		else if(blockOver == 2) //Pause
 		{
-			modelePlay.setPause(2);
+			modelePlay.setButtonPause("press");
 			modelePlay.setPause();
-			
-			
 		}
 		else if(blockOver == 3) //Play
 		{
-			modelePlay.setPlay(3);
+			modelePlay.setButtonPlay("press");
 			modelePlay.setPlay();
 		}
 		else if(blockOver == 4) //player
@@ -73,13 +71,13 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 	{
 		if(blockOver == 2)
 		{
-			modelePlay.setPause(1);
+			modelePlay.setButtonPause("release");
 		}
 		else if(blockOver == 3)
 		{
-			modelePlay.setPlay(2);
+			modelePlay.setButtonPlay("release");
 		}
-		
+
 		blockSelected = 0;
 		offset = 0;
 		mouseMoved(e);
@@ -122,8 +120,8 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 				if(blockOver != 2)
 				{
 					blockOver = 2; 
-					modelePlay.setPause(1);
-					modelePlay.setPlay(0);
+					modelePlay.setButtonPause("over");
+					modelePlay.setButtonPlay("out");
 					vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
@@ -132,8 +130,8 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 				if(blockOver != 3)
 				{
 					blockOver = 3; 
-					modelePlay.setPause(0);
-					modelePlay.setPlay(1);
+					modelePlay.setButtonPause("out");
+					modelePlay.setButtonPlay("over");
 					vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
@@ -149,11 +147,11 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 			{
 				if(blockOver == 2)
 				{
-					modelePlay.setPause(0);
+					modelePlay.setButtonPause("out");
 				}
 				else if(blockOver == 3)
 				{
-					modelePlay.setPlay(0);
+					modelePlay.setButtonPlay("out");
 				}
 	
 				blockOver = 0;

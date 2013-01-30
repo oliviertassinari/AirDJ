@@ -118,8 +118,8 @@ public class VuePlay extends JPanel
 		double bpm = modelePlay.getBpm();
 		int total = modelePlay.getTotal();
 		int current = modelePlay.getCurrent();
-		int play = modelePlay.getPlay();
-		int pause = modelePlay.getPause();		
+		int buttonPlay = modelePlay.getButtonPlay();
+		int buttonPause = modelePlay.getButtonPause();		
 
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING , RenderingHints.VALUE_ANTIALIAS_ON);
@@ -161,24 +161,28 @@ public class VuePlay extends JPanel
 		}
 
 		//Button
-		if(pause == 1) //over
+		if(buttonPause == 1) //over
 		{
 			g.drawImage(imageButton, 124, 174, 124+36, 174+23, 0, 0, 36, 23, null);
 		}
-		else if(pause == 2) //press
+		else if(buttonPause == 2) //on
 		{
 			g.drawImage(imageButton, 124, 174, 124+36, 174+23, 0, 23, 36, 46, null);
 		}
+		else if(buttonPause == 3) //press
+		{
+			g.drawImage(imageButton, 124, 174, 124+36, 174+23, 0, 46, 36, 69, null);
+		}
 
-		if(play == 1) //over
+		if(buttonPlay == 1) //over
 		{
 			g.drawImage(imageButton, 162, 174, 162+39, 174+23, 36, 0, 75, 23, null);
 		}
-		else if(play == 2) //on
+		else if(buttonPlay == 2) //on
 		{
 			g.drawImage(imageButton, 162, 174, 162+39, 174+23, 36, 23, 75, 46, null);
 		}
-		else if(play == 3) //press
+		else if(buttonPlay == 3) //press
 		{
 			g.drawImage(imageButton, 162, 174, 162+39, 174+23, 36, 46, 75, 69, null);
 		}
