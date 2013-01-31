@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FilenameFilter;
+import java.io.FileFilter;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -186,10 +186,9 @@ public class VueBrowserTree extends JPanel
 
 			if(parentFile.isDirectory())
 			{
-				File[] listFiles = parentFile.listFiles(new FilenameFilter(){
-				    public boolean accept(File dir, String name)
+				File[] listFiles = parentFile.listFiles(new FileFilter(){
+				    public boolean accept(File file)
 				    {
-				    	File file = new File(dir.getPath()+name);
 				        return file.isDirectory() && !file.isHidden();
 				    }
 				});
@@ -212,10 +211,10 @@ public class VueBrowserTree extends JPanel
 		}
 		else
 		{
-			File[] listFiles = new File(node.getPath()).listFiles(new FilenameFilter(){
-			    public boolean accept(File dir, String name)
+			File[] listFiles = new File(node.getPath()).listFiles(new FileFilter(){
+			    public boolean accept(File file)
 			    {
-			    	File file = new File(dir.getPath()+name);
+			    	System.out.println(file.getPath());
 			        return file.isDirectory() && !file.isHidden();
 			    }
 			});
@@ -243,6 +242,15 @@ public class VueBrowserTree extends JPanel
 
 	public void setLength(int value)
 	{
+		if(scroll > value*16 - 161)
+		{
+			scroll = value*16 - 161;
+		}
+		if(scroll < 0)
+		{
+			scroll = 0;
+		}
+
 		length = value;
 	}
 
