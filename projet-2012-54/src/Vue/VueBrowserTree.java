@@ -214,7 +214,6 @@ public class VueBrowserTree extends JPanel
 			File[] listFiles = new File(node.getPath()).listFiles(new FileFilter(){
 			    public boolean accept(File file)
 			    {
-			    	System.out.println(file.getPath());
 			        return file.isDirectory() && !file.isHidden();
 			    }
 			});
