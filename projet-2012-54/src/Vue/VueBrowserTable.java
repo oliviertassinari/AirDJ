@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,7 +26,7 @@ public class VueBrowserTable extends JPanel
 	private int scroll = 0;
 	private int[] scrollBarState = {0, 0};
 	private int[] tableOver = {-1, -1};
-	private ModeleBrowserTree nodeDrawed;
+	private ArrayList<String> pathList;
 
 	public VueBrowserTable()
 	{
@@ -36,7 +37,7 @@ public class VueBrowserTable extends JPanel
 		setPreferredSize(new Dimension(645, 163));
 		setBorder(BorderFactory.createMatteBorder(1, 0, 1, 1, new Color(0x4E4C4B)));
 
-		paintNode(null);
+		paintNode("");
 	}
 
 	protected void paintComponent(Graphics g)
@@ -106,20 +107,27 @@ public class VueBrowserTable extends JPanel
 		}
 	}
 
-	public void paintNode(ModeleBrowserTree node)
+	public void paintNode(String path)
 	{
-		nodeDrawed = node;
+		pathList = new ArrayList<String>();
+		File node = new File(path);
+
+		if(node.isDirectory())
+		{
+			File[] listFiles = node.listFiles();
+	
+			for(int i = 0; i < listFiles.length; i++)
+			{
+				if(listFiles[i].isFile() && getExtension(listFiles[i].getName()).equals(".wav"))
+				{
+					pathList.add(listFiles[i].getPath());
+				}
+			}
+		}
 
 		int x = 0;
 
-		if(node != null)
-		{
-			length = node.getChildCount();
-		}
-		else
-		{
-			length = 0;
-		}
+		length = pathList.size();
 
 		int color = 0; // 0 = #1C1C1D - 1 = #101010
 
@@ -138,38 +146,32 @@ public class VueBrowserTable extends JPanel
 		gi.fillRect(0, 0, 628, 161);
 		gi.setFont(new Font("sansserif", Font.BOLD, 11));
 
-		if(node != null)
+		for(String filePath : pathList)
 		{
-			for(int i = 0; i < node.getChildCount(); i++)
+			if(color == 0)
 			{
-				//if(getExtension(node.getChild(i).getName()).equals(".mp3"))
-				//{
-					if(color == 0)
-					{
-						color = 1; 
-						gi.setColor(new Color(0x1C1C1D));
-					}
-					else
-					{
-						color = 0; 
-						gi.setColor(new Color(0x101010));
-					}
-	
-					gi.fillRect(0, x, 628, 25);
-	
-					gi.setColor(Color.WHITE);
-					gi.drawString(node.getChild(i).getName(), 60, x+16);
-
-					gi.drawImage(imageTable, 4, x+2, 24, x+23, 0, 0, 20, 21, this);
-					gi.drawImage(imageTable, 26, x+2, 46, x+23, 20, 0, 40, 21, this);
-
-					x += 25;
-				//}
+				color = 1; 
+				gi.setColor(new Color(0x1C1C1D));
 			}
-	
-			gi.dispose();
-			repaint();
+			else
+			{
+				color = 0; 
+				gi.setColor(new Color(0x101010));
+			}
+
+			gi.fillRect(0, x, 628, 25);
+
+			gi.setColor(Color.WHITE);
+			gi.drawString(new File(filePath).getName(), 60, x+16);
+
+			gi.drawImage(imageTable, 4, x+2, 24, x+23, 0, 0, 20, 21, this);
+			gi.drawImage(imageTable, 26, x+2, 46, x+23, 20, 0, 40, 21, this);
+
+			x += 25;
 		}
+
+		gi.dispose();
+		repaint();
 	}
 
 	public String getExtension(String filePath)
@@ -231,8 +233,8 @@ public class VueBrowserTable extends JPanel
 		repaint();
 	}
 
-	public ModeleBrowserTree getNodeDrawed()
+	public String getFilePath(int index)
 	{
-		return nodeDrawed;
+		return pathList.get(index);
 	}
 }

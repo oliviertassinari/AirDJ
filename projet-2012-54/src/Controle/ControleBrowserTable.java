@@ -85,11 +85,11 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 			{
 				if(4 <= x && x <= 23)
 				{
-					modele.getModelePlayP1().setFilePath(vueBrowserTable.getNodeDrawed().getChild(line).getPath());
+					modele.getModelePlayP1().setFilePath(vueBrowserTable.getFilePath(line));
 				}
 				else if(26 <= x && x <= 45)
 				{
-					modele.getModelePlayP2().setFilePath(vueBrowserTable.getNodeDrawed().getChild(line).getPath());
+					modele.getModelePlayP2().setFilePath(vueBrowserTable.getFilePath(line));
 				}
 			}
 		}

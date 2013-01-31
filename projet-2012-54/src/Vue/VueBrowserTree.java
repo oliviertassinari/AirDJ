@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FilenameFilter;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,7 +17,6 @@ import Modele.ModeleBrowserTree;
 
 public class VueBrowserTree extends JPanel
 {
-	private File[] listRouts;
 	private Image imageTree;
 	private Image imageScrollBar;
 	private BufferedImage imageBackground;
@@ -29,7 +29,6 @@ public class VueBrowserTree extends JPanel
 
 	public VueBrowserTree()
 	{
-		listRouts = File.listRoots();
 		imageTree = new ImageIcon("image/tree.png").getImage();
 		imageScrollBar = new ImageIcon("image/scrollBar.png").getImage();
 
@@ -179,7 +178,7 @@ public class VueBrowserTree extends JPanel
 	{
 		if(node.getPath() == "root")
 		{
-			return listRouts.length;
+			return File.listRoots().length;
 		}
 		else
 		{
@@ -187,14 +186,15 @@ public class VueBrowserTree extends JPanel
 
 			if(parentFile.isDirectory())
 			{
-				String[] directoryMembers = parentFile.list();
-				try{
-					return directoryMembers.length;
-				}
-				catch(Exception e)
-				{
-					return 0;
-				}
+				File[] listFiles = parentFile.listFiles(new FilenameFilter(){
+				    public boolean accept(File dir, String name)
+				    {
+				    	File file = new File(dir.getPath()+name);
+				        return file.isDirectory() && !file.isHidden();
+				    }
+				});
+
+				return listFiles.length;
 			}
 			else
 			{
@@ -207,13 +207,21 @@ public class VueBrowserTree extends JPanel
 	{
 		if(node.getPath() == "root")
 		{
-			String path = listRouts[index].getPath();			
+			String path = File.listRoots()[index].getPath();			
 			return new ModeleBrowserTree(path, path, false, isLeaf(path));
 		}
 		else
 		{
-			File[] listFiles = new File(node.getPath()).listFiles();
+			File[] listFiles = new File(node.getPath()).listFiles(new FilenameFilter(){
+			    public boolean accept(File dir, String name)
+			    {
+			    	File file = new File(dir.getPath()+name);
+			        return file.isDirectory() && !file.isHidden();
+			    }
+			});
+
 			File file = listFiles[index];
+
 			return new ModeleBrowserTree(file.getPath(), file.getName(), false, isLeaf(file.getPath()));
 		}
 	}

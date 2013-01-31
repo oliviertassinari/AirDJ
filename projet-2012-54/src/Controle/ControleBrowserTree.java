@@ -84,8 +84,6 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 			{
 				ModeleBrowserTree node = vueBrowserTree.getNode(line);
 
-				System.out.println(node.getName());
-
 				if(!node.isLeaf())
 				{
 					if(node.isExpanded())
@@ -106,7 +104,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 					vueBrowserTree.paintRoot();
 				}
 
-				vueBrowserTable.paintNode(node);
+				vueBrowserTable.paintNode(node.getPath());
 			}
 		}
 	}
