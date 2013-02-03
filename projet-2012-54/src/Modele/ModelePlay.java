@@ -193,7 +193,7 @@ public class ModelePlay
 
 		current = value;
 		startFrom = value;
-		player.setPosition(current/10);
+		player.setPosition((float)(current)/10);
 
 		vuePlay.repaint();
 	}
@@ -229,7 +229,7 @@ public class ModelePlay
 	{
 		if(player != null)
 		{
-			int[] displayVolume = {(int)player.getCurrentVolume(), (int)player.getCurrentVolume()};
+			int[] displayVolume = player.getCurrentVolume();
 			return displayVolume;
 		}
 		else

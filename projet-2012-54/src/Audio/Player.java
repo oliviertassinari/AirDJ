@@ -97,11 +97,12 @@ public class Player implements Runnable, IPlayer
 					{
 						line.start();
 					}
-					
+
 					byteFromBeginning += 5*frameSize;
 					int pos = (int) ((byteFromBeginning*20)/(frameSize*frameRate));
 					if (pos > 7) pos -= 7;
 					currentVolume = volumeArray[pos];
+
 					line.write(bytes, 0, bytes.length);
 				}
 	
@@ -261,16 +262,17 @@ public class Player implements Runnable, IPlayer
 	 * Donne la position actuel en seconde
 	 * @return volume du sample en cours
 	 */
-	public float getCurrentVolume()
+	public int[] getCurrentVolume()
 	{
-		if(status == 0)
+		int[] currentVolume = {0, 0};
+
+		if(status != 0)
 		{
-			return 0;
+			currentVolume[0] = (int)this.currentVolume;
+			currentVolume[1] = (int)this.currentVolume;
 		}
-		else
-		{
-			return currentVolume;
-		}
+
+		return currentVolume;
 	}
 
 	/**
@@ -326,7 +328,7 @@ public class Player implements Runnable, IPlayer
 		{
 			e.printStackTrace();
 		}
-		catch (IOException e)
+		catch(IOException e)
 		{
 			e.printStackTrace();
 		}

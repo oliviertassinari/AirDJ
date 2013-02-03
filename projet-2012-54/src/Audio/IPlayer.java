@@ -40,7 +40,7 @@ public interface IPlayer
 	 * Regle la position de lecture
 	 * @return volume du sample en cours
 	 */
-	public float getCurrentVolume();
+	public int[] getCurrentVolume();
 
 	/**
 	 * Donne la longueur du morceux en seconde
