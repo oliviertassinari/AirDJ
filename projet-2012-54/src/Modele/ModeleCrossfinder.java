@@ -7,18 +7,36 @@ import Audio.Player;
 
 public class ModeleCrossfinder
 {
+	
 	private Modele modele;
+	/**
+	 * position du cross finder
+	 */
 	private int crossfinder = 0;
+	/**
+	 * volume piste 1
+	 */
 	private int volumeP1 = 100;
+	/**
+	 * volume piste 2
+	 * 
+	 */
 	private int volumeP2 = 100;
 	private int[] displayVolumeP1 = {0, 0};
 	private int[] displayVolumeP2 = {0, 0};
 
+	/**
+	 * constructeur
+	 * @param Modele
+	 */
 	public ModeleCrossfinder(Modele modele)
 	{
 		this.modele = modele;
 	}
 
+	/**
+	 * timer pour mette à jour le volume
+	 */
 	public void setTimer()
 	{
 		Timer timer = new Timer();
@@ -40,6 +58,9 @@ public class ModeleCrossfinder
 		}, 0, 100);
 	}
 	
+	/**
+	 * @param int la valeur qu'on veut appliquer au cross finder
+	 */
 	public void setCrossfinder(int value)
 	{
 		if(value > 100)
@@ -65,6 +86,9 @@ public class ModeleCrossfinder
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
+	/**
+	 * @param int valeur qu'on veut appliquer au volume de la piste 1
+	 */
 	public void setVolumeP1(int value)
 	{
 		if(value > 100)
@@ -81,6 +105,9 @@ public class ModeleCrossfinder
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
+	/**
+	 * @param int valeur qu'on veut appliquer au volume de la piste 2
+	 */
 	public void setVolumeP2(int value)
 	{
 		if(value > 100)
@@ -97,6 +124,9 @@ public class ModeleCrossfinder
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
+	/**
+	 * @return float le coefficient à appliquer au volume de la piste 1 en fonction de la valeur du crossfinder
+	 */
 	public float getCoefVolumeP1()
 	{
 		if(crossfinder < 0)
@@ -109,6 +139,9 @@ public class ModeleCrossfinder
 		}
 	}
 	
+	/**
+	 * @return float le coefficient à appliquer au volume de la piste 2 en fonction de la valeur du crossfinder
+	 */
 	public float getCoefVolumeP2()
 	{
 		if(crossfinder > 0)
@@ -121,26 +154,41 @@ public class ModeleCrossfinder
 		}
 	}
 	
+	/**
+	 * @return int la valeur du crossfinder
+	 */
 	public int getCrossfinder()
 	{
 		return crossfinder;
 	}
 
+	/**
+	 * @return int la valeur du volume de la piste 1
+	 */
 	public int getVolumeP1()
 	{
 		return volumeP1;
 	}
 
+	/**
+	 * @return int la valeur du volume de la piste 2
+	 */
 	public int getVolumeP2()
 	{
 		return volumeP2;
 	}
 
+	/**
+	 * @return
+	 */
 	public int[] getDisplayVolumeP1()
 	{
 		return displayVolumeP1;
 	}
 
+	/**
+	 * @return
+	 */
 	public int[] getDisplayVolumeP2()
 	{
 		return displayVolumeP2;

@@ -16,14 +16,33 @@ import Modele.ModeleCrossfinder;
 
 public class VueCrossfinder extends JPanel
 {
+	/**
+	 * Vue contenant le panel
+	 */
 	private Vue vue;
-	
+	/**
+	 * image d'arrière plan
+	 */
 	private BufferedImage imageBackground;
+	/**
+	 * image du curseur de volume
+	 */
 	private Image imageVolumeCursor;
+	/**
+	 * image du curseur crossfinder
+	 */
 	private Image imageCrossfinderCursor;
+	/**
+	 * image d'arrière plan de l'affichage du volume
+	 */
 	private Image imageDisplayVolumeOver;
-
+	
+     /**
+	 * constructeur
+	 * @param La vue contenante
+	 */
 	public VueCrossfinder(Vue vue)
+	
 	{
 		this.vue = vue;
 
@@ -34,6 +53,9 @@ public class VueCrossfinder extends JPanel
 		imageBackground = getImageBackground();
 	}
 
+	/**
+	 * 
+	 */
 	public BufferedImage getImageBackground()
 	{
 		BufferedImage image = new BufferedImage(250, 300, BufferedImage.TRANSLUCENT);
@@ -99,6 +121,9 @@ public class VueCrossfinder extends JPanel
         return image;
 	}
 	
+	/**
+	 * paintComponent
+	 */
 	protected void paintComponent(Graphics g)
 	{
 		ModeleCrossfinder modeleCrossfinder = vue.getModele().getModeleCrossfinder();

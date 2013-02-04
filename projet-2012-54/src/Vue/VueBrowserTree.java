@@ -16,17 +16,38 @@ import javax.swing.JPanel;
 import Modele.ModeleBrowserTree;
 
 public class VueBrowserTree extends JPanel
+/**
+ * arbre de recherche de chansons dans l'ordinateur
+ */
 {
+	/**
+	 * 
+	 */
 	private Image imageTree;
+	/**
+	 * image de la barre de défilement
+	 */
 	private Image imageScrollBar;
+	/**
+	 * arrière plan
+	 */
 	private BufferedImage imageBackground;
+	/**
+	 * position horiziontale dans l'arbre
+	 */
 	private int x;
+	/**
+	 * position verticale dans l'arbre
+	 */
 	private int y;
 	private int length = 0;
 	private int scroll = 0;
 	private int[] scrollBarState = {0, 0};
 	private ModeleBrowserTree root;
 
+	/**
+	 * constructeur du panel
+	 */
 	public VueBrowserTree()
 	{
 		imageTree = new ImageIcon("image/tree.png").getImage();
@@ -43,7 +64,10 @@ public class VueBrowserTree extends JPanel
 
 		paintRoot();
 	}
-
+	
+	/**
+	 * paintComponent
+	 */
 	protected void paintComponent(Graphics g)
 	{
 		g.drawImage(imageBackground, 1, 1, 333, 162, 0, scroll, 334, 161 + scroll, this);
@@ -99,6 +123,9 @@ public class VueBrowserTree extends JPanel
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void paintRoot()
 	{
         x = 0;
@@ -126,6 +153,9 @@ public class VueBrowserTree extends JPanel
 		repaint();
 	}
 
+	/**
+	 * 
+	 */
 	public void paintNode(ModeleBrowserTree node, Graphics g)
 	{
 		if(!node.isExpanded())
@@ -162,7 +192,9 @@ public class VueBrowserTree extends JPanel
 			x -= 13;
 		}
 	}
-
+	/**
+	 * @param ModeleBrowserTree
+	 */
 	public void buildNode(ModeleBrowserTree node)
 	{
 		int childCount = getChildCount(node);
@@ -174,6 +206,9 @@ public class VueBrowserTree extends JPanel
 		}
 	}
 
+	/**
+	 * @param ModeleBrowserTree
+	 */
 	public int getChildCount(ModeleBrowserTree node)
 	{
 		if(node.getPath() == "root")
@@ -202,6 +237,11 @@ public class VueBrowserTree extends JPanel
 		}
 	}
 
+	/**
+	 * mméthode renvoyant le/les fils
+	 * @param ModeleBrowserTree
+	 * @param int
+	 */
 	public ModeleBrowserTree getChild(ModeleBrowserTree node, int index)
 	{
 		if(node.getPath() == "root")
@@ -224,21 +264,35 @@ public class VueBrowserTree extends JPanel
 		}
 	}
 
+	/**
+	 * méthode spécifiant si on a atteint une feuille ou non
+	 * @param String emplacement du dossier/fichier dans lequel on se trouve
+	 */
 	public boolean isLeaf(String path)
 	{
 		return new File(path).isFile();
 	}
 
+	
+	/**
+	 * @param int
+	 */
 	public ModeleBrowserTree getNode(int lineGoal)
 	{
 		return root.getNode(lineGoal, 1);
 	}
 
+	/**
+	 * 
+	 */
 	public int getLength()
 	{
 		return length;
 	}
 
+	/**
+	 * @param int 
+	 */
 	public void setLength(int value)
 	{
 		if(scroll > value*16 - 161)
@@ -253,11 +307,17 @@ public class VueBrowserTree extends JPanel
 		length = value;
 	}
 
+	/**
+	 * 
+	 */
 	public int getScroll()
 	{
 		return scroll;
 	}
 
+	/**
+	 * @param int
+	 */
 	public void setScroll(int value)
 	{
 		if(value > length*16 - 161)
@@ -273,11 +333,17 @@ public class VueBrowserTree extends JPanel
 		repaint();
 	}
 
+	/**
+	 * 
+	 */
 	public int[] getScrollBarState()
 	{
 		return scrollBarState;
 	}
 
+	/**
+	 * @param int[]
+	 */
 	public void setScrollBarState(int[] value)
 	{
 		scrollBarState = value;

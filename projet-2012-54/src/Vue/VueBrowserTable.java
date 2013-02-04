@@ -18,8 +18,17 @@ import Modele.ModeleBrowserTree;
 
 public class VueBrowserTable extends JPanel
 {
+	/** 
+	 * image de la barre de défilement
+	 */
 	private Image imageScrollBar;
+	/** 
+	 * image de
+	 */
 	private Image imageTable;
+	/**
+	 * arrière plan
+	 */
 	private BufferedImage imageBackground;
 	private int x = 0;
 	private int length = 0;
@@ -28,6 +37,9 @@ public class VueBrowserTable extends JPanel
 	private int[] tableOver = {-1, -1};
 	private ArrayList<String> pathList;
 
+	/**
+	 * constructeur
+	 */
 	public VueBrowserTable()
 	{
 		imageScrollBar = new ImageIcon("image/scrollBar.png").getImage();
@@ -40,6 +52,9 @@ public class VueBrowserTable extends JPanel
 		paintNode("");
 	}
 
+	/**
+	 * méthode paintComponent
+	 */
 	protected void paintComponent(Graphics g)
 	{
 		g.drawImage(imageBackground, 0, 1, 628, 162, 0, scroll, 628, 161 + scroll, this);
@@ -107,6 +122,9 @@ public class VueBrowserTable extends JPanel
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void paintNode(String path)
 	{
 		pathList = new ArrayList<String>();
