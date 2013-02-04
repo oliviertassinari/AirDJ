@@ -20,7 +20,7 @@ public class Player implements Runnable, IPlayer
 	/** 
 	 * Volume de la tranche de 0.05 sec joue
 	 */
-	private int currentVolume;
+	private int[] currentVolume = new int[2];
 	
 	/** 
 	 * Tableau contenant tous les volumes des tranches de 0.05 sec
@@ -101,7 +101,8 @@ public class Player implements Runnable, IPlayer
 					byteFromBeginning += 5*frameSize;
 					int pos = (int) ((byteFromBeginning*20)/(frameSize*frameRate));
 					if (pos > 7) pos -= 7;
-					currentVolume = volumeArray[pos];
+					currentVolume[0] = volumeArray[pos];
+					currentVolume[1] = volumeArray[pos];
 
 					line.write(bytes, 0, bytes.length);
 				}
@@ -140,7 +141,6 @@ public class Player implements Runnable, IPlayer
 			
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
-	 		
 			//Recuperation et initialisation du volume
 			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
 			setVolume(50);
@@ -268,8 +268,8 @@ public class Player implements Runnable, IPlayer
 
 		if(status != 0)
 		{
-			currentVolume[0] = (int)this.currentVolume;
-			currentVolume[1] = (int)this.currentVolume;
+			currentVolume[0] = (int)this.currentVolume[0];
+			currentVolume[1] = (int)this.currentVolume[1];
 		}
 
 		return currentVolume;
