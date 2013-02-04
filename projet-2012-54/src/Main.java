@@ -31,12 +31,9 @@ public class Main
 		
 			public void keyPressed(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-				if((arg0.getKeyChar())=='a'){
-					kinect.fireEvent("play");
-				}
-				
+							
 				if((arg0.getKeyChar())=='p'){
-					kinect.fireEvent("pause");
+					kinect.fireEvent("play");
 				}
 				}
 

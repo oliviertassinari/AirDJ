@@ -289,4 +289,8 @@ public class ModelePlay
 	{
 		return buttonPause;
 	}
+	public int getState(){
+		return state;
+	}
 }
+

@@ -28,6 +28,10 @@ public class VuePlay extends JPanel
 	private Image imagePlayerCursor;
 	private Image imagePlayerCurrent;
 	private Image imageButton;
+	
+	//MODIF 1
+		private int buttonPlay=0;
+		private int buttonPause=0; 
 
 	public VuePlay(int couleur, Vue vue, ModelePlay modelePlay)
 	{
@@ -118,8 +122,9 @@ public class VuePlay extends JPanel
 		double bpm = modelePlay.getBpm();
 		int total = modelePlay.getTotal();
 		int current = modelePlay.getCurrent();
+		/*MODIF1: ces variables deviennent des attributs pour qu'elles soient accessibles du controleur
 		int buttonPlay = modelePlay.getButtonPlay();
-		int buttonPause = modelePlay.getButtonPause();		
+		int buttonPause = modelePlay.getButtonPause();	*/	
 
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING , RenderingHints.VALUE_ANTIALIAS_ON);
@@ -210,4 +215,13 @@ public class VuePlay extends JPanel
 
 		return minuteSting+":"+secondeSting+"."+ms;
 	}
+
+	// MODIF 2: setters
+public void setPlay(int i){
+	buttonPlay=i;
+}
+public void setPause(int i){
+	buttonPause=i;
+}
+
 }
