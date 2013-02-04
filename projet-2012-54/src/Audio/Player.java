@@ -47,10 +47,19 @@ public class Player implements Runnable, IPlayer
 	 */
 	private int status;
 	
+	/**
+	 * 
+	 */
 	private AudioInputStream audioInputStream;
 	
+	/**
+	 * 
+	 */
 	private SourceDataLine line;
 	
+	/**
+	 * 
+	 */
 	private AudioFormat audioFormat;
 	
 	/** 
@@ -141,6 +150,8 @@ public class Player implements Runnable, IPlayer
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
 	 		volumeArray = new int[((int) (file.length()/(frameSize*frameRate)*20))+1];
+	 		
+	 		//Remplissage du teableau de volume en parallele
 			Filler filler = new Filler(this);
 			
 			//Recuperation et initialisation du volume

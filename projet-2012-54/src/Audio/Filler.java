@@ -9,14 +9,28 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Filler implements Runnable {
 
+	/**
+	 * 
+	 */
 	private Thread filler;
+	
+	/**
+	 * Player dont on rempli le tableau de volume
+	 */
 	private Player player;
 	
+	/**
+	 * 
+	 */
 	public void run() 
 	{
 		this.fillVolumeArray();
 	}
 	
+	/**
+	 * Rempli le tableau de volume du player donnee en parametre
+	 * @param player
+	 */
 	public Filler (Player player) 
 	{
 		this.player = player;
