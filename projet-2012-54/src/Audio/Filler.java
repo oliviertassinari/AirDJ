@@ -15,12 +15,12 @@ public class Filler implements Runnable {
 	private Thread filler;
 	
 	/**
-	 * Player dont on rempli le tableau de volume
+	 * Player we will the arrayVolume
 	 */
 	private Player player;
 	
 	/**
-	 * 
+	 * As Thread start he calls this method
 	 */
 	public void run() 
 	{
@@ -28,7 +28,7 @@ public class Filler implements Runnable {
 	}
 	
 	/**
-	 * Rempli le tableau de volume du player donnee en parametre
+	 * CONSTRUCTOR
 	 * @param player
 	 */
 	public Filler (Player player) 
@@ -40,7 +40,7 @@ public class Filler implements Runnable {
 	}
 	
 	/** 
-	 * Rempli le tableau ou chaque case correspond au volume d une tranche de 0.05 seconde
+	 * Fill the arrayVolume of the player provided
 	 */
 	public void fillVolumeArray() 
 	{
@@ -56,11 +56,10 @@ public class Filler implements Runnable {
 			byte bytes[] = new byte[bytesDemiDixiemeSeconde];
 			int pos = 0;
 			int i = 0;
-			int bytesRead = 0;
 			int ind[] = new int[2];
 			int tmp[][] = new int[2][2];
 			
-			while(((bytesRead = ais.read(bytes, 0, bytes.length)) != -1))
+			while(((ais.read(bytes, 0, bytes.length)) != -1))
 			{
 				while(i<bytes.length)
 				{

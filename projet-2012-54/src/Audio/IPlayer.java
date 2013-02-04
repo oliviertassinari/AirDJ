@@ -3,53 +3,54 @@ package Audio;
 public interface IPlayer
 {
 	/** 
-	 * Met le morceau en pause s'il est en lecture
+	 * Pause the music if it is currently played
 	 */
 	public void setPause();
 
 	/** 
-	 * Met le morceau en lecture s'il est en pause
+	 * Play the music if it is currently paused
 	 */
 	public void setPlay();
 
 	/**
-	 * Regle le volume
-	 * @param volume de 0 a 100
+	 * 
+	 * @param volume (0 to 100)
 	 */
 	public void setVolume(float volume);
 
-	/** NON FONCTIONELLE
+	/** 
+	 * USELESS
 	 * @deprecated
 	 * @param vitesse
 	 */
 	public void setVitesse(int vitesse);
 
 	/** 
-	 * Retourne la position dans la piste audio
-	 * @return en seconde
+	 * 
+	 * @return current position (s)
 	 */
 	public float getPosition();
 
 	/** 
-	 * Avance a la position souhaite
-	 * @param position en seconde
+	 * Set the current position to
+	 * @param position (s)
 	 */
 	public void setPosition(float position);
 
 	/**
-	 * Regle la position de lecture
-	 * @return volume du sample en cours
+	 * 
+	 * @return volume of the current 0.05s played (0-left  1-right)
 	 */
 	public int[] getCurrentVolume();
 
 	/**
-	 * Donne la longueur du morceux en seconde
-	 * @return duree totale du morceau en seconde
+	 * 
+	 * @return total length of the file
 	 */
 	public float getLength();
 
 	/**
-	 * reinitialise le morceau
+	 * Reset song
 	 */
 	public boolean reset();
 }
