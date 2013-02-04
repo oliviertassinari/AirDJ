@@ -80,9 +80,11 @@ public class Filler implements Runnable {
 					tmp[1][0] = 0;
 					i += 5*frameSize;
 				}
+				if (tmp[0][1]>tmp[1][1]) tmp[0][1] += 1.5*(tmp[0][1]-tmp[1][1]);
+				if (tmp[1][1]>tmp[0][1]) tmp[1][1] += 1.5*(tmp[1][1]-tmp[0][1]);
 				if (pos == 0) {player.setVolumeArray(tmp[0][0], pos, 0); player.setVolumeArray(tmp[1][0], pos, 1);}
-				if (pos != 0) {player.setVolumeArray((int) (0.5 * player.getVolumeArray(pos-1, 0) + 2 * tmp[0][1]), pos, 0);
-								player.setVolumeArray((int) (0.5 * player.getVolumeArray(pos-1, 1) + 2 * tmp[1][1]), pos, 1);}
+				if (pos != 0) {player.setVolumeArray((int) (0.5 * player.getVolumeArray(pos-1, 0) + 1.5 * tmp[0][1]), pos, 0);
+								player.setVolumeArray((int) (0.5 * player.getVolumeArray(pos-1, 1) + 1.5 * tmp[1][1]), pos, 1);}
 				pos ++;
 				i = 0;
 				tmp[0][1] = 0;
