@@ -3,7 +3,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import Controle.Controle;
-import KinectControle.ClavierListener;
+
 import KinectControle.KinectListener;
 import KinectControle.KinectSource;
 import Modele.Modele;

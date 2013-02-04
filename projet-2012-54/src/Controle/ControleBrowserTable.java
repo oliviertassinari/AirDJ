@@ -23,16 +23,28 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 	private int offset = 0;
 	private Timer timer = new Timer();
 
+	/**
+	 * constructeur
+	 * @param ControleBrowserTable
+	 */
 	public ControleBrowserTable(Controle controle)
 	{
 		vueBrowserTable = controle.getVue().getVueBrowser().getVueBrowserTable();
 		modele = controle.getModele();
 	}
 
+	/**
+	 * controle de l'évènement mouseClicked
+	 * @param MouseEvent
+	 */
 	public void mouseClicked(MouseEvent e)
 	{
 	}
 
+	/**
+	 * controle de l'évènement mousePressed
+	 * @param MouseEvent
+	 */
 	public void mousePressed(MouseEvent e)
 	{
 		if(blockOver == 11) //ScrollBar Up
@@ -95,6 +107,10 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 		}
 	}
 
+	/**
+	 * controle de l'évènement mouseReleased
+	 * @param MouseEvent
+	 */
 	public void mouseReleased(MouseEvent e)
 	{
 		timer.cancel();
@@ -103,15 +119,27 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 		mouseMoved(e);
 	}
 
+	/**
+	 * controle de l'évènement mouseEntered
+	 * @param MouseEvent
+	 */
 	public void mouseEntered(MouseEvent e)
 	{
 	}
 
+	/**
+	 * controle de l'évènement mouseExited
+	 * @param MouseEvent
+	 */
 	public void mouseExited(MouseEvent e)
 	{
 		mouseMoved(new MouseEvent(vueBrowserTable, 0, 0, 0, -1, -1, 0, false));
 	}
 
+	/**
+	 * controle de l'évènement mouseMoved
+	 * @param MouseEvent
+	 */
 	public void mouseMoved(MouseEvent e)
 	{
 		int length = vueBrowserTable.getLength();
@@ -221,6 +249,10 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 		}
 	}
 
+	/**
+	 * controle de l'évènement mouseDragged
+	 * @param MouseEvent
+	 */
 	public void mouseDragged(MouseEvent e)
 	{
 		if(blockSelected == 1) //ScrollBar
@@ -232,6 +264,10 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 		}
 	}
 
+	/**
+	 * controle de l'évènement mouseWheelMoved
+	 * @param MouseEvent
+	 */
 	public void mouseWheelMoved(MouseWheelEvent e)
 	{
 		vueBrowserTable.setScroll(vueBrowserTable.getScroll() + 50*e.getWheelRotation());

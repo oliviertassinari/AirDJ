@@ -12,6 +12,11 @@ public class Controle
 	private Vue vue;
 	private Modele modele;
 
+	/**
+	 * constructeur
+	 * @param Vue
+	 * @param Modele
+	 */
 	public Controle(Vue vue, Modele modele)
 	{
 		this.vue = vue;
@@ -48,11 +53,19 @@ public class Controle
 		vuePlayP2.addMouseWheelListener(controlePlayP2);
 	}
 
+	/**
+	 * accéder à la vue
+	 * @return Vue
+	 */
 	public Vue getVue()
 	{
 		return vue;
 	}
-
+ 
+	/**
+	 * accéder au modele
+	 * @return Modele
+	 */
 	public Modele getModele()
 	{
 		return modele;

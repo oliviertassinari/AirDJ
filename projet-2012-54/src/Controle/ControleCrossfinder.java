@@ -12,21 +12,39 @@ import Vue.VueCrossfinder;
 
 public class ControleCrossfinder implements MouseListener, MouseMotionListener, MouseWheelListener
 {
+	/**
+	 * VueCrossFinder controlée
+	 */
 	private VueCrossfinder vueCrossfinder ;
+	/**
+	 * ModeleCrossFinder controlé
+	 */
 	private ModeleCrossfinder modeleCrossfinder;
+	/**
+	 * attribut désignant
+	 */
 	int blockOver = 0;
 	int blockSelected = 0;
 	int offset = 0;
 
+	/**
+	 * @param Controle
+	 */
 	public ControleCrossfinder(Controle controle)
 	{
 		vueCrossfinder = controle.getVue().getVueCrossfinder();
 		modeleCrossfinder = controle.getModele().getModeleCrossfinder();
 	}
 
+	
 	public void mouseClicked(MouseEvent e)
 	{
 	}
+	
+	/**
+	 * controle de l'évènement appui sur la souris
+	 * @param MouseEvent
+	 */
 
 	public void mousePressed(MouseEvent e)
 	{
@@ -81,6 +99,11 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 		}
 	}
 
+	/**
+	 * controle de l'évènement mouseReleased
+	 * @param MouseEvent
+	 */
+
 	public void mouseReleased(MouseEvent e)
 	{
 		blockSelected = 0;
@@ -88,14 +111,26 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 		mouseMoved(e);
 	}
 
+	/**
+	 * controle de l'évènement mouseEntered
+	 * @param MouseEvent
+	 */
 	public void mouseEntered(MouseEvent e)
 	{
 	}
 
+	/**
+	 * controle de l'évènement mouseExited
+	 * @param MouseEvent
+	 */
 	public void mouseExited(MouseEvent e)
 	{
 	}
 
+	/**
+	 * controle de l'évènement mouseMoved
+	 * @param MouseEvent
+	 */
 	public void mouseMoved(MouseEvent e)
 	{
 		if(blockSelected == 0)
@@ -161,7 +196,11 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 			}
 		}
 	}
-
+	
+	/**
+	 * controle de l'évènement mouseDragged
+	 * @param MouseEvent
+	 */
 	public void mouseDragged(MouseEvent e)
 	{
 		if(blockSelected == 1)
@@ -192,6 +231,10 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 		}
 	}
 
+	/**
+	 * controle de l'évènement mouseWheelMoved
+	 * @param MouseEvent
+	 */
 	public void mouseWheelMoved(MouseWheelEvent e)
 	{
 		if(blockOver == 1 || blockOver == 11)
