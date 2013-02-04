@@ -15,21 +15,21 @@ import javax.swing.JPanel;
 
 import Modele.ModeleBrowserTree;
 
-public class VueBrowserTree extends JPanel
 /**
  * arbre de recherche de chansons dans l'ordinateur
  */
+public class VueBrowserTree extends JPanel
 {
 	/**
 	 * 
 	 */
 	private Image imageTree;
 	/**
-	 * image de la barre de défilement
+	 * image de la barre de d efilement
 	 */
 	private Image imageScrollBar;
 	/**
-	 * arrière plan
+	 * arriere plan
 	 */
 	private BufferedImage imageBackground;
 	/**

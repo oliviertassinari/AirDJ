@@ -42,7 +42,6 @@ public class VueCrossfinder extends JPanel
 	 * @param La vue contenante
 	 */
 	public VueCrossfinder(Vue vue)
-	
 	{
 		this.vue = vue;
 
