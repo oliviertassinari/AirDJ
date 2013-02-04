@@ -25,7 +25,7 @@ public class Player implements Runnable, IPlayer
 	/** 
 	 * Tableau contenant tous les volumes des tranches de 0.05 sec
 	 */
-	private int[] volumeArray;
+	private int[][] volumeArray;
 	
 	/** 
 	 * Taux dechantillonage
@@ -110,8 +110,8 @@ public class Player implements Runnable, IPlayer
 					byteFromBeginning += 5*frameSize;
 					int pos = (int) ((byteFromBeginning*20)/(frameSize*frameRate));
 					if (pos > 7) pos -= 7;
-					currentVolume[0] = volumeArray[pos];
-					currentVolume[1] = volumeArray[pos];
+					currentVolume[0] = volumeArray[0][pos];
+					currentVolume[1] = volumeArray[1][pos];
 
 					line.write(bytes, 0, bytes.length);
 				}
@@ -146,10 +146,10 @@ public class Player implements Runnable, IPlayer
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			line = (SourceDataLine) AudioSystem.getLine(info);
 			line.open(audioFormat);
-			
+			System.out.println(info.toString());
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
-	 		volumeArray = new int[((int) (file.length()/(frameSize*frameRate)*20))+1];
+	 		volumeArray = new int[2][((int) (file.length()/(frameSize*frameRate)*20))+1];
 	 		
 	 		//Remplissage du teableau de volume en parallele
 			Filler filler = new Filler(this);
@@ -367,9 +367,9 @@ public class Player implements Runnable, IPlayer
 	 * @param volume
 	 * @param i case du tableau
 	 */
-	public void setVolumeArrayI(int volume, int i)
+	public void setVolumeArray(int volume, int i, int j)
 	{
-		this.volumeArray[i] = volume;
+		this.volumeArray[j][i] = volume;
 	}
 	
 	/**
@@ -377,9 +377,9 @@ public class Player implements Runnable, IPlayer
 	 * @param i case du tableau	
 	 * @return valeur de la case en question
 	 */
-	public int getVolumeArrayI(int i)
+	public int getVolumeArray(int i, int j)
 	{
-		return this.volumeArray[i];
+		return this.volumeArray[j][i];
 	}
 
 }
