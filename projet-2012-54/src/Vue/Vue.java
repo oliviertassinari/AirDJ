@@ -20,6 +20,10 @@ public class Vue extends JFrame
 	private VuePlay vuePlayP2;
 	private Modele modele;
 
+	/**
+	 * constructeur
+	 * @param modele
+	 */
 	public Vue(Modele modele)
 	{
 		this.modele = modele;
