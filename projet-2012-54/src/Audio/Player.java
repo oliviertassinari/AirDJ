@@ -105,7 +105,6 @@ public class Player implements Runnable, IPlayer
 					if (pos > 7) pos -= 7;
 					currentVolume[0] = volumeArray[0][pos];
 					currentVolume[1] = volumeArray[1][pos];
-
 					line.write(bytes, 0, bytes.length);
 				}
 	
