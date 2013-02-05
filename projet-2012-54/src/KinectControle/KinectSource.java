@@ -12,7 +12,7 @@ public class KinectSource {
 
 
 	
-	// code qu'il faudra intégrer dans une classe kinect
+	// code qu'il faudra intï¿½grer dans une classe kinect
 	
 	public KinectSource(Vue vue, Modele modele) {
 		// TODO Auto-generated constructor stub
@@ -33,7 +33,8 @@ public class KinectSource {
 		KinectEvent event = new KinectEvent(this, message );
 		Iterator<ListenerInterface> i = listeners.iterator();
 	    while(i.hasNext()){
-	    	((ListenerInterface) i.next()).ListenToKinect(event);	  
+	    	((ListenerInterface) i.next()).ListenToKinect(event);	
+	    	
 	    }
 	    }
 	

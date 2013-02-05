@@ -13,14 +13,16 @@ public class KinectListener implements ListenerInterface {
 			(event.getSource().getModele().getModelePlayP1()).setButtonPlay("press");
 			(event.getSource().getModele().getModelePlayP1()).setButtonPause("out");
 			(event.getSource().getModele().getModelePlayP1()).setPlay();
+			System.out.println("play");
 			}
 			
-			if(event.getSource().getModele().getModelePlayP1().getState()==1){
+			else if(event.getSource().getModele().getModelePlayP1().getState()==1){
 				//(event.getSource().getVue().getVuePlayP1()).setPause(0);
 		//(event.getSource().getVue().getVuePlayP1()).setPlay(2);
 		(event.getSource().getModele().getModelePlayP1()).setButtonPlay("out");
 		(event.getSource().getModele().getModelePlayP1()).setButtonPause("press");
 		(event.getSource().getModele().getModelePlayP1()).setPause();
+		System.out.println("pause");
 		}
 					
 		}
