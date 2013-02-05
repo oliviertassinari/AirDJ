@@ -13,6 +13,10 @@ public class VueBrowser extends JPanel
 	private VueBrowserTree vueBrowserTree;
 	private VueBrowserTable vueBrowserTable;
 
+	/**
+	 * constructeur vueBrowser (en haut de la fenetre, pour choix pistes)
+	 * @param vue
+	 */
 	public VueBrowser(Vue vue)
 	{
 		this.vue = vue;
@@ -28,11 +32,19 @@ public class VueBrowser extends JPanel
 		add(vueBrowserTable);
 	}
 
+	/**
+	 * getter vueBrowserTree (arbre de recherche)
+	 * @return vueBrowserTree
+	 */
 	public VueBrowserTree getVueBrowserTree()
 	{
 		return vueBrowserTree;
 	}
 	
+	/**
+	 * getter vueBrowserTable (affichage fichiers wav)
+	 * @return
+	 */
 	public VueBrowserTable getVueBrowserTable()
 	{
 		return vueBrowserTable;

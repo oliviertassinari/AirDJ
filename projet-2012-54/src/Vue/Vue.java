@@ -21,7 +21,7 @@ public class Vue extends JFrame
 	private Modele modele;
 
 	/**
-	 * constructeur
+	 * constructeur vue (toute la fenetre)
 	 * @param modele
 	 */
 	public Vue(Modele modele)
@@ -55,31 +55,55 @@ public class Vue extends JFrame
 		setVisible(true);
 	}
 
+	/**
+	 * getter vueBrowser (tout le haut : arbre de recherche et fichiers wav)
+	 * @return vueBrowser
+	 */
 	public VueBrowser getVueBrowser()
 	{
 		return vueBrowser;
 	}
 
+	/**
+	 * getter vueCrossfinder (au milieu : pour passer d'une piste à l'autre)
+	 * @return vueCrossfinder
+	 */
 	public VueCrossfinder getVueCrossfinder()
 	{
 		return vueCrossfinder;
 	}
 
+	/**
+	 * getter vueKinect (video en bas de l'ecran)
+	 * @return
+	 */
 	public VueKinect getVueKinect()
 	{
 		return vueKinect;
 	}
 
+	/**
+	 * getter vuePlayP1 (toute piste 1 sauf volume)
+	 * @return vuePlayP1
+	 */
 	public VuePlay getVuePlayP1()
 	{
 		return vuePlayP1;
 	}
 
+	/**
+	 * getter vuePlayP2 (toute piste 2 sauf volume)
+	 * @return vuePlayP2
+	 */
 	public VuePlay getVuePlayP2()
 	{
 		return vuePlayP2;
 	}
 
+	/**
+	 * getter modele ??
+	 * @return modele
+	 */
 	public Modele getModele()
 	{
 		return modele;

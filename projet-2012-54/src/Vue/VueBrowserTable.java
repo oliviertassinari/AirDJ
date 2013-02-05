@@ -192,6 +192,11 @@ public class VueBrowserTable extends JPanel
 		repaint();
 	}
 
+	/**
+	 * getter extension des fichiers ??
+	 * @param filePath
+	 * @return " "
+	 */
 	public String getExtension(String filePath)
 	{
 		if(filePath.lastIndexOf(".") != -1)
@@ -204,21 +209,37 @@ public class VueBrowserTable extends JPanel
 		}	
 	}
 
+	/**
+	 * getter length (nombre de lignes)
+	 * @return length
+	 */
 	public int getLength()
 	{
 		return length;
 	}
 
+	/**
+	 * setter length (nombre de lignes)
+	 * @param value
+	 */
 	public void setLength(int value)
 	{
 		length = value;
 	}
 
+	/**
+	 * getter scroll (barre de défilement ?)
+	 * @return scroll
+	 */
 	public int getScroll()
 	{
 		return scroll;
 	}
 
+	/**
+	 * setter scroll (barre de défilement ?)
+	 * @param value
+	 */
 	public void setScroll(int value)
 	{
 		if(value > length*25 - 161)
@@ -234,23 +255,40 @@ public class VueBrowserTable extends JPanel
 		repaint();
 	}
 
+	/**
+	 * 
+	 * @return scrollBarState
+	 */
 	public int[] getScrollBarState()
 	{
 		return scrollBarState;
 	}
 
+	/**
+	 * setter scrollBarState
+	 * @param value
+	 */
 	public void setScrollBarState(int[] value)
 	{
 		scrollBarState = value;
 		repaint();
 	}
 
+	/**
+	 * setter tableOver
+	 * @param value
+	 */
 	public void setTableOver(int[] value)
 	{
 		tableOver = value;
 		repaint();
 	}
 
+	/**
+	 * getter filePath
+	 * @param index
+	 * @return
+	 */
 	public String getFilePath(int index)
 	{
 		return pathList.get(index);
