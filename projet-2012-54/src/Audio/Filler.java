@@ -52,8 +52,8 @@ public class Filler implements Runnable {
 			
 			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
 			
-			int bytesDemiDixiemeSeconde = (int) (frameSize * frameRate / 20);
-			byte bytes[] = new byte[bytesDemiDixiemeSeconde];
+			int bytesDuree = (int) (frameSize * frameRate / 20);
+			byte bytes[] = new byte[bytesDuree];
 			int pos = 0;
 			int i = 0;
 			int ind[] = new int[2];
@@ -70,8 +70,8 @@ public class Filler implements Runnable {
 					if (ind[0] == 4) {ind[0]=0; ind[1] = 0;}
 					i++;
 				}
-				tmp[0] = tmp[0]/bytes.length;		
-				tmp[1] = tmp[1]/bytes.length;
+				tmp[0] = 2*tmp[0]/bytes.length;		
+				tmp[1] = 2*tmp[1]/bytes.length;
 				if (pos == 0) 
 				{
 					player.setVolumeArray(tmp[0], pos, 0); 
@@ -79,8 +79,8 @@ public class Filler implements Runnable {
 				}
 				if (pos != 0) 
 				{
-					player.setVolumeArray((int) (0.5 * player.getVolumeArray(pos-1, 0) + 1.5 * tmp[0]), pos, 0);
-					player.setVolumeArray((int) (0.5 * player.getVolumeArray(pos-1, 1) + 1.5 * tmp[1]), pos, 1);
+					player.setVolumeArray((int) (0.4 * player.getVolumeArray(pos-1, 0) + 0.7 * tmp[0]), pos, 0);
+					player.setVolumeArray((int) (0.4 * player.getVolumeArray(pos-1, 1) + 0.7 * tmp[1]), pos, 1);
 				}
 				pos ++;
 				i = 0;
