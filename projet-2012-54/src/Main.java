@@ -33,7 +33,7 @@ public class Main
 				// TODO Auto-generated method stub
 							
 				if((arg0.getKeyChar())=='p'){
-					kinect.fireEvent("play");
+					kinect.fireEvent("play", "left");
 				}
 				}
 
