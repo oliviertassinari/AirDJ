@@ -1,34 +1,37 @@
 package KinectControle;
 
-public class KinectListener implements ListenerInterface {
+import Modele.ModelePlay;
 
-	
+public class KinectListener implements ListenerInterface
+{
 	@Override
-	public void ListenToKinect(KinectEvent event) {
-		// TODO Auto-generated method stub
-		if (event.getMessage()=="play"){
-			if(event.getSource().getModele().getModelePlayP1().getState()==0){
-					//(event.getSource().getVue().getVuePlayP1()).setPause(0);
-			//(event.getSource().getVue().getVuePlayP1()).setPlay(2);
-			(event.getSource().getModele().getModelePlayP1()).setButtonPlay("press");
-			(event.getSource().getModele().getModelePlayP1()).setButtonPause("out");
-			(event.getSource().getModele().getModelePlayP1()).setPlay();
-			System.out.println("play");
-			}
+	public void ListenToKinect(KinectEvent event)
+	{
+		if(event.getMessage() == "play")
+		{
+			ModelePlay modelePlay;
 			
-			else if(event.getSource().getModele().getModelePlayP1().getState()==1){
-				//(event.getSource().getVue().getVuePlayP1()).setPause(0);
-		//(event.getSource().getVue().getVuePlayP1()).setPlay(2);
-		(event.getSource().getModele().getModelePlayP1()).setButtonPlay("out");
-		(event.getSource().getModele().getModelePlayP1()).setButtonPause("press");
-		(event.getSource().getModele().getModelePlayP1()).setPause();
-		System.out.println("pause");
-		}
-					
-		}
-			(event.getSource().getVue().getVuePlayP1()).repaint();
-		
-	}
-	
+			if(event.getParam1() == "left")
+			{
+				modelePlay = event.getSource().getModele().getModelePlayP1();
+			}
+			else
+			{
+				modelePlay = event.getSource().getModele().getModelePlayP2();
+			}
 
+			if(event.getSource().getModele().getModelePlayP1().getState() == 0)
+			{
+				modelePlay.setPlay();
+				modelePlay.setButtonPlay("release");
+				modelePlay.setButtonPause("out");
+			}
+			else if(event.getSource().getModele().getModelePlayP1().getState() == 1)
+			{
+				modelePlay.setPause();
+				modelePlay.setButtonPlay("out");
+				modelePlay.setButtonPause("release");
+			}		
+		}
+	}
 }
