@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import KinectControle.KinectListener;
+import KinectControle.KinectSource;
+
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.CanvasFrame;
 import com.googlecode.javacv.cpp.opencv_core.CvBox2D;
@@ -31,9 +34,13 @@ public class Kinect implements Runnable
     private int ct1 = 0;
     private int ct2 = 0;
     private long timeOrigin = System.currentTimeMillis();
+    
+    private KinectSource kinectSource;
 
-	public Kinect()
+	public Kinect(KinectSource kinectSource)
     {
+		this.kinectSource = kinectSource;
+
 		runner = new Thread(this, "kinect");
 		runner.start();
     }
@@ -202,7 +209,8 @@ public class Kinect implements Runnable
 	        	}
 
 	        	getPositionHand(centerList);
-	        	reconnaissanceDeMvt();
+	        	reconnaissanceDeMvt(mainPositionLeft, "left");
+	        	reconnaissanceDeMvt(mainPositionRight, "right");
 
 	    		cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
 	    		cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
@@ -359,15 +367,15 @@ public class Kinect implements Runnable
 		mainPosition.add(timeLastGrab, centerList.get(minLengthList[0]), getDepth(centerList.get(minLengthList[0])), 0);
     }
 
-    public void reconnaissanceDeMvt()
+    public void reconnaissanceDeMvt(MainPosition mainPosition, String side)
     {
-    	long[] positionCurrent = mainPositionLeft.getFiltre(0);
+    	long[] positionCurrent = mainPosition.getFiltre(0);
 
     	for(int i = 0; i < 19; i++)
     	{
-    		long[] position = mainPositionLeft.getFiltre(i);
+    		long[] position = mainPosition.getFiltre(i);
 
-    		if(mainPositionLeft.get(i)[0] > timeOrigin)
+    		if(mainPosition.get(i)[0] > timeOrigin)
     		{
     			if(Math.abs(position[0]-positionCurrent[0]) < 40 && Math.abs(position[1]-positionCurrent[1]) < 40) //stable en x, y
 	    		{
@@ -393,7 +401,7 @@ public class Kinect implements Runnable
 
 	    			for(int j = 0; j <= i; j++)
 	    			{
-	    				dz += mainPositionLeft.getDerivee(j)[2]; //z
+	    				dz += mainPosition.getDerivee(j)[2]; //z
 	    			}
 
 	    			if(dz < -0.25 && position[2] - positionCurrent[2] > 4)
@@ -402,6 +410,7 @@ public class Kinect implements Runnable
 	    				ct1 = 0;
 	    				ct2 = 0;
 	    				System.out.println("pause "+dz+" "+ (position[2] - positionCurrent[2]));
+	    				kinectSource.fireEvent("play", side);
 	    			}
 	    		}
 
@@ -411,7 +420,7 @@ public class Kinect implements Runnable
 
 	    			for(int j = 0; j <= i; j++)
 	    			{
-	    				dy += mainPositionLeft.getDerivee(j)[1];
+	    				dy += mainPosition.getDerivee(j)[1];
 	    			}
 
 	    			if(Math.abs(dy) > 3)

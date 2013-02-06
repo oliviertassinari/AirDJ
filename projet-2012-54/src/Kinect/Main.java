@@ -26,15 +26,15 @@ public class Main
 		
 		//test controleKinect
 		KinectListener listener = new KinectListener();
-		final KinectSource kinect = new KinectSource(vue, modele);
-		kinect.addKinectListener(listener);
+		final KinectSource kinectSource = new KinectSource(vue, modele);
+		kinectSource.addKinectListener(listener);
 		vue.addKeyListener(new KeyListener() {
 		
 			public void keyPressed(KeyEvent arg0) {
 				// TODO Auto-generated method stub
 							
 				if((arg0.getKeyChar())=='p'){
-					kinect.fireEvent("play");
+					kinectSource.fireEvent("play");
 				}
 				}
 
@@ -47,5 +47,6 @@ public class Main
             
         });
 		
+		new Kinect(kinectSource);
 	}
 }
