@@ -31,15 +31,13 @@ public class Kinect implements Runnable
 	private IplImage imageTraitement;
 	private long timeLastGrab;
 	private long[] timeList = new long[4];
-    private int ct1 = 0;
-    private int ct2 = 0;
-    private long timeOrigin = System.currentTimeMillis();
-    
-    private KinectSource kinectSource;
+    private reconnaissanceMvt reconnaissanceMvtLeft;
+    private reconnaissanceMvt reconnaissanceMvtRight;
 
 	public Kinect(KinectSource kinectSource)
     {
-		this.kinectSource = kinectSource;
+		reconnaissanceMvtLeft = new reconnaissanceMvt(mainPositionLeft, "left", kinectSource);
+		reconnaissanceMvtRight = new reconnaissanceMvt(mainPositionRight, "right", kinectSource);
 
 		runner = new Thread(this, "kinect");
 		runner.start();
@@ -209,8 +207,8 @@ public class Kinect implements Runnable
 	        	}
 
 	        	getPositionHand(centerList);
-	        	reconnaissanceDeMvt(mainPositionLeft, "left");
-	        	reconnaissanceDeMvt(mainPositionRight, "right");
+	        	reconnaissanceMvtLeft.compute(timeLastGrab);
+	        	reconnaissanceMvtRight.compute(timeLastGrab);
 
 	    		cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
 	    		cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
@@ -367,87 +365,6 @@ public class Kinect implements Runnable
 		mainPosition.add(timeLastGrab, centerList.get(minLengthList[0]), getDepth(centerList.get(minLengthList[0])), 0);
     }
 
-    public void reconnaissanceDeMvt(MainPosition mainPosition, String side)
-    {
-    	long[] positionCurrent = mainPosition.getFiltre(0);
-
-    	for(int i = 0; i < 19; i++)
-    	{
-    		long[] position = mainPosition.getFiltre(i);
-
-    		if(mainPosition.get(i)[0] > timeOrigin)
-    		{
-    			if(Math.abs(position[0]-positionCurrent[0]) < 40 && Math.abs(position[1]-positionCurrent[1]) < 40) //stable en x, y
-	    		{
-	    			ct1 += 1;
-	    		}
-	    		else
-	    		{
-	    			ct1 = 0;
-	    		}
-
-    			if(Math.abs(position[0]-positionCurrent[0]) < 40 && Math.abs(position[2]-positionCurrent[2]) < 40) //stable en x, z
-    			{
-    				ct2 += 1;
-    			}
-	    		else
-	    		{
-	    			ct2 = 0;
-	    		}
-
-	    		if(ct1 > 20)
-	    		{
-	    			float dz = 0;
-
-	    			for(int j = 0; j <= i; j++)
-	    			{
-	    				dz += mainPosition.getDerivee(j)[2]; //z
-	    			}
-
-	    			if(dz < -0.25 && position[2] - positionCurrent[2] > 4)
-	    			{
-	    				timeOrigin = timeLastGrab;
-	    				ct1 = 0;
-	    				ct2 = 0;
-	    				System.out.println("pause "+dz+" "+ (position[2] - positionCurrent[2]));
-	    				kinectSource.fireEvent("play", side);
-	    			}
-	    		}
-
-	    		if(ct2 > 20)
-	    		{
-	    			float dy = 0;
-
-	    			for(int j = 0; j <= i; j++)
-	    			{
-	    				dy += mainPosition.getDerivee(j)[1];
-	    			}
-
-	    			if(Math.abs(dy) > 3)
-	    			{
-	    				timeOrigin = timeLastGrab;
-	    				ct1 = 0;
-	    				ct2 = 0;
-	    				System.out.println("volume "+dy);
-	    			}
-	    		}
-    		}
-    		else
-    		{
-    			break;
-    		}
-    	}
-
-    	if(ct1 > 20)
-    	{
-			//System.out.println("stable");
-    	}
-    	else
-    	{
-    		//System.out.println("non stable "+ct1);
-    	}
-    }
-  
     public int getFPS()
     {
     	for(int i = 3; i > 0; i--)
