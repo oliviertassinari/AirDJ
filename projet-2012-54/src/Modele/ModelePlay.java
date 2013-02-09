@@ -292,5 +292,6 @@ public class ModelePlay
 	public int getState(){
 		return state;
 	}
+
 }
 

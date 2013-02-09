@@ -28,9 +28,9 @@ public class KinectSource
 		listeners.remove(listener);
 	}
 	
-	public synchronized void fireEvent(String message, String param1)
+	public synchronized void fireEvent(String message, String cote, int valeur)
 	{
-		KinectEvent event = new KinectEvent(this, message, param1);
+		KinectEvent event = new KinectEvent(this, message, cote, valeur);
 		Iterator<ListenerInterface> i = listeners.iterator();
 
 	    while(i.hasNext())

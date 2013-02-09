@@ -7,14 +7,16 @@ public class KinectEvent extends EventObject
 	private static final long serialVersionUID = 1L;
 	private KinectSource source;
 	private String message;
-	private String param1;
+	private String cote;
+	private int valeur;
 
-	public KinectEvent(KinectSource source, String message, String param1)
+	public KinectEvent(KinectSource source, String message, String cote, int valeur)
 	{
 		super(source);
 		this.source =source;
 		this.message = message;
-		this.param1 = param1;
+		this.cote = cote;
+		this.valeur=valeur;
 	}
 	
 	public KinectSource getSource()
@@ -27,8 +29,12 @@ public class KinectEvent extends EventObject
 		return message;
 	}
 
-	public String getParam1()
+	public String getCote()
 	{
-		return param1;
+		return cote;
+	}
+	public int getValeur()
+	{
+		return valeur;
 	}
 }
