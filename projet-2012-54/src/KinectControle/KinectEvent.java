@@ -29,21 +29,34 @@ public class KinectEvent extends EventObject
 		this.cote = cote;
 		this.valeur=valeur;
 	}
-	
+	/**getter source
+	 * @return source
+	 */
 	public KinectSource getSource()
 	{
 		return source;
 	}
-	
+	/**
+	 * getter message
+	 * @return message
+	 */
 	public String getMessage()
 	{
 		return message;
 	}
-
+	
+	/**
+	 * getter coté
+	 * @return
+	 */
 	public String getCote()
 	{
 		return cote;
 	}
+	/**
+	 * getteur valeur
+	 * @return valeur
+	 */
 	public int getValeur()
 	{
 		return valeur;
