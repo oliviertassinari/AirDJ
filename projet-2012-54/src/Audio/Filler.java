@@ -15,7 +15,7 @@ public class Filler implements Runnable {
 	private Thread filler;
 	
 	/**
-	 * Player we will the arrayVolume
+	 * Player we will fill the arrayVolume
 	 */
 	private Player player;
 	
@@ -52,8 +52,8 @@ public class Filler implements Runnable {
 			
 			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
 			
-			int bytesDuree = (int) (frameSize * frameRate / 20);
-			byte bytes[] = new byte[bytesDuree];
+			int bytesCinqCentieme = (int) (frameSize * frameRate / 20);
+			byte bytes[] = new byte[bytesCinqCentieme];
 			int pos = 0;
 			int i = 0;
 			int ind[] = new int[2];
