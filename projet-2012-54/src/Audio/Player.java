@@ -390,7 +390,7 @@ public class Player implements Runnable, IPlayer
 	 */
 	public void setBPM(int bpm)
 	{
-		this.bpm=(int) (60/(bpm*0.05));
+		this.bpm=bpm;
 	}
 
 	public int getBPM()

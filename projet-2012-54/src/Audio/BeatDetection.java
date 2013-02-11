@@ -71,7 +71,7 @@ public class BeatDetection implements Runnable{
 			}
 			
 			int[] beat = new int[(int) (file.length()/bytesCinqCentieme)+1];
-			float C = 1.3f;
+			float C = 1.35f;
 			
 			int pos[] = new int[3];
 
@@ -113,16 +113,32 @@ public class BeatDetection implements Runnable{
 				tmp[0] = player.getBeatArray(i);
 				if (tmp[0] == 1 && player.getBeatArray(i+1) == 0) 
 				{
-					tmp[2] = (tmp[3]*tmp[2]+tmp[1])/(tmp[3]+1);
-					tmp[1] = 0;
-					tmp[3]++;
+					//if (tmp[3]>20)
+					//{
+						if (tmp[1]>tmp[2]/2)
+						{
+							tmp[2] = (tmp[3]*tmp[2]+tmp[1])/(tmp[3]+1);
+							tmp[1] = 0;
+							tmp[3]++;
+						}
+						else
+						{
+							tmp[1]++;
+						}
+					//}
+					//else
+					//{
+					//	tmp[2] = (tmp[3]*tmp[2]+tmp[1])/(tmp[3]+1);
+					//	tmp[1] = 0;
+					//	tmp[3]++;
+					//}
 				}
 				else
 				{
 					tmp[1]++;
 				}
 			}
-			player.setBPM(tmp[2]);
+			player.setBPM((int) (60/tmp[2]*0.05));
 
 		}
 		catch(UnsupportedAudioFileException e)
