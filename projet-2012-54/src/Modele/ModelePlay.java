@@ -17,7 +17,7 @@ public class ModelePlay
 	private String title = "Drag a song on this desk to load it";
 	private String artist = "";
 
-	private int bpm = 0;
+	private float bpm = 0;
 	private int total = 0;
 	private int current = 0;
 	private int state = 0; //0 pause - 1 play
