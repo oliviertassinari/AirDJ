@@ -21,36 +21,12 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
  */
 public class OpenCV
 {
-    public static void cvThreshold(IplImage src, IplImage dst, double threshold, double maxValue, int thresholdType)
-    {
-    	if(thresholdType == CV_THRESH_BINARY_INV)
-    	{
-    		int width = src.width();
-    		int height = src.height();
-    		int pixelIndex;
-
-    		ByteBuffer srcBuffer = src.getByteBuffer();
-    		ByteBuffer dstBuffer = dst.getByteBuffer();
-
-    		for(int x = 0; x < width; x++)
-    		{
-    			for(int y = 0; y < height; y++)
-    			{
-    				pixelIndex = x + width*y;
-
-    				if(getUnsignedByte(srcBuffer, pixelIndex) > threshold)
-    				{
-    					dstBuffer.put(pixelIndex, (byte) maxValue);
-    				}
-    				else
-    				{
-        				dstBuffer.put(pixelIndex, (byte) 0);
-    				}
-    			}
-    		}
-    	}
-    }
-
+	/**
+	 * Converts image from one color space to another
+	 * @param src The source 8-bit
+	 * @param dst The destination image
+	 * @param code Color conversion operation
+	 */
 	public static void cvCvtColor(IplImage src, IplImage dst, int code)
     {
     	if(code == CV_RGB2GRAY)
@@ -71,8 +47,39 @@ public class OpenCV
     			}
     		}
     	}
+    	else if(code == CV_GRAY2RGB)
+    	{
+    		int width = src.width();
+    		int height = src.height();
+    		int srcPixelIndex;
+    		byte value;
+
+    		ByteBuffer srcBuffer = src.getByteBuffer();
+    		ByteBuffer dstBuffer = dst.getByteBuffer();
+
+    		for(int x = 0; x < width; x++)
+    		{
+    			for(int y = 0; y < height; y++)
+    			{
+    				srcPixelIndex = 3*x + 3*width*y;
+    				value = (byte)(getUnsignedByte(srcBuffer, x + width*y));
+    				dstBuffer.put(srcPixelIndex, value);
+    				dstBuffer.put(srcPixelIndex + 1, value);
+    				dstBuffer.put(srcPixelIndex + 2, value);
+    			}
+    		}
+    	}
     }
 
+	/**
+	 * Finds global minimum and maximum in array or subarray
+	 * @param src The source array
+	 * @param minVal return minimum value
+	 * @param maxVal return maximum value
+	 * @param minPoint return minimum location
+	 * @param maxPoint returned maximum location
+	 * @param mask The optional mask that is used to select a subarray
+	 */
     public static void cvMinMaxLoc(IplImage src, double[] minVal, double[] maxVal, CvPoint minPoint, CvPoint maxPoint, IplImage mask)
     {
 		int width = src.width();
@@ -82,7 +89,7 @@ public class OpenCV
 		int value;
 		minVal[0] = 255;
 		maxVal[0] = 0;
-		
+
 		for(int x = 0; x < width; x++)
 		{
 			for(int y = 0; y < height; y++)
@@ -108,6 +115,78 @@ public class OpenCV
     	minPoint.y(minPointY);
     	maxPoint.x(maxPointX);
     	maxPoint.y(maxPointY);
+    }
+
+    /**
+     * Applies fixed-level threshold to array elements
+     * @param src Source array
+     * @param dst Destination array
+     * @param threshold Threshold value
+     * @param maxValue Maximum value
+     * @param thresholdType Thresholding type
+     */
+	public static void cvThreshold(IplImage src, IplImage dst, double threshold, double maxValue, int thresholdType)
+    {
+    	if(thresholdType == CV_THRESH_BINARY_INV)
+    	{
+    		int width = src.width();
+    		int height = src.height();
+    		int pixelIndex;
+
+    		ByteBuffer srcBuffer = src.getByteBuffer();
+    		ByteBuffer dstBuffer = dst.getByteBuffer();
+
+    		for(int x = 0; x < width; x++)
+    		{
+    			for(int y = 0; y < height; y++)
+    			{
+    				pixelIndex = x + width*y;
+
+    				if(getUnsignedByte(srcBuffer, pixelIndex) > threshold)
+    				{
+    					dstBuffer.put(pixelIndex, (byte) 0);
+    				}
+    				else
+    				{
+    					dstBuffer.put(pixelIndex, (byte) maxValue);
+    					
+    				}
+    			}
+    		}
+    	}
+    }
+
+	public static double cvContourArea(CvSeq contour, CvSlice slice, int mode)
+	{
+		double area = 0;
+
+		if(contour.total() > 2)
+		{
+			int[][] coordonne = new int[contour.total()][2];
+	
+			for(int i = 0; i < contour.total(); i++)
+			{
+				CvPoint point = new CvPoint(cvGetSeqElem(contour, i));
+				coordonne[i][0] = point.x();
+				coordonne[i][1] = point.y();
+			}
+			
+			for(int i = 0; i < coordonne.length-1; i++)
+			{
+				area += coordonne[i][0]*coordonne[i+1][1] - coordonne[i+1][0]*coordonne[i][1];
+			}
+
+	    	return Math.abs(area/2);
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+    public static int getUnsignedByte(ByteBuffer bb, int index)
+    {
+		return (short) (bb.get(index) & 0xff);
     }
 
     public static void cvSmooth(IplImage src, IplImage dst, int smoothtype, int param1, int param2, double param3, double param4)
@@ -335,39 +414,6 @@ public class OpenCV
 		{
 			return false;
 		}
-    }
-
-	public static double cvContourArea(CvSeq contour, CvSlice slice, int mode)
-	{
-		double area = 0;
-
-		if(contour.total() > 2)
-		{
-			int[][] coordonne = new int[contour.total()][2];
-	
-			for(int i = 0; i < contour.total(); i++)
-			{
-				CvPoint point = new CvPoint(cvGetSeqElem(contour, i));
-				coordonne[i][0] = point.x();
-				coordonne[i][1] = point.y();
-			}
-			
-			for(int i = 0; i < coordonne.length-1; i++)
-			{
-				area += coordonne[i][0]*coordonne[i+1][1] - coordonne[i+1][0]*coordonne[i][1];
-			}
-
-	    	return Math.abs(area/2);
-		}
-		else
-		{
-			return 0;
-		}
-	}
-
-    public static int getUnsignedByte(ByteBuffer bb, int index)
-    {
-		return (short) (bb.get(index) & 0xff);
     }
 
     public static void cvDrawContours(IplImage src, CvSeq contour, CvScalar external_color, CvScalar hole_color,  int max_level,  int thickness, int lineType)

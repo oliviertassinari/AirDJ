@@ -1,8 +1,5 @@
 package Kinect;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
 import Controle.Controle;
 
 import KinectControle.KinectListener;
@@ -21,8 +18,6 @@ public class Main
 		modele.getModeleCrossfinder().setTimer();
 
 		Controle controle = new Controle(vue, modele);
-
-		modele.getModelePlayP1().setFilePath("data/Any Colour You Like.wav");
 
 		KinectListener listener = new KinectListener();
 		final KinectSource kinectSource = new KinectSource(vue, modele);
