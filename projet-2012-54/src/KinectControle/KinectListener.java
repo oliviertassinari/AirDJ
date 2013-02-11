@@ -1,34 +1,60 @@
 package KinectControle;
 
-public class KinectListener implements ListenerInterface {
+import Modele.ModeleCrossfinder;
+import Modele.ModelePlay;
 
-	
+public class KinectListener implements ListenerInterface
+{
+	/**
+	 * 
+	 */
 	@Override
-	public void ListenToKinect(KinectEvent event) {
-		// TODO Auto-generated method stub
-		if (event.getMessage()=="play"){
-			if(event.getSource().getModele().getModelePlayP1().getState()==0){
-					//(event.getSource().getVue().getVuePlayP1()).setPause(0);
-			//(event.getSource().getVue().getVuePlayP1()).setPlay(2);
-			(event.getSource().getModele().getModelePlayP1()).setButtonPlay("press");
-			(event.getSource().getModele().getModelePlayP1()).setButtonPause("out");
-			(event.getSource().getModele().getModelePlayP1()).setPlay();
-			System.out.println("play");
+	public void ListenToKinect(KinectEvent event)
+	{		
+		
+		// commande play/pause
+		if(event.getMessage() == "play")
+		{
+			ModelePlay modelePlay;
+			
+			if(event.getCote() == "left")
+			{
+				modelePlay = event.getSource().getModele().getModelePlayP1();
+			}
+			else 
+			{
+				modelePlay = event.getSource().getModele().getModelePlayP2();
 			}
 			
-			else if(event.getSource().getModele().getModelePlayP1().getState()==1){
-				//(event.getSource().getVue().getVuePlayP1()).setPause(0);
-		//(event.getSource().getVue().getVuePlayP1()).setPlay(2);
-		(event.getSource().getModele().getModelePlayP1()).setButtonPlay("out");
-		(event.getSource().getModele().getModelePlayP1()).setButtonPause("press");
-		(event.getSource().getModele().getModelePlayP1()).setPause();
-		System.out.println("pause");
+			if(modelePlay.getState() == 0)
+			{
+				modelePlay.setPlay();
+				modelePlay.setButtonPlay("release");
+				modelePlay.setButtonPause("out");
+			}
+			else if(modelePlay.getState() == 1)
+			{
+				modelePlay.setPause();
+				modelePlay.setButtonPlay("out");
+				modelePlay.setButtonPause("release");
+			}		
 		}
-					
+		
+		if(event.getMessage() == "volume"){
+			
+			ModeleCrossfinder crossfinder = event.getSource().getModele().getModeleCrossfinder();
+			if(event.getCote() == "left"){
+				crossfinder.setVolumeP1(crossfinder.getVolumeP1()+event.getValeur());
+			}
+			else if(event.getCote() == "right"){
+				crossfinder.setVolumeP2(crossfinder.getVolumeP2()+event.getValeur());
+			}		
 		}
-			(event.getSource().getVue().getVuePlayP1()).repaint();
+		if(event.getMessage() == "crossfinder"){
+			ModeleCrossfinder crossfinder = event.getSource().getModele().getModeleCrossfinder();
+			crossfinder.setCrossfinder(crossfinder.getCrossfinder()+event.getValeur());
+		}
+			
 		
 	}
-	
-
 }

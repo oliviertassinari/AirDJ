@@ -121,7 +121,7 @@ public class ModelePlay
 		}
 		else if(state == "out")
 		{
-			if(this.state == 0  || player == null)
+			if(this.state == 0 || player == null)
 			{
 				buttonPlay = 0;
 			}
@@ -292,5 +292,6 @@ public class ModelePlay
 	public int getState(){
 		return state;
 	}
+
 }
 

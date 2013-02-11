@@ -29,7 +29,7 @@ public class Vue extends JFrame
 		this.modele = modele;
 
 		setTitle("AirDJ");
-		setSize(1000 + 8 + 17, 700 + 4 + 14);
+		setSize(1000 +8 + 17, 740+4  + 14);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(new ImageIcon("image/icon.png").getImage());
