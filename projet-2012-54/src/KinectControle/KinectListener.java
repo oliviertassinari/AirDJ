@@ -5,6 +5,9 @@ import Modele.ModelePlay;
 
 public class KinectListener implements ListenerInterface
 {
+	/**
+	 * 
+	 */
 	@Override
 	public void ListenToKinect(KinectEvent event)
 	{		

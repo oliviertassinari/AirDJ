@@ -24,6 +24,16 @@ public class Player implements Runnable, IPlayer
 	/** 
 	 * 
 	 */
+	private int[] beatArray;
+	
+	/** 
+	 * 
+	 */
+	private int bpm;
+	
+	/** 
+	 * 
+	 */
 	private float frameRate;
 	
 	/** 
@@ -50,7 +60,7 @@ public class Player implements Runnable, IPlayer
 	 * 
 	 */
 	private SourceDataLine line;
-	
+
 	/**
 	 * 
 	 */
@@ -141,9 +151,11 @@ public class Player implements Runnable, IPlayer
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
 	 		volumeArray = new int[2][((int) (file.length()/(frameSize*frameRate)*20))+1];
+	 		beatArray = new int[((int) (file.length()/(frameSize*frameRate)*20))+1];
 	 		
 	 		//Filling volumeArray
 			new Filler(this);
+			new BeatDetection(this);
 			
 			//Initializing gainControl
 			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
@@ -364,7 +376,38 @@ public class Player implements Runnable, IPlayer
 	}
 	
 	/**
+	 * @param beat: 1 oui - 0 non
+	 * @param i array position
+	 */
+	public void setBeatArray(int beat, int i)
+	{
+		this.beatArray[i] = beat;
+	}
+	
+	/**
 	 * 
+	 * @param bpm
+	 */
+	public void setBPM(int bpm)
+	{
+		this.bpm=bpm;
+	}
+
+	public int getBPM()
+	{
+		return this.bpm;
+	}
+	
+	/**
+	 * @param beat: 1 oui - 0 non
+	 * @param i array position
+	 */
+	public int getBeatArray(int i)
+	{
+		return this.beatArray[i];
+	}
+	
+	/**
 	 * @param j (0-left  1-right)
 	 * @param i array position
 	 */

@@ -48,7 +48,9 @@ public interface IPlayer
 	 * @return total length of the file
 	 */
 	public float getLength();
-
+	
+	public int getBPM();
+	
 	/**
 	 * Reset song
 	 */
