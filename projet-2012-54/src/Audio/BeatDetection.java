@@ -34,8 +34,9 @@ public class BeatDetection implements Runnable{
 	public BeatDetection(Player player) 
 	{
 		this.player = player;
-		detector = new Thread(this, "detector");
-		detector.start();
+		//detector = new Thread(this, "detector");
+		//detector.start();
+		this.beatDetection();
 	
 	}
 	
@@ -49,61 +50,79 @@ public class BeatDetection implements Runnable{
 			int frameSize = player.getFrameSize();
 			float frameRate= player.getFrameRate();
 			File file = player.getFile();
-			
 			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
 			
 			int bytesUneSeconde = (int) (frameSize * frameRate);
 			int bytesCinqCentieme = (int) (frameSize * frameRate / 20);
-			byte bytes[] = new byte[bytesCinqCentieme];
+			
+			byte bytes[] = new byte[(int) file.length()];
+			double bytesBis[] = new double[(int) file.length()];
+			while(((ais.read(bytes, 0, bytes.length)) != -1));
+				
+			for (int i =0; i<bytes.length; i++) 
+				{
+				Byte temp = new Byte(bytes[i]);
+				bytesBis[i] = temp.doubleValue();
+				}
+			
+			for (int i =1; i<bytes.length; i++) 
+			{
+			bytesBis[i] = bytesBis[i] + 0.6*bytesBis[i-1];
+			}
+			
 			int[] beat = new int[(int) (file.length()/bytesCinqCentieme)+1];
-			int C = 1;
+			float C = 1.3f;
 			
-			int pos[] = new int[2];
-			pos[0] = 0;
-			pos[1] = 0;
-			
-			int tmp[] = new int[2];
+			int pos[] = new int[3];
+
+			int tmp[] = new int[4];
 			tmp[0] = 0;
 			tmp[1] = 0;
+			tmp[2] = 0;
+			tmp[3] = 0;
 			
-			while(((ais.read(bytes, 0, bytesCinqCentieme)) != -1))
+			for (pos[0]=0; pos[0]<bytes.length-bytesCinqCentieme; pos[0]+=bytesCinqCentieme)
 			{
-				System.out.println("pos " + pos[0]);
-				pos[1] = 0;
-				while(pos[1]<bytesCinqCentieme)
-				{
-					Byte temp = new Byte(bytes[pos[1]]);
-					tmp[0] += Math.pow(Math.abs(temp.intValue()), 2);
-					pos[1]++;
-				}
-				beat[pos[0]] = tmp[0];
-				System.out.println("e " + tmp[0]);
 				
-				if (pos[0]>20)
+				for (pos[1]=0; pos[1]<bytesCinqCentieme; pos[1]++) 
 				{
-					pos[1] = 0;
-					while(pos[1]<20)
-					{
-						tmp[1] += 0.05*beat[pos[0]-pos[1]];
-						pos[1]++;
-					}
-					System.out.println("E " + tmp[1]);
-
+					tmp[0] += Math.pow(Math.abs(bytesBis[pos[0]+pos[1]]), 2);
+				}
+				beat[pos[2]] = tmp[0];
+				
+				if (pos[2]>20)
+				{
+					for(pos[1] = 0; pos[1]<20; pos[1]++) tmp[1] += 0.05*beat[pos[2]-pos[1]];
 					if(tmp[0]>C*tmp[1]) 
 					{
-						player.setBeatArray(1, pos[0]);				
-						System.out.println("beat " + 1);
+						player.setBeatArray(1, pos[2]);				
 					}
 					else
 					{
-						player.setBeatArray(0, pos[0]);				
-						System.out.println("beat " + 0);
+						player.setBeatArray(0, pos[2]);				
 					}
 					tmp[0] = 0;
 					tmp[1] = 0;
-				}
-				pos[0]++;
+				}		
+				
+				pos[2]++;
 			}
+			
+			for (int i=0; i<=((int) (file.length()/(frameSize*frameRate)*20)); i++)
+			{
+				tmp[0] = player.getBeatArray(i);
+				if (tmp[0] == 1 && player.getBeatArray(i+1) == 0) 
+				{
+					tmp[2] = (tmp[3]*tmp[2]+tmp[1])/(tmp[3]+1);
+					tmp[1] = 0;
+					tmp[3]++;
+				}
+				else
+				{
+					tmp[1]++;
+				}
+			}
+			player.setBPM(tmp[2]);
 
 		}
 		catch(UnsupportedAudioFileException e)

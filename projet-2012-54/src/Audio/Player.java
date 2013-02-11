@@ -29,6 +29,11 @@ public class Player implements Runnable, IPlayer
 	/** 
 	 * 
 	 */
+	private int bpm;
+	
+	/** 
+	 * 
+	 */
 	private float frameRate;
 	
 	/** 
@@ -55,7 +60,7 @@ public class Player implements Runnable, IPlayer
 	 * 
 	 */
 	private SourceDataLine line;
-	
+
 	/**
 	 * 
 	 */
@@ -381,6 +386,28 @@ public class Player implements Runnable, IPlayer
 	
 	/**
 	 * 
+	 * @param bpm
+	 */
+	public void setBPM(int bpm)
+	{
+		this.bpm=(int) (60/(bpm*0.05));
+	}
+
+	public int getBPM()
+	{
+		return this.bpm;
+	}
+	
+	/**
+	 * @param beat: 1 oui - 0 non
+	 * @param i array position
+	 */
+	public int getBeatArray(int i)
+	{
+		return this.beatArray[i];
+	}
+	
+	/**
 	 * @param j (0-left  1-right)
 	 * @param i array position
 	 */

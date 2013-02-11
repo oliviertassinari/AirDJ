@@ -62,7 +62,7 @@ public class ModelePlay
 		title = file.getName();
 		artist = file.getName();
 
-		bpm = 108;
+		bpm = player.getBPM();
 		total = Math.round(player.getLength()*10);
 
 		current = 0;
