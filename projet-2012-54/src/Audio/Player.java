@@ -29,7 +29,7 @@ public class Player implements Runnable, IPlayer
 	/** 
 	 * 
 	 */
-	private int bpm;
+	private float bpm;
 	
 	/** 
 	 * 
@@ -151,7 +151,7 @@ public class Player implements Runnable, IPlayer
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
 	 		volumeArray = new int[2][((int) (file.length()/(frameSize*frameRate)*20))+1];
-	 		beatArray = new int[((int) (file.length()/(frameSize*frameRate)*20))+1];
+	 		beatArray = new int[((int) (file.length()/(frameSize*frameRate)*100))+1];
 	 		
 	 		//Filling volumeArray
 			new Filler(this);
@@ -388,12 +388,12 @@ public class Player implements Runnable, IPlayer
 	 * 
 	 * @param bpm
 	 */
-	public void setBPM(int bpm)
+	public void setBPM(float bpm)
 	{
-		this.bpm=bpm;
+		this.bpm=(float) (60/(bpm*0.01));
 	}
 
-	public int getBPM()
+	public float getBPM()
 	{
 		return this.bpm;
 	}

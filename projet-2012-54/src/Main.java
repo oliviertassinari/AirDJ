@@ -21,7 +21,7 @@ public class Main
 
 		Controle controle = new Controle(vue, modele);
 
-		modele.getModelePlayP1().setFilePath("data/1.wav");
+		//modele.getModelePlayP1().setFilePath("data/1.wav");
 		
 		//test controleKinect
 		KinectListener listener = new KinectListener();

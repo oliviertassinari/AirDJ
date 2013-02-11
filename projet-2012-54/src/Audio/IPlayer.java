@@ -49,7 +49,7 @@ public interface IPlayer
 	 */
 	public float getLength();
 	
-	public int getBPM();
+	public float getBPM();
 	
 	/**
 	 * Reset song
