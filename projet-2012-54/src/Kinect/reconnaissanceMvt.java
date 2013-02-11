@@ -79,7 +79,7 @@ public class reconnaissanceMvt
 	    				ct2 = 0;
 	    				ct3 = 0;
 	    				System.out.println(side+" pause "+dz+" "+ (position[2] - positionCurrent[2]));
-	    				kinectSource.fireEvent("pause", side, 0);
+	    				kinectSource.fireEvent("play", side, 0);
 	    			}
 	    		}
 
