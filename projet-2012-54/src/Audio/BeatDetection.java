@@ -78,7 +78,6 @@ public class BeatDetection implements Runnable{
 				}
 				beat[pos[0]] = tmp[0];
 				System.out.println("e " + tmp[0]);
-				tmp[0] = 0;
 				
 				if (pos[0]>20)
 				{
@@ -100,6 +99,7 @@ public class BeatDetection implements Runnable{
 						player.setBeatArray(0, pos[0]);				
 						System.out.println("beat " + 0);
 					}
+					tmp[0] = 0;
 					tmp[1] = 0;
 				}
 				pos[0]++;
