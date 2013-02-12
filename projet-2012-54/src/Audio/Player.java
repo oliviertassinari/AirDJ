@@ -365,21 +365,29 @@ public class Player implements Runnable, IPlayer
 	 */
 	public void setVolumeArray(int volume, int i, int j)
 	{
-		this.volumeArray[j][i] = volume;
+		volumeArray[j][i] = volume;
 	}
 
-	
+	/**
+	 * 
+	 * @return array position
+	 */
+	public int[][] getVolumeArray()
+	{
+		return volumeArray;
+	}
+
 	/**
 	 * @param j (0-left  1-right)
 	 * @param i array position
 	 */
 	public int getVolumeArray(int i, int j)
 	{
-		return this.volumeArray[j][i];
+		return volumeArray[j][i];
 	}
-	
+
 	public float getBPM()
 	{
-		return this.bpm;
+		return bpm;
 	}
 }

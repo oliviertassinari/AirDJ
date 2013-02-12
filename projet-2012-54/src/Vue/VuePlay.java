@@ -186,6 +186,16 @@ public class VuePlay extends JPanel
 		{
 			g.drawImage(imageButton, 162, 174, 162+39, 174+23, 36, 46, 75, 69, null);
 		}
+
+		if(modelePlay.getPlayer() != null)
+		{		
+			VueSpectre spectre = new VueSpectre(modelePlay.getPlayer());
+			BufferedImage imageSpectre = spectre.get();
+			g.drawImage(imageSpectre, 0, 0, this);
+
+			g.setColor(Color.CYAN);
+			g.fillRect(18, 75, 332, 40);
+		}
 	}
 
 	public String getFormatMMSS(int value)

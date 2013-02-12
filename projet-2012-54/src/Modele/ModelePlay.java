@@ -289,9 +289,15 @@ public class ModelePlay
 	{
 		return buttonPause;
 	}
-	public int getState(){
+
+	public int getState()
+	{
 		return state;
 	}
 
+	public IPlayer getPlayer()
+	{
+		return player;
+	}
 }
 
