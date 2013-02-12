@@ -39,9 +39,11 @@ public class KinectListener implements ListenerInterface
 				
 				if ( event.getCote()=="left"){
 					modeleKinect.setMessageGauche("play");
+					modeleKinect.setMessageDroite(null);
 				}
 				else if ( event.getCote()=="right"){
 					modeleKinect.setMessageDroite("play");
+					modeleKinect.setMessageGauche(null);
 				}
 			}
 			else if(modelePlay.getState() == 1)
@@ -52,9 +54,11 @@ public class KinectListener implements ListenerInterface
 				
 				if ( event.getCote()=="left"){
 					modeleKinect.setMessageGauche("pause");
+					modeleKinect.setMessageDroite(null);
 				}
 				else if ( event.getCote()=="right"){
 					modeleKinect.setMessageDroite("pause");
+					modeleKinect.setMessageGauche(null);
 				}
 			}		
 		}
@@ -65,10 +69,12 @@ public class KinectListener implements ListenerInterface
 			if(event.getCote() == "left"){
 				crossfinder.setVolumeP1(crossfinder.getVolumeP1()+event.getValeur());
 				modeleKinect.setMessageGauche("volume");
+				modeleKinect.setMessageDroite(null);
 			}
 			else if(event.getCote() == "right"){
 				crossfinder.setVolumeP2(crossfinder.getVolumeP2()+event.getValeur());
 				modeleKinect.setMessageDroite("volume");
+				modeleKinect.setMessageGauche(null);
 			}		
 		}
 		if(event.getMessage() == "crossfinder"){
