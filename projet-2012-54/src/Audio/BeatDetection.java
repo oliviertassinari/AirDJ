@@ -1,4 +1,4 @@
-package Audio;
+/*package Audio;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,17 +11,17 @@ public class BeatDetection implements Runnable{
 
 	/**
 	 * 
-	 */
+	 *
 	private Thread detector;
 	
 	/**
 	 * 
-	 */
+	 *
 	private Player player;
 	
 	/**
 	 * 
-	 */
+	 *
 	public void run() 
 	{
 		this.beatDetection();
@@ -30,7 +30,7 @@ public class BeatDetection implements Runnable{
 	/**
 	 * CONSTRUCTOR
 	 * @param player
-	 */
+	 *
 	public BeatDetection(Player player) 
 	{
 		this.player = player;
@@ -42,7 +42,7 @@ public class BeatDetection implements Runnable{
 	
 	/** 
 	 * 
-	 */
+	 *
 	public void beatDetection() 
 	{
 		try
@@ -151,3 +151,4 @@ public class BeatDetection implements Runnable{
 	}
 	
 }
+*/
