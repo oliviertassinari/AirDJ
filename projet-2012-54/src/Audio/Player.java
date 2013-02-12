@@ -155,7 +155,6 @@ public class Player implements Runnable, IPlayer
 	 		
 	 		//Filling volumeArray
 			new Filler(this);
-			new BeatDetection(this);
 			
 			//Initializing gainControl
 			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
