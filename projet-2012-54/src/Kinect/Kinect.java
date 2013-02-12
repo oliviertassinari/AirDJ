@@ -35,7 +35,7 @@ public class Kinect implements Runnable
 	private long[] timeList = new long[4];
     private reconnaissanceMvt reconnaissanceMvtLeft;
     private reconnaissanceMvt reconnaissanceMvtRight;
-    Vue vue;
+    private Vue vue;
 
 	public Kinect(KinectSource kinectSource, Vue vue)
     {
@@ -44,7 +44,7 @@ public class Kinect implements Runnable
 
 		runner = new Thread(this, "kinect");
 		runner.start();
-		this.vue=vue;
+		this.vue = vue;
     }
 
 	public void run()

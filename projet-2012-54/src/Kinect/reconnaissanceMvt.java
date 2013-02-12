@@ -74,7 +74,7 @@ public class reconnaissanceMvt
 
 	    			if(dz < -0.25 && position[2] - positionCurrent[2] > 4)
 	    			{
-	    				timeOrigin = timeLastGrab;
+	    				timeOrigin = timeLastGrab + 500;
 	    				ct1 = 0;
 	    				ct2 = 0;
 	    				ct3 = 0;
@@ -94,7 +94,7 @@ public class reconnaissanceMvt
 
 	    			if(Math.abs(dy) > 3)
 	    			{
-	    				timeOrigin = timeLastGrab+500;
+	    				timeOrigin = timeLastGrab + 500;
 	    				ct1 = 0;
 	    				ct2 = 0;
 	    				ct3 = 0;
@@ -114,7 +114,7 @@ public class reconnaissanceMvt
 
 	    			if((dx > 3 && side == "right") || (dx < -3 && side == "left"))
 	    			{
-	    				timeOrigin = timeLastGrab;
+	    				timeOrigin = timeLastGrab + 500;
 	    				ct1 = 0;
 	    				ct2 = 0;
 	    				ct3 = 0;
