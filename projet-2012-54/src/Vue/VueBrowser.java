@@ -43,7 +43,7 @@ public class VueBrowser extends JPanel
 	
 	/**
 	 * getter vueBrowserTable (affichage fichiers wav)
-	 * @return
+	 * @return VueBrowserTable
 	 */
 	public VueBrowserTable getVueBrowserTable()
 	{

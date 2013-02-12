@@ -75,7 +75,7 @@ public class Vue extends JFrame
 
 	/**
 	 * getter vueKinect (video en bas de l'ecran)
-	 * @return
+	 * @return VueKinect
 	 */
 	public VueKinect getVueKinect()
 	{
@@ -101,7 +101,7 @@ public class Vue extends JFrame
 	}
 
 	/**
-	 * getter modele ??
+	 * 
 	 * @return modele
 	 */
 	public Modele getModele()

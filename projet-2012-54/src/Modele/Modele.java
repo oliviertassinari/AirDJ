@@ -5,9 +5,7 @@ import Vue.Vue;
 
 public class Modele
 {
-	/**
-	 * vue référente
-	 */
+	
 	Vue vue;
 	ModeleBrowser modeleBrowser;
 	ModeleCrossfinder modeleCrossfinder;

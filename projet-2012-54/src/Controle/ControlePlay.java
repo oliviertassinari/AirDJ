@@ -10,6 +10,9 @@ import java.awt.event.MouseWheelListener;
 import Modele.ModelePlay;
 import Vue.VuePlay;
 
+/**
+ * Partie du controleur associée à ModelePlay
+ */
 public class ControlePlay implements MouseListener, MouseMotionListener, MouseWheelListener
 {
 	private VuePlay vuePlay;
@@ -18,6 +21,11 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 	int blockSelected = 0;
 	int offset = 0;
 
+	/**
+	 * constructeur
+	 * @param vuePlay
+	 * @param modelePlay
+	 */
 	public ControlePlay(VuePlay vuePlay, ModelePlay modelePlay)
 	{
 		this.vuePlay = vuePlay;
@@ -27,7 +35,12 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 	public void mouseClicked(MouseEvent e)
 	{
 	}
+	
 
+	/**
+	 * gestion de l'appui de souris
+	 * @param e
+	 */
 	public void mousePressed(MouseEvent e)
 	{
 		if(blockOver == 1) //pitch
@@ -67,6 +80,10 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 		}
 	}
 
+	/**
+	 * gestion de l'évènement relever la souris
+	 * @param e
+	 */
 	public void mouseReleased(MouseEvent e)
 	{
 		if(blockOver == 2)
@@ -91,6 +108,10 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 	{
 	}
 
+	/**
+	 * gestion d'un mouvement
+	 * @param e
+	 */
 	public void mouseMoved(MouseEvent e)
 	{
 		if(blockSelected == 0)
@@ -160,6 +181,10 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 		}
 	}
 
+	/**
+	 * gestion d'un glissé
+	 * @param e
+	 */
 	public void mouseDragged(MouseEvent e)
 	{
 		if(blockSelected == 1) //Pitch
@@ -175,6 +200,9 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 		}
 	}
 
+	/**
+	 * gestion d'une rotation de la molette
+	 */
 	public void mouseWheelMoved(MouseWheelEvent e)
 	{
 		if(blockOver == 1 || blockOver == 11) //Pitch ou Pitch All

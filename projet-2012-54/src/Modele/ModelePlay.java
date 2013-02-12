@@ -8,8 +8,13 @@ import Vue.VuePlay;
 import Audio.IPlayer;
 import Audio.Player;
 
-public class ModelePlay
-{
+/**
+ * Partie du modele associée à VuePlay, contenant des attributs sur l'état de la
+ * lecture des pistes, les pistes jouées.
+ * 
+ * 
+ */
+public class ModelePlay {
 	private Modele modele;
 	private VuePlay vuePlay;
 	private String filePath = "";
@@ -20,28 +25,37 @@ public class ModelePlay
 	private float bpm = 0;
 	private int total = 0;
 	private int current = 0;
-	private int state = 0; //0 pause - 1 play
+	private int state = 0; // 0 pause - 1 play
 	private int buttonPlay = 0;
 	private int buttonPause = 0;
 	private IPlayer player = null;
 	private int cote; // 0 gauche - 1 droite
 	private int startFrom = 0;
 
-	public ModelePlay(Modele modele, int cote)
-	{
+	/**
+	 * 
+	 * @param modele
+	 * @param cote
+	 */
+	public ModelePlay(Modele modele, int cote) {
 		this.modele = modele;
 		this.cote = cote;
 	}
 
-	public void setVuePlay(VuePlay vuePlay)
-	{
+	/**
+	 * 
+	 * @param vuePlay
+	 */
+	public void setVuePlay(VuePlay vuePlay) {
 		this.vuePlay = vuePlay;
 	}
 
-	public void setFilePath(String value)
-	{
-		if(player != null && state == 1)
-		{
+	/**
+	 * 
+	 * @param value
+	 */
+	public void setFilePath(String value) {
+		if (player != null && state == 1) {
 			player.setPause();
 		}
 
@@ -50,20 +64,19 @@ public class ModelePlay
 		File file = new File(filePath);
 
 		player = new Player(value);
-		if(cote == 0)
-		{	
-			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP1()*modele.getModeleCrossfinder().getCoefVolumeP1()));
-		}
-		else
-		{
-			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP2()*modele.getModeleCrossfinder().getCoefVolumeP2()));
+		if (cote == 0) {
+			player.setVolume((int) (modele.getModeleCrossfinder().getVolumeP1() * modele
+					.getModeleCrossfinder().getCoefVolumeP1()));
+		} else {
+			player.setVolume((int) (modele.getModeleCrossfinder().getVolumeP2() * modele
+					.getModeleCrossfinder().getCoefVolumeP2()));
 		}
 
 		title = file.getName();
 		artist = file.getName();
 
 		bpm = player.getBPM();
-		total = Math.round(player.getLength()*10);
+		total = Math.round(player.getLength() * 10);
 
 		current = 0;
 		state = 0;
@@ -76,53 +89,40 @@ public class ModelePlay
 		vuePlay.repaint();
 	}
 
-	public void setPlay()
-	{
-		if(player != null)
-		{
-			if(state == 0)
-			{
+	public void setPlay() {
+		if (player != null) {
+			if (state == 0) {
 				state = 1;
 				player.setPlay();
-			}	
-			else
-			{
-				player.setPosition(startFrom/10);
+			} else {
+				player.setPosition(startFrom / 10);
 			}
 		}
 	}
 
-	public void setPause()
-	{
-		if(player != null && state == 1)
-		{
+	public void setPause() {
+		if (player != null && state == 1) {
 			state = 0;
 			player.setPause();
 		}
 	}
 
-	public void setButtonPlay(String state)
-	{
-		if(state == "over")
-		{
-			if(this.state == 0 || player == null)
-			{
+	/**
+	 * 
+	 * @param state
+	 */
+	public void setButtonPlay(String state) {
+		if (state == "over") {
+			if (this.state == 0 || player == null) {
 				buttonPlay = 1;
 			}
-		}
-		else if(state == "press")
-		{
+		} else if (state == "press") {
 			buttonPlay = 3;
 			buttonPause = 0;
-		}
-		else if(state == "release")
-		{
+		} else if (state == "release") {
 			buttonPlay = 2;
-		}
-		else if(state == "out")
-		{
-			if(this.state == 0 || player == null)
-			{
+		} else if (state == "out") {
+			if (this.state == 0 || player == null) {
 				buttonPlay = 0;
 			}
 		}
@@ -130,119 +130,109 @@ public class ModelePlay
 		vuePlay.repaint();
 	}
 
-	public void setButtonPause(String state)
-	{
-		if(state == "over")
-		{
-			if(this.state == 1  || player == null)
-			{
+	/**
+	 * 
+	 * @param state
+	 */
+	public void setButtonPause(String state) {
+		if (state == "over") {
+			if (this.state == 1 || player == null) {
 				buttonPause = 1;
 			}
-		}
-		else if(state == "press")
-		{
+		} else if (state == "press") {
 			buttonPlay = 0;
 			buttonPause = 3;
-		}
-		else if(state == "release")
-		{
+		} else if (state == "release") {
 			buttonPause = 2;
-		}
-		else if(state == "out")
-		{
-			if(this.state == 1 || player == null)
-			{
+		} else if (state == "out") {
+			if (this.state == 1 || player == null) {
 				buttonPause = 0;
 			}
 		}
 
 		vuePlay.repaint();
 	}
-	
-	public void setPitch(int value)
-	{
-		if(value > 100)
-		{
+
+	/**
+	 * 
+	 * @param value
+	 */
+	public void setPitch(int value) {
+		if (value > 100) {
 			value = 100;
-		}
-		else if(value < -100)
-		{
+		} else if (value < -100) {
 			value = -100;
 		}
 
 		pitch = value;
 
-		if(player != null)
-		{
+		if (player != null) {
 			player.setVitesse(pitch);
 		}
 
 		vuePlay.repaint();
 	}
 
-	public void setCurrent(int value)
-	{
-		if(value < 0)
-		{
+	/**
+	 * 
+	 * @param value
+	 */
+	public void setCurrent(int value) {
+		if (value < 0) {
 			value = 0;
-		}
-		else if(value > total)
-		{
+		} else if (value > total) {
 			value = total;
 		}
 
 		current = value;
 		startFrom = value;
-		player.setPosition((float)(current)/10);
+		player.setPosition((float) (current) / 10);
 
 		vuePlay.repaint();
 	}
 
-	public void updateCurrent()
-	{
-		if(player != null)
-		{
-			int currentNew = Math.round(player.getPosition()*10);
+	
+	public void updateCurrent() {
+		if (player != null) {
+			int currentNew = Math.round(player.getPosition() * 10);
 
-			if(currentNew == total)
-			{
+			if (currentNew == total) {
 				reset();
 			}
 
-			if(currentNew != current)
-			{
+			if (currentNew != current) {
 				current = currentNew;
 				vuePlay.repaint();
 			}
 		}
 	}
 
-	public void setVolume(int volume)
-	{
-		if(player != null)
-		{
+	/**
+	 * 
+	 * @param volume
+	 */
+	public void setVolume(int volume) {
+		if (player != null) {
 			player.setVolume(volume);
 		}
 	}
 
-	public int[] getDisplayVolume()
-	{
-		if(player != null)
-		{
+	/**
+	 * 
+	 * @return int[]
+	 */
+	public int[] getDisplayVolume() {
+		if (player != null) {
 			int[] displayVolume = player.getCurrentVolume();
 			return displayVolume;
-		}
-		else
-		{
-			int[] displayVolume = {0, 0};
+		} else {
+			int[] displayVolume = { 0, 0 };
 			return displayVolume;
 		}
 	}
-	
-	public void reset()
-	{
-		if(player.reset())
-		{
+
+	public void reset() {
+		if (player.reset()) {
 			state = 0;
 			buttonPlay = 0;
 			buttonPause = 2;
@@ -250,54 +240,83 @@ public class ModelePlay
 		}
 	}
 
-	public int getPitch()
-	{
+	/**
+	 * 
+	 * @return int
+	 */
+	public int getPitch() {
 		return pitch;
 	}
 
-	public String getTitle()
-	{
+	/**
+	 * 
+	 * @return String
+	 */
+	public String getTitle() {
 		return title;
 	}
 
-	public String getArtist()
-	{
+	/**
+	 * 
+	 * @return String
+	 */
+	public String getArtist() {
 		return artist;
 	}
 
-	public double getBpm()
-	{
+	/**
+	 * 
+	 * @return double
+	 */
+	public double getBpm() {
 		return bpm;
 	}
 
-	public int getTotal()
-	{
+	/**
+	 * 
+	 * @return int
+	 */
+	public int getTotal() {
 		return total;
 	}
 
-	public int getCurrent()
-	{
+	/**
+	 * 
+	 * @return int
+	 */
+	public int getCurrent() {
 		return current;
 	}
 
-	public int getButtonPlay()
-	{
+	/**
+	 * 
+	 * @return int
+	 */
+	public int getButtonPlay() {
 		return buttonPlay;
 	}
 
-	public int getButtonPause()
-	{
+	/**
+	 * 
+	 * @return int
+	 */
+	public int getButtonPause() {
 		return buttonPause;
 	}
 
-	public int getState()
-	{
+	/**
+	 * 
+	 * @return int
+	 */
+	public int getState() {
 		return state;
 	}
 
-	public IPlayer getPlayer()
-	{
+	/**
+	 * 
+	 * @return IPlayer
+	 */
+	public IPlayer getPlayer() {
 		return player;
 	}
 }
-
