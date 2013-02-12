@@ -23,7 +23,7 @@ public class VueSpectre
 		imageSpectre = new BufferedImage(332, 30, BufferedImage.TRANSLUCENT);
 		Graphics g = imageSpectre.getGraphics();
 
-        int listdim = volumeArray.length; 
+        int listdim = volumeArray[0].length; 
         int m = listdim / 332 + 1;
         int max = 0;
  
@@ -49,7 +49,9 @@ public class VueSpectre
         			1, (S/m)/(max/20 + 1));
         	g.setColor(Color.gray);
         	g.fillRect(i, 15, 1, (S/m)/(max/10 + 1));
-        }  
+        }
+        
+        System.out.println(listdim/m);
 
         return imageSpectre;
 	}

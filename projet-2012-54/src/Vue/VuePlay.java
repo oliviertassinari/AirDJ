@@ -189,12 +189,12 @@ public class VuePlay extends JPanel
 
 		if(modelePlay.getPlayer() != null)
 		{		
-			VueSpectre spectre = new VueSpectre(modelePlay.getPlayer());
-			BufferedImage imageSpectre = spectre.get();
-			g.drawImage(imageSpectre, 0, 0, this);
-
 			g.setColor(Color.CYAN);
 			g.fillRect(18, 75, 332, 40);
+
+			VueSpectre spectre = new VueSpectre(modelePlay.getPlayer());
+			BufferedImage imageSpectre = spectre.get();
+			g.drawImage(imageSpectre, 18, 75, this);
 		}
 	}
 
