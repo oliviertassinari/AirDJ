@@ -13,7 +13,10 @@ public class KinectListener implements ListenerInterface
 	public void ListenToKinect(KinectEvent event)
 	{		
 		ModeleKinect modeleKinect = event.getSource().getModele().getModeleKinect();
-		
+		if(modeleKinect.getMessageDroite()=="crossfinder") {
+			modeleKinect.setMessageDroite(null);
+			modeleKinect.setMessageGauche(null);
+		}
 		// commande play/pause
 		if(event.getMessage() == "play")
 		{

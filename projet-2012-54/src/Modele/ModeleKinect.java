@@ -13,13 +13,13 @@ public class ModeleKinect
 	public void setMessageDroite(String messageDroite){
 		this.messageDroite=messageDroite;
 		modele.getVue().getVueKinect().repaint();
-		System.out.println("droite");
+		
 	}
 	
 	public void setMessageGauche(String messageGauche){
 		this.messageGauche=messageGauche;
 		modele.getVue().getVueKinect().repaint();
-		System.out.println("gauche");
+	
 	}
 	
 	public String getMessageDroite(){
