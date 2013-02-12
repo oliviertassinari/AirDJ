@@ -20,12 +20,7 @@ public class Player implements Runnable, IPlayer
 	 * Array filled with the volume of every 0.05s bracket (0-left  1-right)
 	 */
 	private int[][] volumeArray;
-	
-	/** 
-	 * 
-	 */
-	private int[] beatArray;
-	
+
 	/** 
 	 * 
 	 */
@@ -151,7 +146,6 @@ public class Player implements Runnable, IPlayer
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
 	 		volumeArray = new int[2][((int) (file.length()/(frameSize*frameRate)*20))+1];
-	 		beatArray = new int[((int) (file.length()/(frameSize*frameRate)*100))+1];
 	 		
 	 		//Filling volumeArray
 			new Filler(this);
@@ -373,38 +367,7 @@ public class Player implements Runnable, IPlayer
 	{
 		this.volumeArray[j][i] = volume;
 	}
-	
-	/**
-	 * @param beat: 1 oui - 0 non
-	 * @param i array position
-	 */
-	public void setBeatArray(int beat, int i)
-	{
-		this.beatArray[i] = beat;
-	}
-	
-	/**
-	 * 
-	 * @param bpm
-	 */
-	public void setBPM(float bpm)
-	{
-		this.bpm=(float) (60/(bpm*0.01));
-	}
 
-	public float getBPM()
-	{
-		return this.bpm;
-	}
-	
-	/**
-	 * @param beat: 1 oui - 0 non
-	 * @param i array position
-	 */
-	public int getBeatArray(int i)
-	{
-		return this.beatArray[i];
-	}
 	
 	/**
 	 * @param j (0-left  1-right)
@@ -414,5 +377,9 @@ public class Player implements Runnable, IPlayer
 	{
 		return this.volumeArray[j][i];
 	}
-
+	
+	public float getBPM()
+	{
+		return this.bpm;
+	}
 }
