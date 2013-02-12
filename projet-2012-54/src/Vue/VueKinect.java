@@ -10,11 +10,11 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class VueKinect extends JPanel
 /**
  *Panel devant afficher ce qui est filmé
  *prend en attribut la vue qui le contient
  */
+public class VueKinect extends JPanel
 { 
 	private Vue vue;
 	private BufferedImage kinectImage;
@@ -22,17 +22,12 @@ public class VueKinect extends JPanel
 	private Image pause;
 	private Image volume;
 	private Image crossfinder;
-		
-	
-	
-	
 
      /**
 	 * constructeur qui initialise le panel
 	 * @param Vue
 	 */
 	public VueKinect(Vue vue)
-	
 	{
 		this.vue = vue;
 
@@ -94,13 +89,11 @@ public class VueKinect extends JPanel
 		}
 		//g.drawString(messageGauche, 450, 100);
 		//g.drawString(messageDroite, 780, 100);
-		
-		
-	}
-	
-	public void setKinectImage(BufferedImage kinectImage){
-		this.kinectImage=kinectImage;
-		repaint();
 	}
 
+	public void setKinectImage(BufferedImage kinectImage)
+	{
+		this.kinectImage = kinectImage;
+		repaint();
+	}
 }
