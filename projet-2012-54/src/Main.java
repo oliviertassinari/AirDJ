@@ -21,7 +21,7 @@ public class Main
 
 		Controle controle = new Controle(vue, modele);
 
-		//modele.getModelePlayP1().setFilePath("/stud/users/promo15/ameyer/git/musique/1.wav");
+		modele.getModelePlayP1().setFilePath("/stud/users/promo15/ameyer/git/musique/Aerodynamic.wav");
 		
 		//test controleKinect
 		KinectListener listener = new KinectListener();
