@@ -45,6 +45,8 @@ public class VueKinect extends JPanel
 	 */
 	protected void paintComponent(Graphics g)
 	{
+		g.drawImage(kinectImage,10, 10,null);	
+		
 		play = new ImageIcon("image/playvuekinect.png").getImage();
 		pause = new ImageIcon("image/pausevuekinect.png").getImage();
 		volume = new ImageIcon("image/volumevuekinect.png").getImage();
@@ -94,6 +96,11 @@ public class VueKinect extends JPanel
 		//g.drawString(messageDroite, 780, 100);
 		
 		
+	}
+	
+	public void setKinectImage(BufferedImage kinectImage){
+		this.kinectImage=kinectImage;
+		repaint();
 	}
 
 }
