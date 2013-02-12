@@ -2,6 +2,7 @@ package Vue;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -103,6 +104,12 @@ public class VueCrossfinder extends JPanel
 		g.setColor(new Color(0x090808));
 		g.drawLine(85, 220, 165, 220);
 
+		//Texte
+	    g.setFont(new Font("sansserif", Font.PLAIN, 8));
+		g.setColor(new Color(0x908F8D));
+		g.drawString("VOLUME", 88, 63);
+		g.drawString("VOLUME", 128, 63);
+		
 		//Images
 		Image imageSetVolumeGrid = new ImageIcon("image/volumeGrid.png").getImage();
 		g.drawImage(imageSetVolumeGrid, 95, 70, null);
