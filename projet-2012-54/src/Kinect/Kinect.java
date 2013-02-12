@@ -149,7 +149,6 @@ public class Kinect implements Runnable
 		                		if(nbrFound == 2)
 		                		{
 		                			isFound = true;
-		                			break;
 		                		}
 		                 	}
 		                }
