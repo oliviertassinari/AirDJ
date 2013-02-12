@@ -23,6 +23,6 @@ public class Main
 		final KinectSource kinectSource = new KinectSource(vue, modele);
 		kinectSource.addKinectListener(listener);
 
-		new Kinect(kinectSource);
+		new Kinect(kinectSource, vue);
 	}
 }

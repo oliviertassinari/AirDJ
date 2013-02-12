@@ -4,11 +4,13 @@ import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 import KinectControle.KinectSource;
+import Vue.Vue;
 
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.CanvasFrame;
@@ -33,14 +35,16 @@ public class Kinect implements Runnable
 	private long[] timeList = new long[4];
     private reconnaissanceMvt reconnaissanceMvtLeft;
     private reconnaissanceMvt reconnaissanceMvtRight;
+    Vue vue;
 
-	public Kinect(KinectSource kinectSource)
+	public Kinect(KinectSource kinectSource, Vue vue)
     {
 		reconnaissanceMvtLeft = new reconnaissanceMvt(mainPositionLeft, "left", kinectSource);
 		reconnaissanceMvtRight = new reconnaissanceMvt(mainPositionRight, "right", kinectSource);
 
 		runner = new Thread(this, "kinect");
 		runner.start();
+		this.vue=vue;
     }
 
 	public void run()
@@ -57,12 +61,15 @@ public class Kinect implements Runnable
 			grabber.start();
 
 			IplImage imageGrab = grabber.grab();
+			BufferedImage bufferedImageGrab = imageGrab.getBufferedImage();
 			int width  = imageGrab.width();
 			int height = imageGrab.height();
 	    	CvPoint minPoint = new CvPoint();
 	    	CvPoint maxPoint = new CvPoint();
 	    	double[] minVal = new double[1];
 	    	double[] maxVal = new double[1];
+	    	
+	    	vue.getVueKinect().setKinectImage(bufferedImageGrab);
 
 	    	// creation window used to display the video, the object in JavaCv can use the material acceleration
 	    	JFrame Fenetre = new JFrame();
