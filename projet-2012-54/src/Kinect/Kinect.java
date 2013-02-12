@@ -149,6 +149,7 @@ public class Kinect implements Runnable
 		                		if(nbrFound == 2)
 		                		{
 		                			isFound = true;
+		                			break;
 		                		}
 		                 	}
 		                }
@@ -156,14 +157,9 @@ public class Kinect implements Runnable
 		            }
 	        	}
 
-	        	if(isFound)
+	        	if(!isFound)
 	        	{
-	        		cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*nbrIteration, 255, CV_THRESH_BINARY_INV);
-	        		//OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*nbrIteration, 255, CV_THRESH_BINARY_INV);
-	        	}
-	        	else
-	        	{
-	        		cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*nbrIteration, 255, CV_THRESH_BINARY_INV);
+	        		cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*firstFound, 255, CV_THRESH_BINARY_INV);
 	        		//OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*firstFound, 255, CV_THRESH_BINARY_INV);
 	        	}
 
