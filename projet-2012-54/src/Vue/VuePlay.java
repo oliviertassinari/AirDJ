@@ -29,7 +29,6 @@ public class VuePlay extends JPanel
 
 	private BufferedImage imageBackground;
 	private Image imagePitchCursor;
-	private Image imagePlayerCursor;
 	private Image imagePlayerCurrent;
 	private Image imageButton;
 
@@ -48,7 +47,6 @@ public class VuePlay extends JPanel
 		setPreferredSize(new Dimension((1000 - 250) / 2, 300));
 
 		imagePitchCursor = new ImageIcon("image/pitchCursor.png").getImage();
-		imagePlayerCursor = new ImageIcon("image/playerCursor.png").getImage();
 		imagePlayerCurrent = new ImageIcon("image/playerCurrent.png").getImage();
 
 		if(couleur == 0)
@@ -174,8 +172,7 @@ public class VuePlay extends JPanel
 		// Player
 		if(total != 0)
 		{
-			g.drawImage(imagePlayerCurrent, 10, 91, 10 + (int)(350 * current / total), 99, 0, 8 * couleur, 1, 8 + 8 * couleur, null);
-			g.drawImage(imagePlayerCursor, 12 + (int)(332 * current / total), 89, null);
+			g.drawImage(imagePlayerCurrent, 2, 81, 2 + (int)(366 * current / total), 108, 0, 8 * couleur, 1, 8 + 8 * couleur, null);
 		}
 
 		// Button

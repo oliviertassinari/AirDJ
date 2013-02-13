@@ -156,7 +156,7 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 					vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
-			else if(19 <= x && x <= 350 && 90 <= y && y <= 99 && modelePlay.getTotal() != 0) // Player
+			else if(2 <= x && x <= 367 && 81 <= y && y <= 107 && modelePlay.getTotal() != 0) // Player
 			{
 				if(blockOver != 4)
 				{
