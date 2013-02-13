@@ -32,7 +32,7 @@ public class KinectListener implements ListenerInterface {
 				modelePlay = event.getSource().getModele().getModelePlayP2();
 			}
 
-			if (modelePlay.getState() == 0) {
+			if (modelePlay.getState() == 0 && modelePlay.getPlayer() != null) {
 				modelePlay.setPlay();
 				modelePlay.setButtonPlay("release");
 				modelePlay.setButtonPause("out");
