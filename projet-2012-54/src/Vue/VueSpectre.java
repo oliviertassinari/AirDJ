@@ -1,3 +1,4 @@
+
 package Vue;
 
 import java.awt.Color;
@@ -20,47 +21,47 @@ public class VueSpectre
 	{
 		int[][] volumeArray = player.getVolumeArray();
 
-        int listdim = volumeArray[0].length; 
-        int m = listdim / 350 + 1;
-        int max = 0;
- 
-        for(int i = 0; i < listdim/m; i++)
-        {
-        	int S = 0;
+		float listdim = volumeArray[0].length;
+		float m = listdim / 368;
+		int max = 0;
+		int pixelLength = (int)(listdim / m);
 
-        	for(int j = 0; j < m; j++)
-        	{
-        		S = (volumeArray[0][m*i + j] + volumeArray[1][m*i + j])/2 + S;
-        	}
+		for(int i = 0; i < pixelLength; i++)
+		{
+			int S = 0;
 
-        	if(max < S)
-        	{
-        		max = S;
-        	}
-        }
-      
-		imageSpectre = new BufferedImage(listdim/m, 39, BufferedImage.TRANSLUCENT);
+			for(int j = 0; j < m; j++)
+			{
+				S = (volumeArray[0][(int)(m * i + j)] + volumeArray[1][(int)(m * i + j)]) / 2 + S;
+			}
+
+			if(max < S)
+			{
+				max = S;
+			}
+		}
+
+		imageSpectre = new BufferedImage(pixelLength, 29, BufferedImage.TRANSLUCENT);
 		Graphics g = imageSpectre.getGraphics();
-		
+
 		g.setColor(Color.black);
-		g.fillRect(0, 0, listdim/m, 40);
-		
+		g.fillRect(0, 0, pixelLength, 29);
+
 		g.setColor(Color.gray);
-		g.drawRect(0, 0, listdim/m-1, 38);
-		//g.drawLine(0, 20, listdim/m-1, 20);
+		g.drawRect(0, 0, pixelLength - 1, 28);
 
-        for(int i = 0; i < listdim/m; i++)
-        {
-        	int S = 0;
+		for(int i = 0; i < pixelLength; i++)
+		{
+			int S = 0;
 
-        	for(int j = 0; j < m; j++)
-        	{
-        		S = (volumeArray[0][m*i + j] + volumeArray[1][m*i + j])/2 + S;
-        	}
+			for(int j = 0; j < m; j++)
+			{
+				S = (volumeArray[0][(int)(m * i + j)] + volumeArray[1][(int)(m * i + j)]) / 2 + S;
+			}
 
-        	g.setColor(Color.gray);
-        	g.drawLine(i, 19, i, 19 - S/(max/18+1));
-        	g.drawLine(i, 19, i, 19 + S/(max/18+1));
+			g.setColor(Color.gray);
+			g.drawLine(i, 14, i, 14 - S / (max / 13 + 1));
+			g.drawLine(i, 14, i, 14 + S / (max / 13 + 1));
 		}
 
 		return imageSpectre;
