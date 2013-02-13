@@ -1,8 +1,6 @@
 package Modele;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import Vue.VuePlay;
 import Audio.IPlayer;

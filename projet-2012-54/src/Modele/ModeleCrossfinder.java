@@ -3,8 +3,6 @@ package Modele;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Audio.Player;
-
 public class ModeleCrossfinder
 {
 	

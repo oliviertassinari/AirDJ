@@ -13,9 +13,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import Modele.ModeleBrowserTree;
-
-
 public class VueBrowserTable extends JPanel
 {
 	/** 

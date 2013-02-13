@@ -1,6 +1,5 @@
 package Modele;
 
-import Audio.Player;
 import Vue.Vue;
 
 public class Modele

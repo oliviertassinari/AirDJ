@@ -10,9 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Modele.Modele;
-import Modele.ModeleBrowserTree;
 import Vue.VueBrowserTable;
-import Vue.VueBrowserTree;
 
 public class ControleBrowserTable implements MouseListener, MouseMotionListener, MouseWheelListener
 {
