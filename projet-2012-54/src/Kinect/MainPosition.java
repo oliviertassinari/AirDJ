@@ -1,9 +1,10 @@
+
 package Kinect;
 
 import com.googlecode.javacv.cpp.opencv_core.CvPoint;
 
 /**
- * Structure de donnée pour enregistrer la position des mains.
+ * Structure de donnï¿½e pour enregistrer la position des mains.
  */
 public class MainPosition
 {
@@ -21,19 +22,19 @@ public class MainPosition
 	/**
 	 * Ajouter une nouvelle position.
 	 * @param time temps en milliseconde depuis 1970
-	 * @param centre coordonnées x y
-	 * @param depth coordonnée z
-	 * @param state état de la main
+	 * @param centre coordonnï¿½es x y
+	 * @param depth coordonnï¿½e z
+	 * @param state ï¿½tat de la main
 	 */
 	public void add(long time, CvPoint centre, long depth, long state)
 	{
-		for(int i = positions.length-1; i > 0; i--)
+		for(int i = positions.length - 1; i > 0; i--)
 		{
-			positions[i][0] = positions[i-1][0];
-			positions[i][1] = positions[i-1][1];
-			positions[i][2] = positions[i-1][2];
-			positions[i][3] = positions[i-1][3];
-			positions[i][4] = positions[i-1][4];
+			positions[i][0] = positions[i - 1][0];
+			positions[i][1] = positions[i - 1][1];
+			positions[i][2] = positions[i - 1][2];
+			positions[i][3] = positions[i - 1][3];
+			positions[i][4] = positions[i - 1][4];
 		}
 
 		positions[0][0] = time;
@@ -42,25 +43,23 @@ public class MainPosition
 		positions[0][3] = depth;
 		positions[0][4] = state;
 
-
-		for(int i = positionsFiltre.length-1; i > 0; i--)
+		for(int i = positionsFiltre.length - 1; i > 0; i--)
 		{
-			positionsFiltre[i][0] = positionsFiltre[i-1][0];
-			positionsFiltre[i][1] = positionsFiltre[i-1][1];
-			positionsFiltre[i][2] = positionsFiltre[i-1][2];
+			positionsFiltre[i][0] = positionsFiltre[i - 1][0];
+			positionsFiltre[i][1] = positionsFiltre[i - 1][1];
+			positionsFiltre[i][2] = positionsFiltre[i - 1][2];
 		}
 
 		positionsFiltre[0][0] = (int)oneEuroFilterX.filter(centre.x());
 		positionsFiltre[0][1] = (int)oneEuroFilterY.filter(centre.y());
 		positionsFiltre[0][2] = depth;
 
-
-		// Calcule de dérivée
-		for(int i = derivees.length-1; i > 0; i--)
+		// Calcule de dï¿½rivï¿½e
+		for(int i = derivees.length - 1; i > 0; i--)
 		{
-			derivees[i][0] = derivees[i-1][0];
-			derivees[i][1] = derivees[i-1][1];
-			derivees[i][2] = derivees[i-1][2];
+			derivees[i][0] = derivees[i - 1][0];
+			derivees[i][1] = derivees[i - 1][1];
+			derivees[i][2] = derivees[i - 1][2];
 		}
 
 		if(positions[1][0] == 0)
@@ -71,17 +70,17 @@ public class MainPosition
 		}
 		else
 		{
-			float deltaT = positions[0][0]-positions[1][0];
+			float deltaT = positions[0][0] - positions[1][0];
 
-			derivees[0][0] = (positionsFiltre[0][0]-positionsFiltre[1][0])/deltaT;
-			derivees[0][1] = (positionsFiltre[0][1]-positionsFiltre[1][1])/deltaT;
-			derivees[0][2] = (positionsFiltre[0][2]-positionsFiltre[1][2])/deltaT;
+			derivees[0][0] = (positionsFiltre[0][0] - positionsFiltre[1][0]) / deltaT;
+			derivees[0][1] = (positionsFiltre[0][1] - positionsFiltre[1][1]) / deltaT;
+			derivees[0][2] = (positionsFiltre[0][2] - positionsFiltre[1][2]) / deltaT;
 		}
 
 	}
 
 	/**
-	 * Réinitialise les données
+	 * Rï¿½initialise les donnï¿½es
 	 */
 	public void reset()
 	{
@@ -92,13 +91,13 @@ public class MainPosition
 		oneEuroFilterX = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 		oneEuroFilterY = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 
-		//System.out.println("reset");
+		// System.out.println("reset");
 	}
 
 	/**
 	 * Retourne une position.
 	 * @param index index
-	 * @return position demandée
+	 * @return position demandï¿½e
 	 */
 	public long[] get(int index)
 	{
@@ -106,9 +105,9 @@ public class MainPosition
 	}
 
 	/**
-	 * Retourne une position filtré.
+	 * Retourne une position filtrï¿½.
 	 * @param index index
-	 * @return position filtré demandée
+	 * @return position filtrï¿½ demandï¿½e
 	 */
 	public long[] getFiltre(int index)
 	{
@@ -116,9 +115,9 @@ public class MainPosition
 	}
 
 	/**
-	 * Retourne une dérivée.
+	 * Retourne une dï¿½rivï¿½e.
 	 * @param index index
-	 * @return dérivée demandée
+	 * @return dï¿½rivï¿½e demandï¿½e
 	 */
 	public float[] getDerivee(int index)
 	{

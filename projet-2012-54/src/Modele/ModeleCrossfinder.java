@@ -1,3 +1,4 @@
+
 package Modele;
 
 import java.util.Timer;
@@ -5,7 +6,7 @@ import java.util.TimerTask;
 
 public class ModeleCrossfinder
 {
-	
+
 	private Modele modele;
 	/**
 	 * position du cross finder
@@ -55,7 +56,7 @@ public class ModeleCrossfinder
 			}
 		}, 0, 100);
 	}
-	
+
 	/**
 	 * @param int la valeur qu'on veut appliquer au cross finder
 	 */
@@ -74,11 +75,11 @@ public class ModeleCrossfinder
 
 		if(crossfinder < 0)
 		{
-			modele.getModelePlayP2().setVolume((int)(volumeP2*getCoefVolumeP2()));
+			modele.getModelePlayP2().setVolume((int)(volumeP2 * getCoefVolumeP2()));
 		}
 		else
 		{
-			modele.getModelePlayP1().setVolume((int)(volumeP1*getCoefVolumeP1()));
+			modele.getModelePlayP1().setVolume((int)(volumeP1 * getCoefVolumeP1()));
 		}
 
 		modele.getVue().getVueCrossfinder().repaint();
@@ -99,7 +100,7 @@ public class ModeleCrossfinder
 		}
 
 		volumeP1 = value;
-		modele.getModelePlayP1().setVolume((int)(volumeP1*getCoefVolumeP1()));
+		modele.getModelePlayP1().setVolume((int)(volumeP1 * getCoefVolumeP1()));
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
@@ -118,7 +119,7 @@ public class ModeleCrossfinder
 		}
 
 		volumeP2 = value;
-		modele.getModelePlayP2().setVolume((int)(volumeP2*getCoefVolumeP2()));
+		modele.getModelePlayP2().setVolume((int)(volumeP2 * getCoefVolumeP2()));
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
@@ -133,10 +134,10 @@ public class ModeleCrossfinder
 		}
 		else
 		{
-			return (float)(100-crossfinder)/100;
+			return (float)(100 - crossfinder) / 100;
 		}
 	}
-	
+
 	/**
 	 * @return float le coefficient à appliquer au volume de la piste 2 en fonction de la valeur du crossfinder
 	 */
@@ -148,10 +149,10 @@ public class ModeleCrossfinder
 		}
 		else
 		{
-			return (float)(100+crossfinder)/100;
+			return (float)(100 + crossfinder) / 100;
 		}
 	}
-	
+
 	/**
 	 * @return int la valeur du crossfinder
 	 */

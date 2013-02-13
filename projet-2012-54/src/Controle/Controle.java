@@ -1,3 +1,4 @@
+
 package Controle;
 
 import Modele.Modele;
@@ -27,7 +28,7 @@ public class Controle
 		vueBrowserTree.addMouseListener(controleBrowserTree);
 		vueBrowserTree.addMouseMotionListener(controleBrowserTree);
 		vueBrowserTree.addMouseWheelListener(controleBrowserTree);
-		
+
 		ControleBrowserTable controleBrowserTable = new ControleBrowserTable(this);
 		VueBrowserTable vueBrowserTable = vue.getVueBrowser().getVueBrowserTable();
 		vueBrowserTable.addMouseListener(controleBrowserTable);
@@ -61,7 +62,7 @@ public class Controle
 	{
 		return vue;
 	}
- 
+
 	/**
 	 * accéder au modele
 	 * @return Modele

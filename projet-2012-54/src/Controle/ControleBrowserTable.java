@@ -1,3 +1,4 @@
+
 package Controle;
 
 import java.awt.Cursor;
@@ -45,51 +46,54 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 	 */
 	public void mousePressed(MouseEvent e)
 	{
-		if(blockOver == 11) //ScrollBar Up
+		if(blockOver == 11) // ScrollBar Up
 		{
 			vueBrowserTable.setScroll(vueBrowserTable.getScroll() - 25);
 
 			timer = new Timer();
-			timer.schedule(new TimerTask(){
+			timer.schedule(new TimerTask()
+			{
 				public void run()
 				{
 					vueBrowserTable.setScroll(vueBrowserTable.getScroll() - 25);
 				}
 			}, 500, 100);
 		}
-		else if(blockOver == 12) //ScrollBar Down
+		else if(blockOver == 12) // ScrollBar Down
 		{
 			vueBrowserTable.setScroll(vueBrowserTable.getScroll() + 25);
 
 			timer = new Timer();
-			timer.schedule(new TimerTask(){
+			timer.schedule(new TimerTask()
+			{
 				public void run()
 				{
 					vueBrowserTable.setScroll(vueBrowserTable.getScroll() + 25);
 				}
 			}, 500, 100);
 		}
-		else if(blockOver == 13) //ScrollBar
+		else if(blockOver == 13) // ScrollBar
 		{
 			int scroll = vueBrowserTable.getScroll();
 			int length = vueBrowserTable.getLength();
 
 			blockSelected = 1;
-			offset = 123*(80+scroll)/(length*16) + 20 - e.getY();
+			offset = 123 * (80 + scroll) / (length * 16) + 20 - e.getY();
 		}
-		else if(blockOver == 14) //ScrollBar All
+		else if(blockOver == 14) // ScrollBar All
 		{
 			blockSelected = 1;
 			mouseDragged(e);
 			vueBrowserTable.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
-		else //Table
+		else
+		// Table
 		{
 			int x = e.getX();
 			int y = e.getY();
 			int scroll = vueBrowserTable.getScroll();
 			int length = vueBrowserTable.getLength();
-			int line = (int)((scroll+y)/25);
+			int line = (int)((scroll + y) / 25);
 
 			if(line < length)
 			{
@@ -148,9 +152,9 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 			int y = e.getY();
 			int scroll = vueBrowserTable.getScroll();
 
-			if(628 <= x && x <= 644 && length*25 > 161)
+			if(628 <= x && x <= 644 && length * 25 > 161)
 			{
-				if(y <= 15) //ScrollBar Up
+				if(y <= 15) // ScrollBar Up
 				{
 					if(blockOver != 11)
 					{
@@ -160,7 +164,7 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 						vueBrowserTable.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					}
 				}
-				else if(145 <= y) //ScrollBar Down
+				else if(145 <= y) // ScrollBar Down
 				{
 					if(blockOver != 12)
 					{
@@ -170,9 +174,9 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 						vueBrowserTable.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					}
 				}
-				else if(20 + (int)(123*scroll/(25*length)) <= y && y <= 20 + (int)(123*(scroll+160)/(25*length)))
+				else if(20 + (int)(123 * scroll / (25 * length)) <= y && y <= 20 + (int)(123 * (scroll + 160) / (25 * length)))
 				{
-					if(blockOver != 13) //ScrollBar
+					if(blockOver != 13) // ScrollBar
 					{
 						int[] state = {1, 1};
 						blockOver = 13;
@@ -182,7 +186,7 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 				}
 				else if(20 <= y && y <= 140)
 				{
-					if(blockOver != 14) //ScrollBar All
+					if(blockOver != 14) // ScrollBar All
 					{
 						int[] state = {1, 1};
 						blockOver = 14;
@@ -208,13 +212,13 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 					int[] state = {0, 0};
 					vueBrowserTable.setScrollBarState(state);
 				}
-	
+
 				blockOver = 0;
 				vueBrowserTable.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 			else
 			{
-				int line = (int)((scroll+y)/25);
+				int line = (int)((scroll + y) / 25);
 
 				if(line < length)
 				{
@@ -253,12 +257,12 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		if(blockSelected == 1) //ScrollBar
+		if(blockSelected == 1) // ScrollBar
 		{
 			int y = e.getY();
 			int length = vueBrowserTable.getLength();
 
-			vueBrowserTable.setScroll((int)(((y+offset-20)*length*25)/123-80));
+			vueBrowserTable.setScroll((int)(((y + offset - 20) * length * 25) / 123 - 80));
 		}
 	}
 
@@ -268,6 +272,6 @@ public class ControleBrowserTable implements MouseListener, MouseMotionListener,
 	 */
 	public void mouseWheelMoved(MouseWheelEvent e)
 	{
-		vueBrowserTable.setScroll(vueBrowserTable.getScroll() + 50*e.getWheelRotation());
+		vueBrowserTable.setScroll(vueBrowserTable.getScroll() + 50 * e.getWheelRotation());
 	}
 }

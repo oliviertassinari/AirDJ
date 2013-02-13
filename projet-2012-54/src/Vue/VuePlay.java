@@ -1,3 +1,4 @@
+
 package Vue;
 
 import java.awt.AlphaComposite;
@@ -14,14 +15,14 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import Modele.ModeleCrossfinder;
 import Modele.ModelePlay;
 
 /**
  * Panel affichant l'état de lecture pour chaque piste
  * 
  */
-public class VuePlay extends JPanel {
+public class VuePlay extends JPanel
+{
 	private int couleur; // 0 = blue, 1 = red
 	private Vue vue;
 	private ModelePlay modelePlay;
@@ -39,7 +40,8 @@ public class VuePlay extends JPanel {
 	 * @param modelePlay
 	 */
 
-	public VuePlay(int couleur, Vue vue, ModelePlay modelePlay) {
+	public VuePlay(int couleur, Vue vue, ModelePlay modelePlay)
+	{
 		this.couleur = couleur;
 		this.vue = vue;
 		this.modelePlay = modelePlay;
@@ -47,40 +49,40 @@ public class VuePlay extends JPanel {
 
 		imagePitchCursor = new ImageIcon("image/pitchCursor.png").getImage();
 		imagePlayerCursor = new ImageIcon("image/playerCursor.png").getImage();
-		imagePlayerCurrent = new ImageIcon("image/playerCurrent.png")
-				.getImage();
+		imagePlayerCurrent = new ImageIcon("image/playerCurrent.png").getImage();
 
-		if (couleur == 0) {
+		if(couleur == 0)
+		{
 			imageButton = new ImageIcon("image/buttonBlue.png").getImage();
-		} else {
+		}
+		else
+		{
 			imageButton = new ImageIcon("image/buttonRed.png").getImage();
 		}
 
 		imageBackground = getImageBackground();
 	}
 
-	public BufferedImage getImageBackground() {
-		BufferedImage image = new BufferedImage(375, 300,
-				BufferedImage.TRANSLUCENT);
+	public BufferedImage getImageBackground()
+	{
+		BufferedImage image = new BufferedImage(375, 300, BufferedImage.TRANSLUCENT);
 		Graphics g = image.getGraphics();
 		g.setColor(new Color(0x181613));
 		g.fillRect(0, 0, 375, 300);
 
-		Graphics2D g2d = (Graphics2D) g;
+		Graphics2D g2d = (Graphics2D)g;
 
 		// Shadow
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		AlphaComposite ac = null;
 		g2d.setColor(Color.BLACK);
 		int sw = 375 - 2 * 7;
 		int sh = 300 - 2 * 7;
-		for (int i = 0; i < 7; ++i) {
-			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
-					1f / (i + 1));
+		for(int i = 0; i < 7; ++i)
+		{
+			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f / (i + 1));
 			g2d.setComposite(ac);
-			g2d.fillRoundRect(7 - i, 7 - i, sw + 2 * i, sh + 2 * i, i * 2,
-					i * 2);
+			g2d.fillRoundRect(7 - i, 7 - i, sw + 2 * i, sh + 2 * i, i * 2, i * 2);
 		}
 		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
 		g2d.setComposite(ac);
@@ -93,8 +95,7 @@ public class VuePlay extends JPanel {
 		g.drawLine(0, 0, 369, 0);
 
 		// Background
-		GradientPaint gp1 = new GradientPaint(0, 0, new Color(0x383839), 0,
-				300, new Color(0x171718));
+		GradientPaint gp1 = new GradientPaint(0, 0, new Color(0x383839), 0, 300, new Color(0x171718));
 		g2d.setPaint(gp1);
 		g2d.fillRect(1, 1, 368, 291);
 
@@ -109,8 +110,7 @@ public class VuePlay extends JPanel {
 		Image imagePitchGrid = new ImageIcon("image/pitchGrid.png").getImage();
 		g.drawImage(imagePitchGrid, 300, 120, null);
 
-		Image imagePlayerGrid = new ImageIcon("image/playerGrid.png")
-				.getImage();
+		Image imagePlayerGrid = new ImageIcon("image/playerGrid.png").getImage();
 		g.drawImage(imagePlayerGrid, 18, 90, null);
 
 		Image imagePlayButton = new ImageIcon("image/button.png").getImage();
@@ -121,7 +121,8 @@ public class VuePlay extends JPanel {
 		return image;
 	}
 
-	protected void paintComponent(Graphics g) {
+	protected void paintComponent(Graphics g)
+	{
 		int pitch = modelePlay.getPitch();
 		String title = modelePlay.getTitle();
 		String artist = modelePlay.getArtist();
@@ -131,20 +132,20 @@ public class VuePlay extends JPanel {
 		int buttonPlay = modelePlay.getButtonPlay();
 		int buttonPause = modelePlay.getButtonPause();
 
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		g.drawImage(imageBackground, 0, 0, this);
 
-		g.drawImage(imagePitchCursor, 303, (int) (181 + (0.57 * pitch)), null);
+		g.drawImage(imagePitchCursor, 303, (int)(181 + (0.57 * pitch)), null);
 
 		// Texte
 		g.setFont(new Font("sansserif", Font.BOLD, 17));
 		g.setColor(Color.WHITE);
 		g.drawString(artist, 8, 23);
 
-		if (bpm != 0) {
+		if(bpm != 0)
+		{
 			g.setFont(new Font("sansserif", Font.BOLD, 18));
 			g.drawString(String.valueOf(bpm + pitch), 300, 30);
 		}
@@ -157,58 +158,52 @@ public class VuePlay extends JPanel {
 		g.setColor(new Color(0x908F8D));
 		g.drawString(String.valueOf(pitch), 48, 72);
 
-		if (total != 0) {
+		if(total != 0)
+		{
 			g.drawString(getFormatMMSS(current), 68, 60);
 			g.drawString(getFormatMMSS(total - current), 190, 60);
 		}
 
-		
-		if (modelePlay.getPlayer() != null) {
+		if(modelePlay.getPlayer() != null)
+		{
 			VueSpectre spectre = new VueSpectre(modelePlay.getPlayer());
 			BufferedImage imageSpectre = spectre.get();
 			g.drawImage(imageSpectre, 10, 77, 350, 39, this);
 		}
-		
-		// Player
-		if (total != 0) {
-			g.drawImage(imagePlayerCurrent, 10, 91,
-					10 + (int) (350 * current / total), 99, 0, 8 * couleur, 1,
-					8 + 8 * couleur, null);
-			g.drawImage(imagePlayerCursor, 12 + (int) (332 * current / total),
-					89, null);
-		}
 
+		// Player
+		if(total != 0)
+		{
+			g.drawImage(imagePlayerCurrent, 10, 91, 10 + (int)(350 * current / total), 99, 0, 8 * couleur, 1, 8 + 8 * couleur, null);
+			g.drawImage(imagePlayerCursor, 12 + (int)(332 * current / total), 89, null);
+		}
 
 		// Button
-		if (buttonPause == 1) // over
+		if(buttonPause == 1) // over
 		{
-			g.drawImage(imageButton, 124, 174, 124 + 36, 174 + 23, 0, 0, 36,
-					23, null);
-		} else if (buttonPause == 2) // on
+			g.drawImage(imageButton, 124, 174, 124 + 36, 174 + 23, 0, 0, 36, 23, null);
+		}
+		else if(buttonPause == 2) // on
 		{
-			g.drawImage(imageButton, 124, 174, 124 + 36, 174 + 23, 0, 23, 36,
-					46, null);
-		} else if (buttonPause == 3) // press
+			g.drawImage(imageButton, 124, 174, 124 + 36, 174 + 23, 0, 23, 36, 46, null);
+		}
+		else if(buttonPause == 3) // press
 		{
-			g.drawImage(imageButton, 124, 174, 124 + 36, 174 + 23, 0, 46, 36,
-					69, null);
+			g.drawImage(imageButton, 124, 174, 124 + 36, 174 + 23, 0, 46, 36, 69, null);
 		}
 
-		if (buttonPlay == 1) // over
+		if(buttonPlay == 1) // over
 		{
-			g.drawImage(imageButton, 162, 174, 162 + 39, 174 + 23, 36, 0, 75,
-					23, null);
-		} else if (buttonPlay == 2) // on
-		{
-			g.drawImage(imageButton, 162, 174, 162 + 39, 174 + 23, 36, 23, 75,
-					46, null);
-		} else if (buttonPlay == 3) // press
-		{
-			g.drawImage(imageButton, 162, 174, 162 + 39, 174 + 23, 36, 46, 75,
-					69, null);
+			g.drawImage(imageButton, 162, 174, 162 + 39, 174 + 23, 36, 0, 75, 23, null);
 		}
-
-	
+		else if(buttonPlay == 2) // on
+		{
+			g.drawImage(imageButton, 162, 174, 162 + 39, 174 + 23, 36, 23, 75, 46, null);
+		}
+		else if(buttonPlay == 3) // press
+		{
+			g.drawImage(imageButton, 162, 174, 162 + 39, 174 + 23, 36, 46, 75, 69, null);
+		}
 	}
 
 	/**
@@ -216,7 +211,8 @@ public class VuePlay extends JPanel {
 	 * @param value
 	 * @return String
 	 */
-	public String getFormatMMSS(int value) {
+	public String getFormatMMSS(int value)
+	{
 		int ms = value % 10;
 		int secondes = (value - ms) / 10;
 		int seconde = secondes % 60;
@@ -225,11 +221,13 @@ public class VuePlay extends JPanel {
 		String secondeSting = String.valueOf(seconde);
 		String minuteSting = String.valueOf(minute);
 
-		if (seconde < 10) {
+		if(seconde < 10)
+		{
 			secondeSting = "0" + String.valueOf(seconde);
 		}
 
-		if (minute < 10) {
+		if(minute < 10)
+		{
 			minuteSting = "0" + String.valueOf(minute);
 		}
 

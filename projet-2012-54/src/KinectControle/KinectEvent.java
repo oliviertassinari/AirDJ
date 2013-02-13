@@ -1,8 +1,10 @@
+
 package KinectControle;
 
 import java.util.EventObject;
 
-public class KinectEvent extends EventObject {
+public class KinectEvent extends EventObject
+{
 	private static final long serialVersionUID = 1L;
 	private KinectSource source;
 	private String message;
@@ -23,8 +25,8 @@ public class KinectEvent extends EventObject {
 	 * @param valeur
 	 *            // utilisé pour le volume et crossfinder
 	 */
-	public KinectEvent(KinectSource source, String message, String cote,
-			int valeur) {
+	public KinectEvent(KinectSource source, String message, String cote, int valeur)
+	{
 		super(source);
 		this.source = source;
 		this.message = message;
@@ -37,7 +39,8 @@ public class KinectEvent extends EventObject {
 	 * 
 	 * @return source
 	 */
-	public KinectSource getSource() {
+	public KinectSource getSource()
+	{
 		return source;
 	}
 
@@ -46,7 +49,8 @@ public class KinectEvent extends EventObject {
 	 * 
 	 * @return message
 	 */
-	public String getMessage() {
+	public String getMessage()
+	{
 		return message;
 	}
 
@@ -55,7 +59,8 @@ public class KinectEvent extends EventObject {
 	 * 
 	 * @return
 	 */
-	public String getCote() {
+	public String getCote()
+	{
 		return cote;
 	}
 
@@ -64,7 +69,8 @@ public class KinectEvent extends EventObject {
 	 * 
 	 * @return valeur
 	 */
-	public int getValeur() {
+	public int getValeur()
+	{
 		return valeur;
 	}
 }

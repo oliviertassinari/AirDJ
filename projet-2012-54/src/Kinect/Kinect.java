@@ -1,3 +1,4 @@
+
 package Kinect;
 
 import static com.googlecode.javacv.cpp.opencv_core.*;
@@ -27,51 +28,51 @@ import com.googlecode.javacv.cpp.opencv_imgproc.CvConvexityDefect;
 public class Kinect implements Runnable
 {
 	private Thread runner;
-	private MainPosition mainPositionLeft = new MainPosition(); 
+	private MainPosition mainPositionLeft = new MainPosition();
 	private MainPosition mainPositionRight = new MainPosition();
 	private IplImage imageTraitement;
 	private long timeLastGrab;
 	private long[] timeList = new long[4];
-    private reconnaissanceMvt reconnaissanceMvtLeft;
-    private reconnaissanceMvt reconnaissanceMvtRight;
-    private Vue vue;
+	private reconnaissanceMvt reconnaissanceMvtLeft;
+	private reconnaissanceMvt reconnaissanceMvtRight;
+	private Vue vue;
 
 	public Kinect(KinectSource kinectSource, Vue vue)
-    {
+	{
 		reconnaissanceMvtLeft = new reconnaissanceMvt(mainPositionLeft, "left", kinectSource);
 		reconnaissanceMvtRight = new reconnaissanceMvt(mainPositionRight, "right", kinectSource);
 
 		runner = new Thread(this, "kinect");
 		runner.start();
 		this.vue = vue;
-    }
+	}
 
 	public void run()
 	{
 		try
 		{
-	    	//OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test1.mkv");
-	    	//OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test2.mpg");
-	    	//OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact42_test1.mkv");
-	    	//OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test2.mkv");
-			//OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
-	        KinectGrabber grabber = new KinectGrabber();
+			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test1.mkv");
+			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test2.mpg");
+			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact42_test1.mkv");
+			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test2.mkv");
+			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(0);
+			KinectGrabber grabber = new KinectGrabber();
 
 			grabber.start();
 
 			IplImage imageGrab = grabber.grab();
-			int width  = imageGrab.width();
+			int width = imageGrab.width();
 			int height = imageGrab.height();
-	    	CvPoint minPoint = new CvPoint();
-	    	CvPoint maxPoint = new CvPoint();
-	    	double[] minVal = new double[1];
-	    	double[] maxVal = new double[1];
+			CvPoint minPoint = new CvPoint();
+			CvPoint maxPoint = new CvPoint();
+			double[] minVal = new double[1];
+			double[] maxVal = new double[1];
 
-	    	// creation window used to display the video, the object in JavaCv can use the material acceleration
-	    	JFrame Fenetre = new JFrame();
+			// creation window used to display the video, the object in JavaCv can use the material acceleration
+			JFrame Fenetre = new JFrame();
 			Fenetre.setLayout(new GridLayout(1, 2));
 			Fenetre.setTitle("module JavaCV");
-			Fenetre.setSize(width*2+40, height+60);
+			Fenetre.setSize(width * 2 + 40, height + 60);
 			Fenetre.setLocationRelativeTo(null);
 			Fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -90,140 +91,137 @@ public class Kinect implements Runnable
 			while((imageGrab = grabber.grab()) != null)
 			{
 				timeLastGrab = System.currentTimeMillis();
-/*
-				imageTraitement = IplImage.create(width, height, IPL_DEPTH_8U, 1);
-				cvCvtColor(imageGrab, imageTraitement, CV_RGB2GRAY);
+				/*
+				 * imageTraitement = IplImage.create(width, height, IPL_DEPTH_8U, 1); cvCvtColor(imageGrab, imageTraitement, CV_RGB2GRAY); IplImage imageDislay2 = imageGrab.clone();
+				 */
 
-				IplImage imageDislay2 = imageGrab.clone();
-*/
-				
 				IplImage imageDislay2 = IplImage.create(width, height, IPL_DEPTH_8U, 3);
 				cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
-				//OpenCV.cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
+				// OpenCV.cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
 
 				imageTraitement = imageGrab.clone();
 
 				cvMinMaxLoc(imageTraitement, minVal, maxVal, minPoint, maxPoint, null);
-				//OpenCV.cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null);
-	        	cvCircle(imageDislay2, minPoint, 3, CvScalar.YELLOW, -1, 8, 0);
+				// OpenCV.cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null);
+				cvCircle(imageDislay2, minPoint, 3, CvScalar.YELLOW, -1, 8, 0);
 
-	        	cvSmooth(imageTraitement, imageTraitement, CV_GAUSSIAN, 7, 7, 0, 0);
+				cvSmooth(imageTraitement, imageTraitement, CV_GAUSSIAN, 7, 7, 0, 0);
 
-	        	IplImage imageThreshold = imageTraitement.clone();
+				IplImage imageThreshold = imageTraitement.clone();
 
-	        	int nbrIteration = 0;
-	        	int firstFound = 0;
-	        	boolean isFound = false;
-	        	ArrayList<CvPoint> centerList = new ArrayList<CvPoint>();
+				int nbrIteration = 0;
+				int firstFound = 0;
+				boolean isFound = false;
+				ArrayList<CvPoint> centerList = new ArrayList<CvPoint>();
 
-	        	while(!isFound && nbrIteration < 6) //5 iterations max
-	        	{
-	        		nbrIteration++;
+				while(!isFound && nbrIteration < 6) // 5 iterations max
+				{
+					nbrIteration++;
 
-	        		int nbrFound = 0;
+					int nbrFound = 0;
 
-		        	cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*nbrIteration, 255, CV_THRESH_BINARY_INV);
-		        	//OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*nbrIteration, 255, CV_THRESH_BINARY_INV);
+					cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * nbrIteration, 255, CV_THRESH_BINARY_INV);
+					// OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*nbrIteration, 255, CV_THRESH_BINARY_INV);
 
-		        	CvSeq contour = new CvSeq();
-		         	cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+					CvSeq contour = new CvSeq();
+					cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
-		            while(contour != null && !contour.isNull())
-		            {
-		            	if(contour.elem_size() > 0)
-		                {
-		            		double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0);
+					while(contour != null && !contour.isNull())
+					{
+						if(contour.elem_size() > 0)
+						{
+							double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0);
 
-		                	if(aire > 1000 && aire < 10000)
-		                	{
-		                		nbrFound += 1;
-		                		
-		                		if(nbrFound == 1 && firstFound == 0)
-		                		{
-		                			firstFound = nbrIteration;
-		                		}
-		                		if(nbrFound == 2)
-		                		{
-		                			isFound = true;
-		                		}
-		                 	}
-		                }
-		                contour = contour.h_next();
-		            }
-	        	}
+							if(aire > 1000 && aire < 10000)
+							{
+								nbrFound += 1;
 
-	        	if(!isFound)
-	        	{
-	        		cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*firstFound, 255, CV_THRESH_BINARY_INV);
-	        		//OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*firstFound, 255, CV_THRESH_BINARY_INV);
-	        	}
+								if(nbrFound == 1 && firstFound == 0)
+								{
+									firstFound = nbrIteration;
+								}
+								if(nbrFound == 2)
+								{
+									isFound = true;
+								}
+							}
+						}
+						contour = contour.h_next();
+					}
+				}
 
-	        	CvSeq contour = new CvSeq();
-	         	cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+				if(!isFound)
+				{
+					cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * firstFound, 255, CV_THRESH_BINARY_INV);
+					// OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*firstFound, 255, CV_THRESH_BINARY_INV);
+				}
 
-	            while(contour != null && !contour.isNull())
-	            {
-	            	if(contour.elem_size() > 0)
-	                {
-	            		double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0);
+				CvSeq contour = new CvSeq();
+				cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
-	                	if(aire > 1000 && aire < 10000)
-	                	{
-	                		//cvDrawContours(imageDislay2, contour, CvScalar.BLUE, CvScalar.BLUE, -1, 1, CV_AA);
+				while(contour != null && !contour.isNull())
+				{
+					if(contour.elem_size() > 0)
+					{
+						double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0);
 
-	                	    CvSeq points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour)*0.002, 0);
-	                		//cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
+						if(aire > 1000 && aire < 10000)
+						{
+							// cvDrawContours(imageDislay2, contour, CvScalar.BLUE, CvScalar.BLUE, -1, 1, CV_AA);
 
-	                		CvPoint centre = getContourCenter3(points, storage);
-	                		cvCircle(imageDislay2, centre, 3, CvScalar.RED, -1, 8, 0);
+							CvSeq points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.002, 0);
+							// cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
 
-	                		getFingers(contour, storage, imageDislay2);
+							CvPoint centre = getContourCenter3(points, storage);
+							cvCircle(imageDislay2, centre, 3, CvScalar.RED, -1, 8, 0);
 
-	                		centerList.add(centre);
-	                 	}
-	                }
-	                contour = contour.h_next();
-	        	}
+							getFingers(contour, storage, imageDislay2);
 
-	        	getPositionHand(centerList);
-	        	reconnaissanceMvtLeft.compute(timeLastGrab);
-	        	reconnaissanceMvtRight.compute(timeLastGrab);
+							centerList.add(centre);
+						}
+					}
+					contour = contour.h_next();
+				}
 
-	    		cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
-	    		cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
+				getPositionHand(centerList);
+				reconnaissanceMvtLeft.compute(timeLastGrab);
+				reconnaissanceMvtRight.compute(timeLastGrab);
 
-				CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.6, 1); 
+				cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
+				cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
+
+				CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.6, 1);
 
 				if(mainPositionLeft.get(0)[0] == timeLastGrab)
 				{
-					cvPutText(imageDislay2, "Gauche", cvPoint((int)mainPositionLeft.getFiltre(0)[0]-20, (int)mainPositionLeft.getFiltre(0)[1]-10), font, CvScalar.BLUE);
+					cvPutText(imageDislay2, "Gauche", cvPoint((int)mainPositionLeft.getFiltre(0)[0] - 20, (int)mainPositionLeft.getFiltre(0)[1] - 10), font, CvScalar.BLUE);
 				}
 				if(mainPositionRight.get(0)[0] == timeLastGrab)
 				{
-					cvPutText(imageDislay2, "Droite", cvPoint((int)mainPositionRight.getFiltre(0)[0]-20, (int)mainPositionRight.getFiltre(0)[1]-10), font, CvScalar.RED);
+					cvPutText(imageDislay2, "Droite", cvPoint((int)mainPositionRight.getFiltre(0)[0] - 20, (int)mainPositionRight.getFiltre(0)[1] - 10), font, CvScalar.RED);
 				}
 
-	        	CvFont fontFPS = new CvFont(CV_FONT_HERSHEY_COMPLEX, 1, 2); 
-				cvPutText(imageDislay2, "FPS : "+Integer.toString(getFPS()), cvPoint(10, 465), fontFPS, CvScalar.RED);
+				CvFont fontFPS = new CvFont(CV_FONT_HERSHEY_COMPLEX, 1, 2);
+				cvPutText(imageDislay2, "FPS : " + Integer.toString(getFPS()), cvPoint(10, 465), fontFPS, CvScalar.RED);
 
-				IplImage resizeDisplay = IplImage.create(width/2, height/2, IPL_DEPTH_8U, 3);
+				IplImage resizeDisplay = IplImage.create(width / 2, height / 2, IPL_DEPTH_8U, 3);
 				cvResize(imageDislay2, resizeDisplay);
-		    	vue.getVueKinect().setKinectImage(resizeDisplay.getBufferedImage());
+				vue.getVueKinect().setKinectImage(resizeDisplay.getBufferedImage());
 
 				fenetreFrame1.showImage(imageThreshold);
 				fenetreFrame2.showImage(imageDislay2);
 
 				cvClearMemStorage(storage);
 
-				long timeEnd = 33-(int)(System.currentTimeMillis()-timeLastGrab);
+				long timeEnd = 33 - (int)(System.currentTimeMillis() - timeLastGrab);
 
 				if(timeEnd > 0)
 				{
 					Thread.sleep(timeEnd);
 				}
 
-				//System.out.println(-timeEnd+33+" ms");
-		    }
+				// System.out.println(-timeEnd+33+" ms");
+			}
 
 			grabber.stop();
 			fenetreFrame1.dispose();
@@ -232,14 +230,16 @@ public class Kinect implements Runnable
 		catch(InterruptedException e)
 		{
 			e.printStackTrace();
-		} catch (java.lang.Exception e) {
+		}
+		catch(java.lang.Exception e)
+		{
 			e.printStackTrace();
 		}
-    }
+	}
 
 	public void getFingers(CvSeq contour, CvMemStorage storage, IplImage imageDislay2)
 	{
-		CvSeq points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour)*0.005, 0);
+		CvSeq points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.005, 0);
 		cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
 
 		CvSeq convex = cvConvexHull2(points, storage, CV_COUNTER_CLOCKWISE, 1);
@@ -251,12 +251,12 @@ public class Kinect implements Runnable
 		ArrayList<CvPoint> fingersList = new ArrayList<CvPoint>();
 		ArrayList<CvPoint> fingersList2 = new ArrayList<CvPoint>();
 
-		//System.out.println(getAngle(new CvConvexityDefect(cvGetSeqElem(defect, 0)).end(), new CvConvexityDefect(cvGetSeqElem(defect, 0)).depth_point(), new CvConvexityDefect(cvGetSeqElem(defect, 0)).start()));
+		// System.out.println(getAngle(new CvConvexityDefect(cvGetSeqElem(defect, 0)).end(), new CvConvexityDefect(cvGetSeqElem(defect, 0)).depth_point(), new CvConvexityDefect(cvGetSeqElem(defect, 0)).start()));
 
 		while(defect != null)
 		{
-    		for(int i = 0; i < defect.total(); i++)
-    		{
+			for(int i = 0; i < defect.total(); i++)
+			{
 				CvConvexityDefect convexityDefect = new CvConvexityDefect(cvGetSeqElem(defect, i));
 
 				if(convexityDefect.depth() > 10)
@@ -264,27 +264,23 @@ public class Kinect implements Runnable
 
 					if(getAngle(convexityDefect.end(), convexityDefect.depth_point(), convexityDefect.start()) < 100)
 					{
-/*						CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.5, 1); 
-						cvPutText(imageDislay2, Integer.toString(i), convexityDefect.start(), font, CvScalar.MAGENTA);
-
-						cvCircle(imageDislay2, convexityDefect.start(), 3, CvScalar.MAGENTA, -1, 8, 0);
-						cvCircle(imageDislay2, convexityDefect.depth_point(), 3, CvScalar.WHITE, -1, 8, 0);
-						cvCircle(imageDislay2, convexityDefect.end(), 3, CvScalar.CYAN, -1, 8, 0);
-*/
+						/*
+						 * CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.5, 1); cvPutText(imageDislay2, Integer.toString(i), convexityDefect.start(), font, CvScalar.MAGENTA); cvCircle(imageDislay2, convexityDefect.start(), 3, CvScalar.MAGENTA, -1, 8, 0); cvCircle(imageDislay2, convexityDefect.depth_point(), 3, CvScalar.WHITE, -1, 8, 0); cvCircle(imageDislay2, convexityDefect.end(), 3, CvScalar.CYAN, -1, 8, 0);
+						 */
 						fingersList.add(convexityDefect.start());
 						fingersList.add(convexityDefect.end());
 					}
 				}
-    		}
+			}
 
-		    defect = defect.h_next();
+			defect = defect.h_next();
 		}
 
 		for(int i = 0; i < fingersList.size(); i++)
 		{
 			if(i < fingersList.size() - 1)
 			{
-				if(getLenght(fingersList.get(i), fingersList.get(i+1)) < 10)
+				if(getLenght(fingersList.get(i), fingersList.get(i + 1)) < 10)
 				{
 					i++;
 				}
@@ -295,9 +291,9 @@ public class Kinect implements Runnable
 			fingersList2.add(fingersList.get(i));
 		}
 	}
-	
-    public void getPositionHand(ArrayList<CvPoint> centerList)
-    {
+
+	public void getPositionHand(ArrayList<CvPoint> centerList)
+	{
 		if(centerList.size() > 0)
 		{
 			long[] centreLeft = mainPositionLeft.get(0);
@@ -305,35 +301,36 @@ public class Kinect implements Runnable
 
 			if(centreLeft[0] != centreRight[0]) // Si on a perdu une main
 			{
-    			if(centerList.size() == 1)
-    			{
-    				if(centreLeft[0] > centreRight[0]) // On a perdu la droite
+				if(centerList.size() == 1)
+				{
+					if(centreLeft[0] > centreRight[0]) // On a perdu la droite
 					{
-    					addToClotherHand(centerList, centreLeft, mainPositionLeft);
+						addToClotherHand(centerList, centreLeft, mainPositionLeft);
 					}
-					else // On a perdu la gauche
+					else
+					// On a perdu la gauche
 					{
 						addToClotherHand(centerList, centreRight, mainPositionRight);
-					}	
-       			}
-				else if(centerList.size() >= 2) //On r�initialise les positions
+					}
+				}
+				else if(centerList.size() >= 2) // On r�initialise les positions
 				{
 					mainPositionLeft.reset();
 					mainPositionRight.reset();
 
 					CvPoint centre1 = centerList.get(0);
-	    			CvPoint centre2 = centerList.get(1);
+					CvPoint centre2 = centerList.get(1);
 
-	    			if(centre2.x() > centre1.x()) // center1 : left
-	    			{
-	    				mainPositionLeft.add(timeLastGrab, centre1, getDepth(centre1), 0);
-	    				mainPositionRight.add(timeLastGrab, centre2, getDepth(centre2), 0);
-	    			}
-	    			else
-	    			{
-	    				mainPositionLeft.add(timeLastGrab, centre2, getDepth(centre2), 0);
-	    				mainPositionRight.add(timeLastGrab, centre1, getDepth(centre1), 0);
-	    			}
+					if(centre2.x() > centre1.x()) // center1 : left
+					{
+						mainPositionLeft.add(timeLastGrab, centre1, getDepth(centre1), 0);
+						mainPositionRight.add(timeLastGrab, centre2, getDepth(centre2), 0);
+					}
+					else
+					{
+						mainPositionLeft.add(timeLastGrab, centre2, getDepth(centre2), 0);
+						mainPositionRight.add(timeLastGrab, centre1, getDepth(centre1), 0);
+					}
 				}
 			}
 			else
@@ -341,7 +338,7 @@ public class Kinect implements Runnable
 				int choose = 0;
 				double[] lengthListToLeft = new double[centerList.size()];
 				double[] lengthListToRight = new double[centerList.size()];
-	
+
 				for(int i = 0; i < centerList.size(); i++)
 				{
 					lengthListToLeft[i] = getLenght(centreLeft[1], centreLeft[2], centerList.get(i).x(), centerList.get(i).y());
@@ -384,16 +381,16 @@ public class Kinect implements Runnable
 					else
 					{
 						addToClotherHand(centerList, centreLeft, mainPositionLeft);
-					}		
+					}
 				}
 			}
 		}
-    }
+	}
 
-    public void addToClotherHand(ArrayList<CvPoint> centerList, long[] center, MainPosition mainPosition)
-    {
-    	double[] lengthList = new double[centerList.size()];
-		
+	public void addToClotherHand(ArrayList<CvPoint> centerList, long[] center, MainPosition mainPosition)
+	{
+		double[] lengthList = new double[centerList.size()];
+
 		for(int i = 0; i < centerList.size(); i++)
 		{
 			lengthList[i] = getLenght(center[1], center[2], centerList.get(i).x(), centerList.get(i).y());
@@ -402,90 +399,90 @@ public class Kinect implements Runnable
 		int[] minLengthList = getMinList(lengthList);
 
 		mainPosition.add(timeLastGrab, centerList.get(minLengthList[0]), getDepth(centerList.get(minLengthList[0])), 0);
-    }
+	}
 
-    public int getFPS()
-    {
-    	for(int i = 3; i > 0; i--)
-    	{
-    		timeList[i] = timeList[i-1];
-    	}
+	public int getFPS()
+	{
+		for(int i = 3; i > 0; i--)
+		{
+			timeList[i] = timeList[i - 1];
+		}
 
-    	timeList[0] = System.currentTimeMillis();
+		timeList[0] = System.currentTimeMillis();
 
-    	return (int)(3000/(float)((timeList[0] - timeList[3])));
-    }
+		return (int)(3000 / (float)((timeList[0] - timeList[3])));
+	}
 
-    // Rectangle englobant
-    public CvPoint getContourCenter(CvSeq contour, CvMemStorage storage)
-    {
-    	CvBox2D box = cvMinAreaRect2(contour, storage);
+	// Rectangle englobant
+	public CvPoint getContourCenter(CvSeq contour, CvMemStorage storage)
+	{
+		CvBox2D box = cvMinAreaRect2(contour, storage);
 
-    	return new CvPoint((int)box.center().x(), (int)box.center().y());
-    }
-    
-    // Barycentre
-    public CvPoint getContourCenter2(CvSeq contour, CvMemStorage storage)
-    {
-    	CvPoint centre = new CvPoint();
+		return new CvPoint((int)box.center().x(), (int)box.center().y());
+	}
 
-    	for(int i = 0; i < contour.total(); i++)
+	// Barycentre
+	public CvPoint getContourCenter2(CvSeq contour, CvMemStorage storage)
+	{
+		CvPoint centre = new CvPoint();
+
+		for(int i = 0; i < contour.total(); i++)
 		{
 			CvPoint point = new CvPoint(cvGetSeqElem(contour, i));
 
-			centre.x(centre.x()+point.x());
-			centre.y(centre.y()+point.y());
+			centre.x(centre.x() + point.x());
+			centre.y(centre.y() + point.y());
 		}
 
-    	centre.x(centre.x()/contour.total());
-    	centre.y(centre.y()/contour.total());
+		centre.x(centre.x() / contour.total());
+		centre.y(centre.y() / contour.total());
 
-    	return centre;
-    }
-    
-    // Moment
-    public CvPoint getContourCenter3(CvSeq contour, CvMemStorage storage)
-    {
-    	CvMoments moments = new CvMoments();
-    	
-    	cvMoments(contour, moments, 0);
+		return centre;
+	}
 
-    	return new CvPoint((int)(moments.m10()/moments.m00()), (int)(moments.m01()/moments.m00()));
-    }
+	// Moment
+	public CvPoint getContourCenter3(CvSeq contour, CvMemStorage storage)
+	{
+		CvMoments moments = new CvMoments();
 
-    public int getDepth(CvPoint point)
-    {
-    	return OpenCV.getUnsignedByte(imageTraitement.getByteBuffer(), point.x() + imageTraitement.width()*point.y());
-    }
+		cvMoments(contour, moments, 0);
 
-    public double getLenght(long x1, long y1, int x2, int y2)
-    {
-    	return Math.sqrt(((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2)));
-    }
+		return new CvPoint((int)(moments.m10() / moments.m00()), (int)(moments.m01() / moments.m00()));
+	}
 
-    public double getLenght(CvPoint point1, CvPoint point2)
-    {
-    	return getLenght(point1.x(), point1.y(), point2.x(), point2.y());
-    }
+	public int getDepth(CvPoint point)
+	{
+		return OpenCV.getUnsignedByte(imageTraitement.getByteBuffer(), point.x() + imageTraitement.width() * point.y());
+	}
 
-    public int[] getMinList(double[] list)
-    {
-    	double min = list[0];
-    	int index = 0;
+	public double getLenght(long x1, long y1, int x2, int y2)
+	{
+		return Math.sqrt(((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)));
+	}
 
-    	for(int i = 1; i < list.length; i++)
-    	{
-    		if(list[i] < min)
-    		{
-    			min = list[i];
-    			index = i;
-    		}
-    	}
+	public double getLenght(CvPoint point1, CvPoint point2)
+	{
+		return getLenght(point1.x(), point1.y(), point2.x(), point2.y());
+	}
 
-    	int[] r = {index, (int)min};
+	public int[] getMinList(double[] list)
+	{
+		double min = list[0];
+		int index = 0;
 
-    	return r;
-    }
+		for(int i = 1; i < list.length; i++)
+		{
+			if(list[i] < min)
+			{
+				min = list[i];
+				index = i;
+			}
+		}
+
+		int[] r = {index, (int)min};
+
+		return r;
+	}
 
 	public int getAngle(CvPoint p1, CvPoint p2, CvPoint p3)
 	{
@@ -493,11 +490,13 @@ public class Kinect implements Runnable
 		double beta = Math.atan2(p3.y() - p2.y(), p3.x() - p2.x());
 		double angle = (beta - alpha);
 
-		//Correction de l'angle pour le restituer entre 0 et 2PI
-		while (angle < 0.0 || angle > 2 * Math.PI)
+		// Correction de l'angle pour le restituer entre 0 et 2PI
+		while(angle < 0.0 || angle > 2 * Math.PI)
 		{
-			if (angle < 0.0) angle += 2 * Math.PI;
-			else if (angle > 2 * Math.PI) angle -= 2 * Math.PI;
+			if(angle < 0.0)
+				angle += 2 * Math.PI;
+			else if(angle > 2 * Math.PI)
+				angle -= 2 * Math.PI;
 		}
 
 		return (int)(Math.round(Math.toDegrees(angle)));

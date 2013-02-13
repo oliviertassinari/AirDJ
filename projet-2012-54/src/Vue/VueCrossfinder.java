@@ -1,3 +1,4 @@
+
 package Vue;
 
 import java.awt.AlphaComposite;
@@ -37,11 +38,11 @@ public class VueCrossfinder extends JPanel
 	 * image d'arrière plan de l'affichage du volume
 	 */
 	private Image imageDisplayVolumeOver;
-	
-     /**
-	 * constructeur
-	 * @param La vue contenante
-	 */
+
+	/**
+	* constructeur
+	* @param La vue contenante
+	*/
 	public VueCrossfinder(Vue vue)
 	{
 		this.vue = vue;
@@ -59,35 +60,35 @@ public class VueCrossfinder extends JPanel
 	public BufferedImage getImageBackground()
 	{
 		BufferedImage image = new BufferedImage(250, 300, BufferedImage.TRANSLUCENT);
-        Graphics g = image.getGraphics();
+		Graphics g = image.getGraphics();
 		g.setColor(new Color(0x181613));
 		g.fillRect(0, 0, 250, 300);
 
 		Graphics2D g2d = (Graphics2D)g;
 
-		//Shadow
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING , RenderingHints.VALUE_ANTIALIAS_ON);  
-        AlphaComposite ac = null;  
-        g2d.setColor(Color.BLACK);  
-        int sw = 250 - 2*7;   
-        int sh = 300 - 2*7;  
-        for(int i=0; i<7; ++i)
-        {  
-            ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f/(i+1));  
-            g2d.setComposite(ac);  
-            g2d.fillRoundRect(7-i, 7-i, sw + 2*i, sh + 2*i, i*2, i*2);  
-        }
-        ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);  
-        g2d.setComposite(ac);  
-  
-		//Border
+		// Shadow
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		AlphaComposite ac = null;
+		g2d.setColor(Color.BLACK);
+		int sw = 250 - 2 * 7;
+		int sh = 300 - 2 * 7;
+		for(int i = 0; i < 7; ++i)
+		{
+			ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f / (i + 1));
+			g2d.setComposite(ac);
+			g2d.fillRoundRect(7 - i, 7 - i, sw + 2 * i, sh + 2 * i, i * 2, i * 2);
+		}
+		ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+		g2d.setComposite(ac);
+
+		// Border
 		g.setColor(new Color(0x42413d));
 		g.drawLine(0, 0, 0, 292);
 		g.drawLine(244, 0, 244, 292);
 		g.drawLine(0, 292, 244, 292);
 		g.drawLine(1, 0, 244, 0);
 
-		//Background
+		// Background
 		GradientPaint gp1 = new GradientPaint(0, 0, new Color(0x383839), 0, 300, new Color(0x171718));
 		g2d.setPaint(gp1);
 		g2d.fillRect(1, 1, 243, 291);
@@ -104,13 +105,13 @@ public class VueCrossfinder extends JPanel
 		g.setColor(new Color(0x090808));
 		g.drawLine(85, 220, 165, 220);
 
-		//Texte
-	    g.setFont(new Font("sansserif", Font.PLAIN, 8));
+		// Texte
+		g.setFont(new Font("sansserif", Font.PLAIN, 8));
 		g.setColor(new Color(0x908F8D));
 		g.drawString("VOLUME", 88, 63);
 		g.drawString("VOLUME", 128, 63);
-		
-		//Images
+
+		// Images
 		Image imageSetVolumeGrid = new ImageIcon("image/volumeGrid.png").getImage();
 		g.drawImage(imageSetVolumeGrid, 95, 70, null);
 		g.drawImage(imageSetVolumeGrid, 135, 70, null);
@@ -122,11 +123,11 @@ public class VueCrossfinder extends JPanel
 		g.drawImage(imageVolumeGrid, 30, 50, null);
 		g.drawImage(imageVolumeGrid, 193, 50, null);
 
-        g.dispose();
+		g.dispose();
 
-        return image;
+		return image;
 	}
-	
+
 	/**
 	 * paintComponent
 	 */
@@ -142,20 +143,20 @@ public class VueCrossfinder extends JPanel
 
 		g.drawImage(imageBackground, 0, 0, this);
 
-		//volumeCursor
-		g.drawImage(imageVolumeCursor, 94, (int)(148-volumeP1*0.78), null);
-		g.drawImage(imageVolumeCursor, 134, (int)(148-volumeP2*0.78), null);
+		// volumeCursor
+		g.drawImage(imageVolumeCursor, 94, (int)(148 - volumeP1 * 0.78), null);
+		g.drawImage(imageVolumeCursor, 134, (int)(148 - volumeP2 * 0.78), null);
 
-		g.drawImage(imageCrossfinderCursor, (int)(116+crossfinder*0.5), 238, null);
+		g.drawImage(imageCrossfinderCursor, (int)(116 + crossfinder * 0.5), 238, null);
 
-		//displayVolume
+		// displayVolume
 		g.setColor(new Color(0x28acff));
-		g.fillRect(34, 53+120-(int)(displayVolumeP1[0]*1.2/100*modeleCrossfinder.getVolumeP1()*modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[0]*1.2/100*modeleCrossfinder.getCoefVolumeP1()*modeleCrossfinder.getVolumeP1()));
-		g.fillRect(44, 53+120-(int)(displayVolumeP1[1]*1.2/100*modeleCrossfinder.getVolumeP1()*modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[1]*1.2/100*modeleCrossfinder.getCoefVolumeP1()*modeleCrossfinder.getVolumeP1()));
+		g.fillRect(34, 53 + 120 - (int)(displayVolumeP1[0] * 1.2 / 100 * modeleCrossfinder.getVolumeP1() * modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[0] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP1() * modeleCrossfinder.getVolumeP1()));
+		g.fillRect(44, 53 + 120 - (int)(displayVolumeP1[1] * 1.2 / 100 * modeleCrossfinder.getVolumeP1() * modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[1] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP1() * modeleCrossfinder.getVolumeP1()));
 
 		g.setColor(new Color(0xff171a));
-		g.fillRect(197, 53+120-(int)(displayVolumeP2[0]*1.2/100*modeleCrossfinder.getVolumeP2()*modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[0]*1.2/100*modeleCrossfinder.getCoefVolumeP2()*modeleCrossfinder.getVolumeP2()));
-		g.fillRect(207, 53+120-(int)(displayVolumeP2[1]*1.2/100*modeleCrossfinder.getVolumeP2()*modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[1]*1.2/100*modeleCrossfinder.getCoefVolumeP2()*modeleCrossfinder.getVolumeP2()));
+		g.fillRect(197, 53 + 120 - (int)(displayVolumeP2[0] * 1.2 / 100 * modeleCrossfinder.getVolumeP2() * modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[0] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP2() * modeleCrossfinder.getVolumeP2()));
+		g.fillRect(207, 53 + 120 - (int)(displayVolumeP2[1] * 1.2 / 100 * modeleCrossfinder.getVolumeP2() * modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[1] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP2() * modeleCrossfinder.getVolumeP2()));
 
 		g.drawImage(imageDisplayVolumeOver, 34, 53, null);
 		g.drawImage(imageDisplayVolumeOver, 197, 53, null);

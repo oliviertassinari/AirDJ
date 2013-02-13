@@ -61,8 +61,8 @@ public class VueSpectre
         	g.setColor(Color.gray);
         	g.drawLine(i, 19, i, 19 - S/(max/18+1));
         	g.drawLine(i, 19, i, 19 + S/(max/18+1));
-        }
+		}
 
-        return imageSpectre;
+		return imageSpectre;
 	}
 }

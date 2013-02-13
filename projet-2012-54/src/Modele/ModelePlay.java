@@ -1,3 +1,4 @@
+
 package Modele;
 
 import java.io.File;
@@ -12,7 +13,8 @@ import Audio.Player;
  * 
  * 
  */
-public class ModelePlay {
+public class ModelePlay
+{
 	private Modele modele;
 	private VuePlay vuePlay;
 	private String filePath = "";
@@ -35,7 +37,8 @@ public class ModelePlay {
 	 * @param modele
 	 * @param cote
 	 */
-	public ModelePlay(Modele modele, int cote) {
+	public ModelePlay(Modele modele, int cote)
+	{
 		this.modele = modele;
 		this.cote = cote;
 	}
@@ -44,7 +47,8 @@ public class ModelePlay {
 	 * 
 	 * @param vuePlay
 	 */
-	public void setVuePlay(VuePlay vuePlay) {
+	public void setVuePlay(VuePlay vuePlay)
+	{
 		this.vuePlay = vuePlay;
 	}
 
@@ -52,8 +56,10 @@ public class ModelePlay {
 	 * 
 	 * @param value
 	 */
-	public void setFilePath(String value) {
-		if (player != null && state == 1) {
+	public void setFilePath(String value)
+	{
+		if(player != null && state == 1)
+		{
 			player.setPause();
 		}
 
@@ -62,12 +68,13 @@ public class ModelePlay {
 		File file = new File(filePath);
 
 		player = new Player(value);
-		if (cote == 0) {
-			player.setVolume((int) (modele.getModeleCrossfinder().getVolumeP1() * modele
-					.getModeleCrossfinder().getCoefVolumeP1()));
-		} else {
-			player.setVolume((int) (modele.getModeleCrossfinder().getVolumeP2() * modele
-					.getModeleCrossfinder().getCoefVolumeP2()));
+		if(cote == 0)
+		{
+			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP1() * modele.getModeleCrossfinder().getCoefVolumeP1()));
+		}
+		else
+		{
+			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP2() * modele.getModeleCrossfinder().getCoefVolumeP2()));
 		}
 
 		title = file.getName();
@@ -87,19 +94,26 @@ public class ModelePlay {
 		vuePlay.repaint();
 	}
 
-	public void setPlay() {
-		if (player != null) {
-			if (state == 0) {
+	public void setPlay()
+	{
+		if(player != null)
+		{
+			if(state == 0)
+			{
 				state = 1;
 				player.setPlay();
-			} else {
+			}
+			else
+			{
 				player.setPosition(startFrom / 10);
 			}
 		}
 	}
 
-	public void setPause() {
-		if (player != null && state == 1) {
+	public void setPause()
+	{
+		if(player != null && state == 1)
+		{
 			state = 0;
 			player.setPause();
 		}
@@ -109,18 +123,28 @@ public class ModelePlay {
 	 * 
 	 * @param state
 	 */
-	public void setButtonPlay(String state) {
-		if (state == "over") {
-			if (this.state == 0 || player == null) {
+	public void setButtonPlay(String state)
+	{
+		if(state == "over")
+		{
+			if(this.state == 0 || player == null)
+			{
 				buttonPlay = 1;
 			}
-		} else if (state == "press") {
+		}
+		else if(state == "press")
+		{
 			buttonPlay = 3;
 			buttonPause = 0;
-		} else if (state == "release") {
+		}
+		else if(state == "release")
+		{
 			buttonPlay = 2;
-		} else if (state == "out") {
-			if (this.state == 0 || player == null) {
+		}
+		else if(state == "out")
+		{
+			if(this.state == 0 || player == null)
+			{
 				buttonPlay = 0;
 			}
 		}
@@ -132,18 +156,28 @@ public class ModelePlay {
 	 * 
 	 * @param state
 	 */
-	public void setButtonPause(String state) {
-		if (state == "over") {
-			if (this.state == 1 || player == null) {
+	public void setButtonPause(String state)
+	{
+		if(state == "over")
+		{
+			if(this.state == 1 || player == null)
+			{
 				buttonPause = 1;
 			}
-		} else if (state == "press") {
+		}
+		else if(state == "press")
+		{
 			buttonPlay = 0;
 			buttonPause = 3;
-		} else if (state == "release") {
+		}
+		else if(state == "release")
+		{
 			buttonPause = 2;
-		} else if (state == "out") {
-			if (this.state == 1 || player == null) {
+		}
+		else if(state == "out")
+		{
+			if(this.state == 1 || player == null)
+			{
 				buttonPause = 0;
 			}
 		}
@@ -155,16 +189,21 @@ public class ModelePlay {
 	 * 
 	 * @param value
 	 */
-	public void setPitch(int value) {
-		if (value > 100) {
+	public void setPitch(int value)
+	{
+		if(value > 100)
+		{
 			value = 100;
-		} else if (value < -100) {
+		}
+		else if(value < -100)
+		{
 			value = -100;
 		}
 
 		pitch = value;
 
-		if (player != null) {
+		if(player != null)
+		{
 			player.setVitesse(pitch);
 		}
 
@@ -175,30 +214,37 @@ public class ModelePlay {
 	 * 
 	 * @param value
 	 */
-	public void setCurrent(int value) {
-		if (value < 0) {
+	public void setCurrent(int value)
+	{
+		if(value < 0)
+		{
 			value = 0;
-		} else if (value > total) {
+		}
+		else if(value > total)
+		{
 			value = total;
 		}
 
 		current = value;
 		startFrom = value;
-		player.setPosition((float) (current) / 10);
+		player.setPosition((float)(current) / 10);
 
 		vuePlay.repaint();
 	}
 
-	
-	public void updateCurrent() {
-		if (player != null) {
+	public void updateCurrent()
+	{
+		if(player != null)
+		{
 			int currentNew = Math.round(player.getPosition() * 10);
 
-			if (currentNew == total) {
+			if(currentNew == total)
+			{
 				reset();
 			}
 
-			if (currentNew != current) {
+			if(currentNew != current)
+			{
 				current = currentNew;
 				vuePlay.repaint();
 			}
@@ -209,8 +255,10 @@ public class ModelePlay {
 	 * 
 	 * @param volume
 	 */
-	public void setVolume(int volume) {
-		if (player != null) {
+	public void setVolume(int volume)
+	{
+		if(player != null)
+		{
 			player.setVolume(volume);
 		}
 	}
@@ -219,18 +267,24 @@ public class ModelePlay {
 	 * 
 	 * @return int[]
 	 */
-	public int[] getDisplayVolume() {
-		if (player != null) {
+	public int[] getDisplayVolume()
+	{
+		if(player != null)
+		{
 			int[] displayVolume = player.getCurrentVolume();
 			return displayVolume;
-		} else {
-			int[] displayVolume = { 0, 0 };
+		}
+		else
+		{
+			int[] displayVolume = {0, 0};
 			return displayVolume;
 		}
 	}
 
-	public void reset() {
-		if (player.reset()) {
+	public void reset()
+	{
+		if(player.reset())
+		{
 			state = 0;
 			buttonPlay = 0;
 			buttonPause = 2;
@@ -242,7 +296,8 @@ public class ModelePlay {
 	 * 
 	 * @return int
 	 */
-	public int getPitch() {
+	public int getPitch()
+	{
 		return pitch;
 	}
 
@@ -250,7 +305,8 @@ public class ModelePlay {
 	 * 
 	 * @return String
 	 */
-	public String getTitle() {
+	public String getTitle()
+	{
 		return title;
 	}
 
@@ -258,7 +314,8 @@ public class ModelePlay {
 	 * 
 	 * @return String
 	 */
-	public String getArtist() {
+	public String getArtist()
+	{
 		return artist;
 	}
 
@@ -266,7 +323,8 @@ public class ModelePlay {
 	 * 
 	 * @return double
 	 */
-	public double getBpm() {
+	public double getBpm()
+	{
 		return bpm;
 	}
 
@@ -274,7 +332,8 @@ public class ModelePlay {
 	 * 
 	 * @return int
 	 */
-	public int getTotal() {
+	public int getTotal()
+	{
 		return total;
 	}
 
@@ -282,7 +341,8 @@ public class ModelePlay {
 	 * 
 	 * @return int
 	 */
-	public int getCurrent() {
+	public int getCurrent()
+	{
 		return current;
 	}
 
@@ -290,7 +350,8 @@ public class ModelePlay {
 	 * 
 	 * @return int
 	 */
-	public int getButtonPlay() {
+	public int getButtonPlay()
+	{
 		return buttonPlay;
 	}
 
@@ -298,7 +359,8 @@ public class ModelePlay {
 	 * 
 	 * @return int
 	 */
-	public int getButtonPause() {
+	public int getButtonPause()
+	{
 		return buttonPause;
 	}
 
@@ -306,7 +368,8 @@ public class ModelePlay {
 	 * 
 	 * @return int
 	 */
-	public int getState() {
+	public int getState()
+	{
 		return state;
 	}
 
@@ -314,7 +377,8 @@ public class ModelePlay {
 	 * 
 	 * @return IPlayer
 	 */
-	public IPlayer getPlayer() {
+	public IPlayer getPlayer()
+	{
 		return player;
 	}
 }

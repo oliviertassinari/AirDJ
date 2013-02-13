@@ -1,3 +1,4 @@
+
 package Vue;
 
 import java.awt.BorderLayout;
@@ -34,17 +35,16 @@ public class Vue extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(new ImageIcon("image/icon.png").getImage());
 
-
 		JPanel panel = new JPanel();
 		panel.setLayout(new BorderLayout());
 		panel.setBorder(BorderFactory.createMatteBorder(7, 7, 7, 2, new Color(0x181613)));
-		getContentPane().add(panel);	
+		getContentPane().add(panel);
 
 		vueBrowser = new VueBrowser(this);
 		vueCrossfinder = new VueCrossfinder(this);
 		vueKinect = new VueKinect(this);
-		vuePlayP1 = new VuePlay(0, this, modele.getModelePlayP1()); //blue
-		vuePlayP2 = new VuePlay(1, this, modele.getModelePlayP2()); //red
+		vuePlayP1 = new VuePlay(0, this, modele.getModelePlayP1()); // blue
+		vuePlayP2 = new VuePlay(1, this, modele.getModelePlayP2()); // red
 
 		panel.add(vueBrowser, BorderLayout.NORTH);
 		panel.add(vueCrossfinder, BorderLayout.CENTER);

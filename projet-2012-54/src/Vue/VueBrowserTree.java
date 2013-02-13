@@ -1,3 +1,4 @@
+
 package Vue;
 
 import java.awt.Color;
@@ -57,14 +58,14 @@ public class VueBrowserTree extends JPanel
 		setPreferredSize(new Dimension(350, 163));
 		setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(0x4E4C4B)));
 
-		//Background
+		// Background
 		length = 1;
 		root = new ModeleBrowserTree("root", "Ordinateur", true, false);
 		buildNode(root);
 
 		paintRoot();
 	}
-	
+
 	/**
 	 * paintComponent
 	 */
@@ -72,23 +73,23 @@ public class VueBrowserTree extends JPanel
 	{
 		g.drawImage(imageBackground, 1, 1, 333, 162, 0, scroll, 334, 161 + scroll, this);
 
-		//ScrollBar
+		// ScrollBar
 		g.setColor(Color.BLACK);
 		g.fillRect(333, 1, 16, 161);
 
-		if(length*16 > 161)
+		if(length * 16 > 161)
 		{
-			if(scrollBarState[0] == 0) //normal
+			if(scrollBarState[0] == 0) // normal
 			{
 				g.setColor(new Color(0x333333));
 				g.drawImage(imageScrollBar, 336, 4, 346, 16, 0, 0, 10, 12, this);
 			}
-			else if(scrollBarState[0] == 1) //over all
+			else if(scrollBarState[0] == 1) // over all
 			{
 				g.setColor(new Color(0x444444));
 				g.drawImage(imageScrollBar, 336, 4, 346, 16, 10, 0, 20, 12, this);
 			}
-			else if(scrollBarState[0] == 2) //over
+			else if(scrollBarState[0] == 2) // over
 			{
 				g.setColor(new Color(0x444444));
 				g.drawImage(imageScrollBar, 336, 4, 346, 16, 20, 0, 30, 12, this);
@@ -96,30 +97,30 @@ public class VueBrowserTree extends JPanel
 
 			g.fillRect(340, 20, 2, 123);
 
-			if(scrollBarState[1] == 0) //normal
+			if(scrollBarState[1] == 0) // normal
 			{
 				g.setColor(new Color(0x9D9D9D));
 				g.drawImage(imageScrollBar, 336, 147, 346, 159, 0, 12, 10, 24, this);
 			}
-			else if(scrollBarState[1] == 1) //over all
+			else if(scrollBarState[1] == 1) // over all
 			{
 				g.setColor(new Color(0xD0D0D0));
 				g.drawImage(imageScrollBar, 336, 147, 346, 159, 10, 12, 20, 24, this);
 			}
-			else if(scrollBarState[1] == 2) //over
+			else if(scrollBarState[1] == 2) // over
 			{
 				g.setColor(new Color(0xD0D0D0));
 				g.drawImage(imageScrollBar, 336, 147, 346, 159, 20, 12, 30, 24, this);
 			}
 
-			int longeur = (int)(123*160/(16*length));
-			
+			int longeur = (int)(123 * 160 / (16 * length));
+
 			if(longeur < 5)
 			{
 				longeur = 5;
 			}
-			
-			g.fillRoundRect(339, 20 + (int)(123*scroll/(16*length)), 4, longeur, 0, 0);
+
+			g.fillRoundRect(339, 20 + (int)(123 * scroll / (16 * length)), 4, longeur, 0, 0);
 		}
 	}
 
@@ -128,28 +129,28 @@ public class VueBrowserTree extends JPanel
 	 */
 	public void paintRoot()
 	{
-        x = 0;
-        y = 0;
+		x = 0;
+		y = 0;
 
-		if(length*16 > 161)
+		if(length * 16 > 161)
 		{
-			imageBackground = new BufferedImage(334, length*16, BufferedImage.TRANSLUCENT);
+			imageBackground = new BufferedImage(334, length * 16, BufferedImage.TRANSLUCENT);
 		}
 		else
 		{
 			imageBackground = new BufferedImage(334, 161, BufferedImage.TRANSLUCENT);
 		}
- 
+
 		Graphics gi = imageBackground.getGraphics();
 		gi.setColor(Color.BLACK);
 		gi.fillRect(0, 0, imageBackground.getWidth(), imageBackground.getHeight());
 
-	    gi.setFont(new Font("sansserif", Font.BOLD, 11));
+		gi.setFont(new Font("sansserif", Font.BOLD, 11));
 		gi.setColor(Color.WHITE);
 
-        paintNode(root, gi);
+		paintNode(root, gi);
 
-        gi.dispose();
+		gi.dispose();
 		repaint();
 	}
 
@@ -179,7 +180,7 @@ public class VueBrowserTree extends JPanel
 			}
 		}
 
-		g.drawString(node.getName(), x+32, y+11);
+		g.drawString(node.getName(), x + 32, y + 11);
 
 		x += 13;
 
@@ -192,6 +193,7 @@ public class VueBrowserTree extends JPanel
 			x -= 13;
 		}
 	}
+
 	/**
 	 * @param ModeleBrowserTree
 	 */
@@ -221,11 +223,12 @@ public class VueBrowserTree extends JPanel
 
 			if(parentFile.isDirectory())
 			{
-				File[] listFiles = parentFile.listFiles(new FileFilter(){
-				    public boolean accept(File file)
-				    {
-				        return file.isDirectory() && !file.isHidden();
-				    }
+				File[] listFiles = parentFile.listFiles(new FileFilter()
+				{
+					public boolean accept(File file)
+					{
+						return file.isDirectory() && !file.isHidden();
+					}
 				});
 
 				return listFiles.length;
@@ -246,16 +249,17 @@ public class VueBrowserTree extends JPanel
 	{
 		if(node.getPath() == "root")
 		{
-			String path = File.listRoots()[index].getPath();			
+			String path = File.listRoots()[index].getPath();
 			return new ModeleBrowserTree(path, path, false, isLeaf(path));
 		}
 		else
 		{
-			File[] listFiles = new File(node.getPath()).listFiles(new FileFilter(){
-			    public boolean accept(File file)
-			    {
-			        return file.isDirectory() && !file.isHidden();
-			    }
+			File[] listFiles = new File(node.getPath()).listFiles(new FileFilter()
+			{
+				public boolean accept(File file)
+				{
+					return file.isDirectory() && !file.isHidden();
+				}
 			});
 
 			File file = listFiles[index];
@@ -273,7 +277,6 @@ public class VueBrowserTree extends JPanel
 		return new File(path).isFile();
 	}
 
-	
 	/**
 	 * @param int
 	 */
@@ -295,9 +298,9 @@ public class VueBrowserTree extends JPanel
 	 */
 	public void setLength(int value)
 	{
-		if(scroll > value*16 - 161)
+		if(scroll > value * 16 - 161)
 		{
-			scroll = value*16 - 161;
+			scroll = value * 16 - 161;
 		}
 		if(scroll < 0)
 		{
@@ -320,9 +323,9 @@ public class VueBrowserTree extends JPanel
 	 */
 	public void setScroll(int value)
 	{
-		if(value > length*16 - 161)
+		if(value > length * 16 - 161)
 		{
-			value = length*16 - 161;
+			value = length * 16 - 161;
 		}
 		if(value < 0)
 		{

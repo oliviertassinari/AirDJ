@@ -1,3 +1,4 @@
+
 package Modele;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class ModeleBrowserTree
 	{
 		this.expanded = expanded;
 	}
-	
+
 	/**
 	 * obtenir l'adresse
 	 * @return String
@@ -84,7 +85,7 @@ public class ModeleBrowserTree
 	{
 		return path;
 	}
-	
+
 	/**
 	 * obtenir le nom
 	 * @return String
@@ -132,11 +133,11 @@ public class ModeleBrowserTree
 			}
 			else if(childIndex + 1 < parent.childCount)
 			{
-				return parent.getChild(childIndex+1).getNode(lineGoal, lineCurrent + 1);
+				return parent.getChild(childIndex + 1).getNode(lineGoal, lineCurrent + 1);
 			}
 			else
 			{
-				return parent.parent.getChild(parent.childIndex+1).getNode(lineGoal, lineCurrent + 1);
+				return parent.parent.getChild(parent.childIndex + 1).getNode(lineGoal, lineCurrent + 1);
 			}
 		}
 	}
@@ -171,7 +172,7 @@ public class ModeleBrowserTree
 
 		return count;
 	}
-	
+
 	/**
 	 * @return int le nombre de feuilles
 	 */

@@ -1,3 +1,4 @@
+
 package Controle;
 
 import java.awt.Cursor;
@@ -46,51 +47,53 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 	 */
 	public void mousePressed(MouseEvent e)
 	{
-		if(blockOver == 11) //ScrollBar Up
+		if(blockOver == 11) // ScrollBar Up
 		{
 			vueBrowserTree.setScroll(vueBrowserTree.getScroll() - 16);
 
 			timer = new Timer();
-			timer.schedule(new TimerTask(){
+			timer.schedule(new TimerTask()
+			{
 				public void run()
 				{
 					vueBrowserTree.setScroll(vueBrowserTree.getScroll() - 16);
 				}
 			}, 500, 100);
 		}
-		else if(blockOver == 12) //ScrollBar Down
+		else if(blockOver == 12) // ScrollBar Down
 		{
 			vueBrowserTree.setScroll(vueBrowserTree.getScroll() + 16);
 
 			timer = new Timer();
-			timer.schedule(new TimerTask(){
+			timer.schedule(new TimerTask()
+			{
 				public void run()
 				{
 					vueBrowserTree.setScroll(vueBrowserTree.getScroll() + 16);
 				}
 			}, 500, 100);
 		}
-		else if(blockOver == 13) //ScrollBar
+		else if(blockOver == 13) // ScrollBar
 		{
 			int scroll = vueBrowserTree.getScroll();
 			int length = vueBrowserTree.getLength();
 
 			blockSelected = 1;
-			offset = 123*(80+scroll)/(length*16) + 20 - e.getY();
+			offset = 123 * (80 + scroll) / (length * 16) + 20 - e.getY();
 		}
-		else if(blockOver == 14) //ScrollBar All
+		else if(blockOver == 14) // ScrollBar All
 		{
 			blockSelected = 1;
 			mouseDragged(e);
 			vueBrowserTree.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
-		else //Tree
+		else
+		// Tree
 		{
-			int x = e.getX();
 			int y = e.getY();
 			int scroll = vueBrowserTree.getScroll();
 			int length = vueBrowserTree.getLength();
-			int line = (int)((scroll+y)/16)+1;
+			int line = (int)((scroll + y) / 16) + 1;
 
 			if(line <= length)
 			{
@@ -101,7 +104,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 					if(node.isExpanded())
 					{
 						node.setExpanded(false);
-						vueBrowserTree.setLength(vueBrowserTree.getLength()-node.removeChildren());
+						vueBrowserTree.setLength(vueBrowserTree.getLength() - node.removeChildren());
 					}
 					else
 					{
@@ -158,7 +161,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 	{
 		int length = vueBrowserTree.getLength();
 
-		if(blockSelected == 0 && length*16 > 161)
+		if(blockSelected == 0 && length * 16 > 161)
 		{
 			int x = e.getX();
 			int y = e.getY();
@@ -166,7 +169,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 
 			if(333 <= x && x <= 347)
 			{
-				if(y <= 15) //ScrollBar Up
+				if(y <= 15) // ScrollBar Up
 				{
 					if(blockOver != 11)
 					{
@@ -176,7 +179,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 						vueBrowserTree.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					}
 				}
-				else if(145 <= y) //ScrollBar Down
+				else if(145 <= y) // ScrollBar Down
 				{
 					if(blockOver != 12)
 					{
@@ -186,9 +189,9 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 						vueBrowserTree.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					}
 				}
-				else if(20 + (int)(123*scroll/(16*length)) <= y && y <= 20 + (int)(123*(scroll+160)/(16*length)))
+				else if(20 + (int)(123 * scroll / (16 * length)) <= y && y <= 20 + (int)(123 * (scroll + 160) / (16 * length)))
 				{
-					if(blockOver != 13) //ScrollBar
+					if(blockOver != 13) // ScrollBar
 					{
 						int[] state = {1, 1};
 						blockOver = 13;
@@ -198,7 +201,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 				}
 				else if(20 <= y && y <= 140)
 				{
-					if(blockOver != 14) //ScrollBar All
+					if(blockOver != 14) // ScrollBar All
 					{
 						int[] state = {1, 1};
 						blockOver = 14;
@@ -224,7 +227,7 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 					int[] state = {0, 0};
 					vueBrowserTree.setScrollBarState(state);
 				}
-	
+
 				blockOver = 0;
 				vueBrowserTree.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
@@ -237,12 +240,12 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 	 */
 	public void mouseDragged(MouseEvent e)
 	{
-		if(blockSelected == 1) //ScrollBar
+		if(blockSelected == 1) // ScrollBar
 		{
 			int y = e.getY();
 			int length = vueBrowserTree.getLength();
 
-			vueBrowserTree.setScroll((int)(((y+offset-20)*length*16)/123-80));
+			vueBrowserTree.setScroll((int)(((y + offset - 20) * length * 16) / 123 - 80));
 		}
 	}
 
@@ -252,6 +255,6 @@ public class ControleBrowserTree implements MouseListener, MouseMotionListener, 
 	 */
 	public void mouseWheelMoved(MouseWheelEvent e)
 	{
-		vueBrowserTree.setScroll(vueBrowserTree.getScroll() + 32*e.getWheelRotation());
+		vueBrowserTree.setScroll(vueBrowserTree.getScroll() + 32 * e.getWheelRotation());
 	}
 }

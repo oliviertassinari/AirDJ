@@ -1,3 +1,4 @@
+
 package Vue;
 
 import java.awt.Color;
@@ -40,7 +41,7 @@ public class VueBrowser extends JPanel
 	{
 		return vueBrowserTree;
 	}
-	
+
 	/**
 	 * getter vueBrowserTable (affichage fichiers wav)
 	 * @return VueBrowserTable

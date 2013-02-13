@@ -1,7 +1,8 @@
+
 package Kinect;
 
 /**
- * Implémentation du filtre passe bas.
+ * Implï¿½mentation du filtre passe bas.
  */
 class LowPassFilter
 {
@@ -13,48 +14,47 @@ class LowPassFilter
 	 */
 	public LowPassFilter()
 	{
-	    x = X = 0;
+		x = X = 0;
 	}
 
 	/**
 	 * Calcule la nouvelle valeur filtre.
 	 * @param value la valeur a filtrer
 	 * @param alpha le facteur du filtre entre 0 et 1
-	 * @return la valeur filtré
+	 * @return la valeur filtrï¿½
 	 */
 	public double filter(double value, double alpha)
 	{
-	    if(initialized)
-	    {
-	        X = alpha * value + (1 - alpha) * X;
-	    }
-	    else
-	    {
-	        X = value;
-	        initialized = true;
-	    }
+		if(initialized)
+		{
+			X = alpha * value + (1 - alpha) * X;
+		}
+		else
+		{
+			X = value;
+			initialized = true;
+		}
 
-	    x = value;
+		x = value;
 
-	    return X;
- 	}
+		return X;
+	}
 
 	/**
-	 * Teste si le filtre a déjà calculé une valeur.
-	 * @return true si le filtre a déjà calculer une valeur
+	 * Teste si le filtre a dï¿½jï¿½ calculï¿½ une valeur.
+	 * @return true si le filtre a dï¿½jï¿½ calculer une valeur
 	 */
 	public boolean isInitialized()
 	{
-	    return initialized;
+		return initialized;
 	}
 
 	/**
-	 * Retourne la dernière valeur donnée en input.
-	 * @return la dernier valeur donnée en input
+	 * Retourne la derniï¿½re valeur donnï¿½e en input.
+	 * @return la dernier valeur donnï¿½e en input
 	 */
 	public double lastRawValue()
 	{
-	    return x;
+		return x;
 	}
 }
-

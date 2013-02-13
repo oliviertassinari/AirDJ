@@ -1,10 +1,10 @@
+
 package Modele;
 
 import Vue.Vue;
 
 public class Modele
 {
-	
 	Vue vue;
 	ModeleBrowser modeleBrowser;
 	ModeleCrossfinder modeleCrossfinder;

@@ -1,3 +1,4 @@
+
 package Vue;
 
 import java.awt.Color;
@@ -32,7 +33,7 @@ public class VueKinect extends JPanel
 	 */
 	public VueKinect(Vue vue)
 	{
-		this.vue = vue;		
+		this.vue = vue;
 		setPreferredSize(new Dimension(1000, 240));
 
 		play = new ImageIcon("image/playvuekinect.png").getImage();
@@ -57,38 +58,39 @@ public class VueKinect extends JPanel
 		g.drawString("Main droite", 780, 25);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 15));
-		if (messageDroite == "play")
+		if(messageDroite == "play")
 		{
 			g.drawImage(play, 730, 55, null);
 		}
-		if (messageDroite == "pause")
+		if(messageDroite == "pause")
 		{
 			g.drawImage(pause, 730, 55, null);
 		}
-		if (messageDroite == "volume")
+		if(messageDroite == "volume")
 		{
 			g.drawImage(volume, 740, 55, null);
-		} else if (messageDroite == "crossfinder")
+		}
+		else if(messageDroite == "crossfinder")
 		{
 			g.drawImage(crossfinder, 745, 55, null);
 		}
 
-		if (messageGauche == "play")
+		if(messageGauche == "play")
 		{
 			g.drawImage(play, 405, 55, null);
 		}
-		if (messageGauche == "pause")
+		if(messageGauche == "pause")
 		{
 			g.drawImage(pause, 405, 55, null);
 		}
-		if (messageGauche == "volume")
+		if(messageGauche == "volume")
 		{
 			g.drawImage(volume, 415, 55, null);
-		} else if (messageGauche == "crossfinder")
+		}
+		else if(messageGauche == "crossfinder")
 		{
 			g.drawImage(crossfinder, 420, 55, null);
 		}
-
 	}
 
 	/**

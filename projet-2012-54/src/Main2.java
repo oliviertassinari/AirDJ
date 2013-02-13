@@ -1,4 +1,3 @@
-
 import Controle.Controle;
 
 import Kinect.Kinect;

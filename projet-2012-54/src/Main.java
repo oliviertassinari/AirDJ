@@ -1,4 +1,3 @@
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -21,57 +20,62 @@ public class Main
 
 		Controle controle = new Controle(vue, modele);
 
-		//modele.getModelePlayP1().setFilePath("/stud/users/promo15/ameyer/git/musique/Aerodynamic.wav");
-		
-		//test controleKinect
+		// modele.getModelePlayP1().setFilePath("/stud/users/promo15/ameyer/git/musique/Aerodynamic.wav");
+
+		// test controleKinect
 		KinectListener listener = new KinectListener();
 		final KinectSource kinect = new KinectSource(vue, modele);
 		kinect.addKinectListener(listener);
-		vue.addKeyListener(new KeyListener() {
-		
-			public void keyPressed(KeyEvent arg0) {
+		vue.addKeyListener(new KeyListener()
+		{
+			public void keyPressed(KeyEvent arg0)
+			{
 				// TODO Auto-generated method stub
-							
-				if((arg0.getKeyChar())=='p'){
+
+				if((arg0.getKeyChar()) == 'p')
+				{
 					kinect.fireEvent("play", "right", 0);
 				}
-				if((arg0.getKeyChar())=='m'){
+				if((arg0.getKeyChar()) == 'm')
+				{
 					kinect.fireEvent("volume", "right", 10);
 				}
-				if((arg0.getKeyChar())=='l'){
+				if((arg0.getKeyChar()) == 'l')
+				{
 					kinect.fireEvent("volume", "right", -10);
 				}
-				
-				if((arg0.getKeyChar())=='b'){
+
+				if((arg0.getKeyChar()) == 'b')
+				{
 					kinect.fireEvent("crossfinder", "...", 10);
 				}
-				if((arg0.getKeyChar())=='v'){
+				if((arg0.getKeyChar()) == 'v')
+				{
 					kinect.fireEvent("crossfinder", "...", -10);
 				}
-				
-				if((arg0.getKeyChar())=='z'){
+
+				if((arg0.getKeyChar()) == 'z')
+				{
 					kinect.fireEvent("play", "left", 0);
 				}
-				if((arg0.getKeyChar())=='s'){
+				if((arg0.getKeyChar()) == 's')
+				{
 					kinect.fireEvent("volume", "left", 10);
 				}
-				if((arg0.getKeyChar())=='q'){
+				if((arg0.getKeyChar()) == 'q')
+				{
 					kinect.fireEvent("volume", "left", -10);
 				}
-				
 
-
-				
-				}
-
-			public void keyReleased(KeyEvent arg0) {
 			}
 
-			
-			public void keyTyped(KeyEvent arg0) {
+			public void keyReleased(KeyEvent arg0)
+			{
 			}
-            
-        });
-		
+
+			public void keyTyped(KeyEvent arg0)
+			{
+			}
+		});
 	}
 }

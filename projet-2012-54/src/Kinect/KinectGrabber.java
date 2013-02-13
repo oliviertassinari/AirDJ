@@ -1,3 +1,4 @@
+
 package Kinect;
 
 import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_16U;
@@ -17,7 +18,7 @@ import com.googlecode.javacv.cpp.opencv_core.IplImage;
 
 /**
  * Wrapper entre OpenNI et JavaCV.
- * Il permet de récupérer l'image de profondeur de la kinect.
+ * Il permet de rï¿½cupï¿½rer l'image de profondeur de la kinect.
 */
 public class KinectGrabber
 {
@@ -35,7 +36,7 @@ public class KinectGrabber
 	{
 		try
 		{
-			context = new Context();    
+			context = new Context();
 			context.addLicense(new License("PrimeSense", "0KOIk2JeIBYClPWVnMoRKn5cdY4="));
 			context.setGlobalMirror(true);
 
@@ -49,7 +50,7 @@ public class KinectGrabber
 	}
 
 	/**
-	 * Démarre le grabber.
+	 * Dï¿½marre le grabber.
 	 */
 	public void start()
 	{
@@ -60,11 +61,11 @@ public class KinectGrabber
 		catch(StatusException e)
 		{
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	/**
-	 * Récupère la dernière image fourni par la kinect.
+	 * Rï¿½cupï¿½re la derniï¿½re image fourni par la kinect.
 	 * @return une image
 	 */
 	public IplImage grab()
@@ -77,7 +78,7 @@ public class KinectGrabber
 			ByteBuffer depthByteBuffer = imageDepth.getByteBuffer();
 
 			DepthMap depthM = depthGenerator.getDepthMap();
-		    depthM.copyToBuffer(depthByteBuffer, 640 * 480 * 2);
+			depthM.copyToBuffer(depthByteBuffer, 640 * 480 * 2);
 
 			return scale(imageDepth);
 		}
@@ -91,7 +92,7 @@ public class KinectGrabber
 	/**
 	 * Augmente le contraste de l image 16bit fournie par la kinect et la convertie en 8bit.
 	 * @param src image source
-	 * @return image traitée
+	 * @return image traitï¿½e
 	 */
 	public IplImage scale(IplImage src)
 	{
@@ -100,15 +101,14 @@ public class KinectGrabber
 		IplImage dst = IplImage.create(640, 480, IPL_DEPTH_8U, 1);
 		ByteBuffer dstByteBuffer = dst.getByteBuffer();
 
-		/* pour avoir tout le champ de vision
-		int c1 = 65535;
-		int c2 = -8000;
-		 * */
+		/*
+		 * pour avoir tout le champ de vision int c1 = 65535; int c2 = -8000;
+		 */
 
 		int c1 = 65535;
 		int c2 = -12000;
 
-		//Calcule de max et min
+		// Calcule de max et min
 		if(scaleI > 10)
 		{
 			int max = 0;
@@ -118,10 +118,10 @@ public class KinectGrabber
 			{
 				for(int y = 0; y < 480; y++)
 				{
-					int srcPixelIndex = 2*x + 2*640*y;
-	
-					int value = (srcByteBuffer.get(srcPixelIndex+1) & 0xff)*256 + (srcByteBuffer.get(srcPixelIndex) & 0xff);
-	
+					int srcPixelIndex = 2 * x + 2 * 640 * y;
+
+					int value = (srcByteBuffer.get(srcPixelIndex + 1) & 0xff) * 256 + (srcByteBuffer.get(srcPixelIndex) & 0xff);
+
 					if(value < min)
 					{
 						min = value;
@@ -133,21 +133,21 @@ public class KinectGrabber
 				}
 			}
 
-			//Filtre passe bas
+			// Filtre passe bas
 			if(scaleIs)
 			{
 				if(max != min)
 				{
-					scaleA = (float)((c1-c2)/(max-min)*0.3 + scaleA*0.7);
-					scaleB = (float)((c1 - scaleA*max)*0.3 + scaleB*0.7);
+					scaleA = (float)((c1 - c2) / (max - min) * 0.3 + scaleA * 0.7);
+					scaleB = (float)((c1 - scaleA * max) * 0.3 + scaleB * 0.7);
 				}
 			}
 			else
 			{
 				if(max != min)
 				{
-					scaleA = (c1-c2)/(max-min);
-					scaleB = c1 - scaleA*max;
+					scaleA = (c1 - c2) / (max - min);
+					scaleB = c1 - scaleA * max;
 					scaleIs = false;
 				}
 			}
@@ -167,11 +167,11 @@ public class KinectGrabber
 		{
 			for(int y = 0; y < 480; y++)
 			{
-				int srcPixelIndex = 2*x + 2*640*y;
-				float value = (srcByteBuffer.get(srcPixelIndex+1) & 0xff)*256 + (srcByteBuffer.get(srcPixelIndex) & 0xff);
+				int srcPixelIndex = 2 * x + 2 * 640 * y;
+				float value = (srcByteBuffer.get(srcPixelIndex + 1) & 0xff) * 256 + (srcByteBuffer.get(srcPixelIndex) & 0xff);
 
-				value = (float)(scaleA*value+scaleB);
-				value = (float)(value/256.0);
+				value = (float)(scaleA * value + scaleB);
+				value = (float)(value / 256.0);
 
 				if(value <= 0)
 				{
@@ -182,7 +182,7 @@ public class KinectGrabber
 					value = 255;
 				}
 
-				dstByteBuffer.put(srcPixelIndex/2, (byte)(value));
+				dstByteBuffer.put(srcPixelIndex / 2, (byte)(value));
 			}
 		}
 
@@ -190,7 +190,7 @@ public class KinectGrabber
 	}
 
 	/**
-	 * Arrête le grabber.
+	 * Arrï¿½te le grabber.
 	 */
 	public void stop()
 	{

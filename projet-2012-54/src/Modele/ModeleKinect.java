@@ -1,6 +1,8 @@
+
 package Modele;
 
-public class ModeleKinect {
+public class ModeleKinect
+{
 	/**
 	 * Partie du Modele controlée par le package kinectControle.
 	 */
@@ -8,7 +10,8 @@ public class ModeleKinect {
 	String messageDroite = "commande";
 	String messageGauche = "commande";
 
-	public ModeleKinect(Modele modele) {
+	public ModeleKinect(Modele modele)
+	{
 		this.modele = modele;
 	}
 
@@ -16,7 +19,8 @@ public class ModeleKinect {
 	 * 
 	 * @param messageDroite
 	 */
-	public void setMessageDroite(String messageDroite) {
+	public void setMessageDroite(String messageDroite)
+	{
 		this.messageDroite = messageDroite;
 		modele.getVue().getVueKinect().repaint();
 
@@ -26,7 +30,8 @@ public class ModeleKinect {
 	 * 
 	 * @param messageGauche
 	 */
-	public void setMessageGauche(String messageGauche) {
+	public void setMessageGauche(String messageGauche)
+	{
 		this.messageGauche = messageGauche;
 		modele.getVue().getVueKinect().repaint();
 
@@ -36,7 +41,8 @@ public class ModeleKinect {
 	 * 
 	 * @return String
 	 */
-	public String getMessageDroite() {
+	public String getMessageDroite()
+	{
 		return messageDroite;
 	}
 
@@ -44,7 +50,8 @@ public class ModeleKinect {
 	 * 
 	 * @return String
 	 */
-	public String getMessageGauche() {
+	public String getMessageGauche()
+	{
 		return messageGauche;
 	}
 }
