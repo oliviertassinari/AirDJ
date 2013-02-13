@@ -1,13 +1,13 @@
-package Kinect;
 
 import Controle.Controle;
 
+import Kinect.Kinect;
 import KinectControle.KinectListener;
 import KinectControle.KinectSource;
 import Modele.Modele;
 import Vue.Vue;
 
-public class Main
+public class Main2
 {
 	public static void main(String[] args)
 	{
