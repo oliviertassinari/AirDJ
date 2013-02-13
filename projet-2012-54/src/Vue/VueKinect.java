@@ -32,19 +32,17 @@ public class VueKinect extends JPanel
 	 */
 	public VueKinect(Vue vue)
 	{
-		this.vue = vue;
-
-		setBackground(Color.black);
+		this.vue = vue;		
 		setPreferredSize(new Dimension(1000, 240));
-	}
 
-	protected void paintComponent(Graphics g)
-	{
 		play = new ImageIcon("image/playvuekinect.png").getImage();
 		pause = new ImageIcon("image/pausevuekinect.png").getImage();
 		volume = new ImageIcon("image/volumevuekinect.png").getImage();
 		crossfinder = new ImageIcon("image/crossfindervuekinect.png").getImage();
+	}
 
+	protected void paintComponent(Graphics g)
+	{
 		String messageDroite = vue.getModele().getModeleKinect().getMessageDroite();
 		String messageGauche = vue.getModele().getModeleKinect().getMessageGauche();
 		g.setColor(new Color(0x181613));
@@ -52,7 +50,7 @@ public class VueKinect extends JPanel
 		g.drawImage(kinectImage, 0, 0, null);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 17));
-		g.setColor(Color.WHITE);
+		g.setColor(new Color(0x4e4c4b));
 		g.drawRect(335, 5, 320, 230);
 		g.drawRect(665, 5, 320, 230);
 		g.drawString("Main gauche", 450, 25);
