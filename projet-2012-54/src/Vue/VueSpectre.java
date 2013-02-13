@@ -20,22 +20,34 @@ public class VueSpectre
 	{
 		int[][] volumeArray = player.getVolumeArray();
 
-		imageSpectre = new BufferedImage(332, 30, BufferedImage.TRANSLUCENT);
-		Graphics g = imageSpectre.getGraphics();
-
         int listdim = volumeArray[0].length; 
-        int m = listdim / 332 + 1;
+        int m = listdim / 350 + 1;
         int max = 0;
  
-        for(int k = 0; k < listdim; k++)
+        for(int i = 0; i < listdim/m; i++)
         {
-        	int val = (volumeArray[0][k] + volumeArray[1][k])/2;
+        	int S = 0;
 
-        	if(max < val)
+        	for(int j = 0; j < m; j++)
         	{
-        		max = val;
+        		S = (volumeArray[0][m*i + j] + volumeArray[1][m*i + j])/2 + S;
+        	}
+
+        	if(max < S)
+        	{
+        		max = S;
         	}
         }
+      
+		imageSpectre = new BufferedImage(listdim/m, 39, BufferedImage.TRANSLUCENT);
+		Graphics g = imageSpectre.getGraphics();
+		
+		g.setColor(Color.black);
+		g.fillRect(0, 0, listdim/m, 40);
+		
+		g.setColor(Color.gray);
+		g.drawRect(0, 0, listdim/m-1, 38);
+		//g.drawLine(0, 20, listdim/m-1, 20);
 
         for(int i = 0; i < listdim/m; i++)
         {
@@ -46,11 +58,9 @@ public class VueSpectre
         		S = (volumeArray[0][m*i + j] + volumeArray[1][m*i + j])/2 + S;
         	}
 
-        	g.setColor(Color.DARK_GRAY);
-        	g.fillRect(i, 15 - (S/m)/(max/20 + 1), 1, (S/m)/(max/20 + 1));
-
         	g.setColor(Color.gray);
-        	g.fillRect(i, 15, 1, (S/m)/(max/10 + 1));
+        	g.drawLine(i, 19, i, 19 - S/(max/18+1));
+        	g.drawLine(i, 19, i, 19 + S/(max/18+1));
         }
 
         return imageSpectre;

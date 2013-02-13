@@ -162,6 +162,13 @@ public class VuePlay extends JPanel {
 			g.drawString(getFormatMMSS(total - current), 190, 60);
 		}
 
+		
+		if (modelePlay.getPlayer() != null) {
+			VueSpectre spectre = new VueSpectre(modelePlay.getPlayer());
+			BufferedImage imageSpectre = spectre.get();
+			g.drawImage(imageSpectre, 10, 77, 350, 39, this);
+		}
+		
 		// Player
 		if (total != 0) {
 			g.drawImage(imagePlayerCurrent, 19, 91,
@@ -170,6 +177,7 @@ public class VuePlay extends JPanel {
 			g.drawImage(imagePlayerCursor, 12 + (int) (332 * current / total),
 					89, null);
 		}
+
 
 		// Button
 		if (buttonPause == 1) // over
@@ -200,11 +208,7 @@ public class VuePlay extends JPanel {
 					69, null);
 		}
 
-		if (modelePlay.getPlayer() != null) {
-			VueSpectre spectre = new VueSpectre(modelePlay.getPlayer());
-			BufferedImage imageSpectre = spectre.get();
-			g.drawImage(imageSpectre, 18, 75, this);
-		}
+	
 	}
 
 	/**
