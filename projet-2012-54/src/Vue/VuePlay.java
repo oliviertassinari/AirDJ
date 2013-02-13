@@ -171,8 +171,8 @@ public class VuePlay extends JPanel {
 		
 		// Player
 		if (total != 0) {
-			g.drawImage(imagePlayerCurrent, 19, 91,
-					19 + (int) (332 * current / total), 99, 0, 8 * couleur, 1,
+			g.drawImage(imagePlayerCurrent, 10, 91,
+					10 + (int) (350 * current / total), 99, 0, 8 * couleur, 1,
 					8 + 8 * couleur, null);
 			g.drawImage(imagePlayerCursor, 12 + (int) (332 * current / total),
 					89, null);
