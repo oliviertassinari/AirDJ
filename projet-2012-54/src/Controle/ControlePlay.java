@@ -196,7 +196,7 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 		{
 			int x = e.getX();
 			int total = modelePlay.getTotal();
-			modelePlay.setCurrent((int)(total * (x + 1 - 19) / 332));
+			modelePlay.setCurrent((int)(total * (x + 1 - 2) / 366));
 		}
 	}
 
