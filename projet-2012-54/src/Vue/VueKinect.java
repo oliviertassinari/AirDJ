@@ -47,9 +47,9 @@ public class VueKinect extends JPanel
 
 		String messageDroite = vue.getModele().getModeleKinect().getMessageDroite();
 		String messageGauche = vue.getModele().getModeleKinect().getMessageGauche();
-		g.setColor(Color.black);
+		g.setColor(new Color(0x181613));
 		g.fillRect(0, 0, 1000, 240);
-		g.drawImage(kinectImage, 10, 10, null);
+		g.drawImage(kinectImage, 0, 0, null);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 17));
 		g.setColor(Color.WHITE);

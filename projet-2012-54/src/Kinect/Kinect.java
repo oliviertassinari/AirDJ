@@ -60,15 +60,12 @@ public class Kinect implements Runnable
 			grabber.start();
 
 			IplImage imageGrab = grabber.grab();
-			BufferedImage bufferedImageGrab = imageGrab.getBufferedImage();
 			int width  = imageGrab.width();
 			int height = imageGrab.height();
 	    	CvPoint minPoint = new CvPoint();
 	    	CvPoint maxPoint = new CvPoint();
 	    	double[] minVal = new double[1];
 	    	double[] maxVal = new double[1];
-	    	
-	    	vue.getVueKinect().setKinectImage(bufferedImageGrab);
 
 	    	// creation window used to display the video, the object in JavaCv can use the material acceleration
 	    	JFrame Fenetre = new JFrame();
@@ -206,11 +203,12 @@ public class Kinect implements Runnable
 					cvPutText(imageDislay2, "Droite", cvPoint((int)mainPositionRight.getFiltre(0)[0]-20, (int)mainPositionRight.getFiltre(0)[1]-10), font, CvScalar.RED);
 				}
 
-	        	CvFont fontFPS = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.6, 1); 
-				cvPutText(imageDislay2, "FPS : "+Integer.toString(getFPS()), cvPoint(10, 460), fontFPS, CvScalar.BLACK);
+	        	CvFont fontFPS = new CvFont(CV_FONT_HERSHEY_COMPLEX, 1, 2); 
+				cvPutText(imageDislay2, "FPS : "+Integer.toString(getFPS()), cvPoint(10, 465), fontFPS, CvScalar.RED);
 
-				//IplImage resizeDisplay = IplImage.create(width/2, height/2, IPL_DEPTH_8U, 3);
-				//cvResize(imageDislay2, resizeDisplay);
+				IplImage resizeDisplay = IplImage.create(width/2, height/2, IPL_DEPTH_8U, 3);
+				cvResize(imageDislay2, resizeDisplay);
+		    	vue.getVueKinect().setKinectImage(resizeDisplay.getBufferedImage());
 
 				fenetreFrame1.showImage(imageThreshold);
 				fenetreFrame2.showImage(imageDislay2);
