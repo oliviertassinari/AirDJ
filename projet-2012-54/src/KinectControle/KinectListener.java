@@ -48,13 +48,13 @@ public class KinectListener implements ListenerInterface
 				if(event.getCote() == "left")
 				{
 					modeleKinect.setMessageGauche("play");
-					modeleKinect.setMessageDroite(null);
+					
 					modeleKinect.setTimerGauche();
 				}
 				else if(event.getCote() == "right")
 				{
 					modeleKinect.setMessageDroite("play");
-					modeleKinect.setMessageGauche(null);
+				
 					modeleKinect.setTimerDroite();
 		
 				}
@@ -68,13 +68,13 @@ public class KinectListener implements ListenerInterface
 				if(event.getCote() == "left")
 				{
 					modeleKinect.setMessageGauche("pause");
-					modeleKinect.setMessageDroite(null);
+				
 					modeleKinect.setTimerGauche();
 				}
 				else if(event.getCote() == "right")
 				{
 					modeleKinect.setMessageDroite("pause");
-					modeleKinect.setMessageGauche(null);
+					
 					modeleKinect.setTimerDroite();
 				}
 			}
@@ -87,14 +87,14 @@ public class KinectListener implements ListenerInterface
 			{
 				crossfinder.setVolumeP1(crossfinder.getVolumeP1() + event.getValeur());
 				modeleKinect.setMessageGauche("volume");
-				modeleKinect.setMessageDroite(null);
+				
 				modeleKinect.setTimerGauche();
 			}
 			else if(event.getCote() == "right")
 			{
 				crossfinder.setVolumeP2(crossfinder.getVolumeP2() + event.getValeur());
 				modeleKinect.setMessageDroite("volume");
-				modeleKinect.setMessageGauche(null);
+			
 				modeleKinect.setTimerDroite();
 			}
 		}
@@ -106,14 +106,14 @@ public class KinectListener implements ListenerInterface
 			{
 				crossfinder.setCrossfinder(crossfinder.getCrossfinder() + event.getValeur());
 				modeleKinect.setMessageGauche("crossfinder");
-				modeleKinect.setMessageDroite(null);
+		
 				modeleKinect.setTimerGauche();
 			}
 			else if(event.getCote() == "right")
 			{
 				crossfinder.setCrossfinder(crossfinder.getCrossfinder() + event.getValeur());
 				modeleKinect.setMessageDroite("crossfinder");
-				modeleKinect.setMessageGauche(null);
+				
 				modeleKinect.setTimerDroite();
 			}
 		}
