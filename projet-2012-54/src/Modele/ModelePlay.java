@@ -285,6 +285,7 @@ public class ModelePlay
 	{
 		if(player.reset())
 		{
+			current = 0;
 			state = 0;
 			buttonPlay = 0;
 			buttonPause = 2;

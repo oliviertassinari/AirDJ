@@ -26,10 +26,10 @@ public class VuePlay extends JPanel
 	private int couleur; // 0 = blue, 1 = red
 	private Vue vue;
 	private ModelePlay modelePlay;
+	private VueSpectre vueSpectre;
 
 	private BufferedImage imageBackground;
 	private Image imagePitchCursor;
-	private Image imagePlayerCurrent;
 	private Image imageButton;
 
 	/**
@@ -47,7 +47,6 @@ public class VuePlay extends JPanel
 		setPreferredSize(new Dimension((1000 - 250) / 2, 300));
 
 		imagePitchCursor = new ImageIcon("image/pitchCursor.png").getImage();
-		imagePlayerCurrent = new ImageIcon("image/playerCurrent.png").getImage();
 
 		if(couleur == 0)
 		{
@@ -57,6 +56,8 @@ public class VuePlay extends JPanel
 		{
 			imageButton = new ImageIcon("image/buttonRed.png").getImage();
 		}
+
+		vueSpectre = new VueSpectre();
 
 		imageBackground = getImageBackground();
 	}
@@ -107,9 +108,6 @@ public class VuePlay extends JPanel
 		// Images
 		Image imagePitchGrid = new ImageIcon("image/pitchGrid.png").getImage();
 		g.drawImage(imagePitchGrid, 300, 120, null);
-
-		Image imagePlayerGrid = new ImageIcon("image/playerGrid.png").getImage();
-		g.drawImage(imagePlayerGrid, 18, 90, null);
 
 		Image imagePlayButton = new ImageIcon("image/button.png").getImage();
 		g.drawImage(imagePlayButton, 120, 170, null);
@@ -162,18 +160,8 @@ public class VuePlay extends JPanel
 			g.drawString(getFormatMMSS(total - current), 190, 60);
 		}
 
-		if(modelePlay.getPlayer() != null)
-		{
-			VueSpectre spectre = new VueSpectre(modelePlay.getPlayer());
-			BufferedImage imageSpectre = spectre.get();
-			g.drawImage(imageSpectre, 1, 80, 368, 29, this);
-		}
-
-		// Player
-		if(total != 0)
-		{
-			g.drawImage(imagePlayerCurrent, 2, 81, 2 + (int)(366 * current / total), 108, 0, 8 * couleur, 1, 8 + 8 * couleur, null);
-		}
+		BufferedImage imageSpectre = vueSpectre.get(current, total, modelePlay.getPlayer(), couleur);
+		g.drawImage(imageSpectre, 1, 80, this);
 
 		// Button
 		if(buttonPause == 1) // over
