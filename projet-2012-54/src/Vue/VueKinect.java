@@ -68,6 +68,7 @@ public class VueKinect extends JPanel
 		g.drawString("Main droite", 780, 25);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 15));
+
 		if(messageDroite == "play")
 		{
 			g.drawImage(play, 730, 55, null);
@@ -84,9 +85,9 @@ public class VueKinect extends JPanel
 		{
 			g.drawImage(crossfinder, 745, 55, null);
 		}
-		else if (messageDroite == null)
+		else if(messageDroite == null)
 		{
-			g.drawImage(null, 740, 55,new Color(0x4e4c4b),null);
+			g.drawImage(null, 740, 55, new Color(0x4e4c4b), null);
 		}
 
 		if(messageGauche == "play")
@@ -105,9 +106,9 @@ public class VueKinect extends JPanel
 		{
 			g.drawImage(crossfinder, 420, 55, null);
 		}
-		else if (messageGauche == null)
+		else if(messageGauche == null)
 		{
-			g.drawImage(null, 420, 55,new Color(0x4e4c4b),null);
+			g.drawImage(null, 420, 55, new Color(0x4e4c4b), null);
 		}
 	}
 
@@ -121,6 +122,7 @@ public class VueKinect extends JPanel
 		this.kinectImage = kinectImage;
 		this.kinectImageLeft = kinectImageLeft;
 		this.kinectImageRight = kinectImageRight;
+
 		repaint();
 	}
 }

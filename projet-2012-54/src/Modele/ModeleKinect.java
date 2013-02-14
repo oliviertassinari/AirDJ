@@ -10,8 +10,8 @@ public class ModeleKinect
 	 * Partie du Modele controlée par le package kinectControle.
 	 */
 	private Modele modele;
-	String messageDroite = "commande";
-	String messageGauche = "commande";
+	private String messageDroite = "commande";
+	private String messageGauche = "commande";
 
 	public ModeleKinect(Modele modele)
 	{
@@ -28,7 +28,7 @@ public class ModeleKinect
 				setMessageDroite(null);
 				cancel();
 			}
-		}, 500, 10);
+		}, 2000);
 	}
 	
 	public void setTimerGauche()
@@ -41,11 +41,9 @@ public class ModeleKinect
 				setMessageGauche(null);
 				cancel();
 			}
-		}, 500, 10);
-		
+		}, 2000);
 	}
 
-	
 	/**
 	 * 
 	 * @param messageDroite
@@ -54,7 +52,6 @@ public class ModeleKinect
 	{
 		this.messageDroite = messageDroite;
 		modele.getVue().getVueKinect().repaint();
-
 	}
 
 	/**
@@ -65,7 +62,6 @@ public class ModeleKinect
 	{
 		this.messageGauche = messageGauche;
 		modele.getVue().getVueKinect().repaint();
-
 	}
 
 	/**
