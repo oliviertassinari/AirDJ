@@ -18,11 +18,11 @@ public class KinectListener implements ListenerInterface
 	public void ListenToKinect(KinectEvent event)
 	{
 		ModeleKinect modeleKinect = event.getSource().getModele().getModeleKinect();
-		if(modeleKinect.getMessageDroite() == "crossfinder")
+		/*if(modeleKinect.getMessageDroite() == "crossfinder")
 		{
 			modeleKinect.setMessageDroite(null);
 			modeleKinect.setMessageGauche(null);
-		}
+		}*/
 		// commande play/pause
 		if(event.getMessage() == "play")
 		{
@@ -31,10 +31,12 @@ public class KinectListener implements ListenerInterface
 			if(event.getCote() == "left")
 			{
 				modelePlay = event.getSource().getModele().getModelePlayP1();
+				modeleKinect.setTimerGauche();
 			}
 			else
 			{
 				modelePlay = event.getSource().getModele().getModelePlayP2();
+				modeleKinect.setTimerDroite();
 			}
 
 			if(modelePlay.getState() == 0 && modelePlay.getPlayer() != null)
@@ -47,11 +49,14 @@ public class KinectListener implements ListenerInterface
 				{
 					modeleKinect.setMessageGauche("play");
 					modeleKinect.setMessageDroite(null);
+					modeleKinect.setTimerGauche();
 				}
 				else if(event.getCote() == "right")
 				{
 					modeleKinect.setMessageDroite("play");
 					modeleKinect.setMessageGauche(null);
+					modeleKinect.setTimerDroite();
+		
 				}
 			}
 			else if(modelePlay.getState() == 1)
@@ -64,11 +69,13 @@ public class KinectListener implements ListenerInterface
 				{
 					modeleKinect.setMessageGauche("pause");
 					modeleKinect.setMessageDroite(null);
+					modeleKinect.setTimerGauche();
 				}
 				else if(event.getCote() == "right")
 				{
 					modeleKinect.setMessageDroite("pause");
 					modeleKinect.setMessageGauche(null);
+					modeleKinect.setTimerDroite();
 				}
 			}
 		}
@@ -81,21 +88,42 @@ public class KinectListener implements ListenerInterface
 				crossfinder.setVolumeP1(crossfinder.getVolumeP1() + event.getValeur());
 				modeleKinect.setMessageGauche("volume");
 				modeleKinect.setMessageDroite(null);
+				modeleKinect.setTimerGauche();
 			}
 			else if(event.getCote() == "right")
 			{
 				crossfinder.setVolumeP2(crossfinder.getVolumeP2() + event.getValeur());
 				modeleKinect.setMessageDroite("volume");
 				modeleKinect.setMessageGauche(null);
+				modeleKinect.setTimerDroite();
 			}
 		}
+
 		if(event.getMessage() == "crossfinder")
+		{
+			ModeleCrossfinder crossfinder = event.getSource().getModele().getModeleCrossfinder();
+			if(event.getCote() == "left")
+			{
+				crossfinder.setCrossfinder(crossfinder.getCrossfinder() + event.getValeur());
+				modeleKinect.setMessageGauche("crossfinder");
+				modeleKinect.setMessageDroite(null);
+				modeleKinect.setTimerGauche();
+			}
+			else if(event.getCote() == "right")
+			{
+				crossfinder.setCrossfinder(crossfinder.getCrossfinder() + event.getValeur());
+				modeleKinect.setMessageDroite("crossfinder");
+				modeleKinect.setMessageGauche(null);
+				modeleKinect.setTimerDroite();
+			}
+		}
+		/*if(event.getMessage() == "crossfinder")
 		{
 			ModeleCrossfinder crossfinder = event.getSource().getModele().getModeleCrossfinder();
 			crossfinder.setCrossfinder(crossfinder.getCrossfinder() + event.getValeur());
 			modeleKinect.setMessageDroite("crossfinder");
 			modeleKinect.setMessageGauche("crossfinder");
-		}
+		}*/
 
 	}
 }

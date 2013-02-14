@@ -48,11 +48,11 @@ public class Main
 
 				if((arg0.getKeyChar()) == 'b')
 				{
-					kinectSource.fireEvent("crossfinder", "...", 10);
+					kinectSource.fireEvent("crossfinder", "right", 10);
 				}
 				if((arg0.getKeyChar()) == 'v')
 				{
-					kinectSource.fireEvent("crossfinder", "...", -10);
+					kinectSource.fireEvent("crossfinder", "left", -10);
 				}
 
 				if((arg0.getKeyChar()) == 'z')

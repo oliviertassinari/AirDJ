@@ -80,9 +80,13 @@ public class VueKinect extends JPanel
 		{
 			g.drawImage(volume, 740, 55, null);
 		}
-		else if(messageDroite == "crossfinder")
+		if(messageDroite == "crossfinder")
 		{
 			g.drawImage(crossfinder, 745, 55, null);
+		}
+		else if (messageDroite == null)
+		{
+			g.drawImage(null, 740, 55,new Color(0x4e4c4b),null);
 		}
 
 		if(messageGauche == "play")
@@ -97,9 +101,13 @@ public class VueKinect extends JPanel
 		{
 			g.drawImage(volume, 415, 55, null);
 		}
-		else if(messageGauche == "crossfinder")
+		if(messageGauche == "crossfinder")
 		{
 			g.drawImage(crossfinder, 420, 55, null);
+		}
+		else if (messageGauche == null)
+		{
+			g.drawImage(null, 420, 55,new Color(0x4e4c4b),null);
 		}
 	}
 

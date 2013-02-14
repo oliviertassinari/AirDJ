@@ -1,6 +1,9 @@
 
 package Modele;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ModeleKinect
 {
 	/**
@@ -14,7 +17,35 @@ public class ModeleKinect
 	{
 		this.modele = modele;
 	}
+	
+	public void setTimerDroite()
+	{
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask()
+		{
+			public void run()
+			{
+				setMessageDroite(null);
+				cancel();
+			}
+		}, 500, 10);
+	}
+	
+	public void setTimerGauche()
+	{
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask()
+		{
+			public void run()
+			{
+				setMessageGauche(null);
+				cancel();
+			}
+		}, 500, 10);
+		
+	}
 
+	
 	/**
 	 * 
 	 * @param messageDroite
