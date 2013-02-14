@@ -243,7 +243,7 @@ public class ModelePlay
 				reset();
 			}
 
-			if(currentNew != current)
+			if(currentNew != current || current == 0)
 			{
 				current = currentNew;
 				vuePlay.repaint();

@@ -57,7 +57,7 @@ public class VuePlay extends JPanel
 			imageButton = new ImageIcon("image/buttonRed.png").getImage();
 		}
 
-		vueSpectre = new VueSpectre();
+		vueSpectre = new VueSpectre(couleur);
 
 		imageBackground = getImageBackground();
 	}
@@ -160,7 +160,7 @@ public class VuePlay extends JPanel
 			g.drawString(getFormatMMSS(total - current), 190, 60);
 		}
 
-		BufferedImage imageSpectre = vueSpectre.get(current, total, modelePlay.getPlayer(), couleur);
+		BufferedImage imageSpectre = vueSpectre.get(current, total, modelePlay.getPlayer());
 		g.drawImage(imageSpectre, 1, 80, this);
 
 		// Button

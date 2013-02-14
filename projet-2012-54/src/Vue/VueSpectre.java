@@ -9,11 +9,14 @@ import Audio.IPlayer;
 
 public class VueSpectre
 {
-	public VueSpectre()
+	private int couleur;
+	
+	public VueSpectre(int couleur)
 	{
+		this.couleur = couleur;
 	}
 
-	public BufferedImage get(int current, int total, IPlayer player, int couleur)
+	public BufferedImage get(int current, int total, IPlayer player)
 	{
 		if(player != null)
 		{
