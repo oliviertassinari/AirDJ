@@ -15,6 +15,7 @@ import Vue.Vue;
 
 import com.googlecode.javacpp.Loader;
 import com.googlecode.javacv.CanvasFrame;
+import com.googlecode.javacv.OpenCVFrameGrabber;
 import com.googlecode.javacv.cpp.opencv_core.CvBox2D;
 import com.googlecode.javacv.cpp.opencv_core.CvContour;
 import com.googlecode.javacv.cpp.opencv_core.CvFont;
@@ -91,9 +92,11 @@ public class Kinect implements Runnable
 			while((imageGrab = grabber.grab()) != null)
 			{
 				timeLastGrab = System.currentTimeMillis();
-				/*
-				 * imageTraitement = IplImage.create(width, height, IPL_DEPTH_8U, 1); cvCvtColor(imageGrab, imageTraitement, CV_RGB2GRAY); IplImage imageDislay2 = imageGrab.clone();
-				 */
+/*			
+				imageTraitement = IplImage.create(width, height, IPL_DEPTH_8U, 1);
+				cvCvtColor(imageGrab, imageTraitement, CV_RGB2GRAY);
+				IplImage imageDislay2 = imageGrab.clone();
+*/
 
 				IplImage imageDislay2 = IplImage.create(width, height, IPL_DEPTH_8U, 3);
 				cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
@@ -206,7 +209,14 @@ public class Kinect implements Runnable
 
 				IplImage resizeDisplay = IplImage.create(width / 2, height / 2, IPL_DEPTH_8U, 3);
 				cvResize(imageDislay2, resizeDisplay);
-				vue.getVueKinect().setKinectImage(resizeDisplay.getBufferedImage());
+
+				IplImage imageLeft = IplImage.create(310, 200, IPL_DEPTH_8U, 3);
+				cvGetRectSubPix(imageDislay2, imageLeft, new CvPoint2D32f((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]));
+
+				IplImage imageRight = IplImage.create(310, 200, IPL_DEPTH_8U, 3);
+				cvGetRectSubPix(imageDislay2, imageRight, new CvPoint2D32f((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]));
+
+				vue.getVueKinect().setKinectImage(resizeDisplay.getBufferedImage(), imageLeft.getBufferedImage(), imageRight.getBufferedImage());
 
 				fenetreFrame1.showImage(imageThreshold);
 				fenetreFrame2.showImage(imageDislay2);

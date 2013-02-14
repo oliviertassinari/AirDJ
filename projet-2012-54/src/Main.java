@@ -22,10 +22,11 @@ public class Main
 
 		// modele.getModelePlayP1().setFilePath("/stud/users/promo15/ameyer/git/musique/Aerodynamic.wav");
 
+		final KinectSource kinectSource = new KinectSource(vue, modele);
+
 		// test controleKinect
 		KinectListener listener = new KinectListener();
-		final KinectSource kinect = new KinectSource(vue, modele);
-		kinect.addKinectListener(listener);
+		kinectSource.addKinectListener(listener);
 		vue.addKeyListener(new KeyListener()
 		{
 			public void keyPressed(KeyEvent arg0)
@@ -34,39 +35,38 @@ public class Main
 
 				if((arg0.getKeyChar()) == 'p')
 				{
-					kinect.fireEvent("play", "right", 0);
+					kinectSource.fireEvent("play", "right", 0);
 				}
 				if((arg0.getKeyChar()) == 'm')
 				{
-					kinect.fireEvent("volume", "right", 10);
+					kinectSource.fireEvent("volume", "right", 10);
 				}
 				if((arg0.getKeyChar()) == 'l')
 				{
-					kinect.fireEvent("volume", "right", -10);
+					kinectSource.fireEvent("volume", "right", -10);
 				}
 
 				if((arg0.getKeyChar()) == 'b')
 				{
-					kinect.fireEvent("crossfinder", "...", 10);
+					kinectSource.fireEvent("crossfinder", "...", 10);
 				}
 				if((arg0.getKeyChar()) == 'v')
 				{
-					kinect.fireEvent("crossfinder", "...", -10);
+					kinectSource.fireEvent("crossfinder", "...", -10);
 				}
 
 				if((arg0.getKeyChar()) == 'z')
 				{
-					kinect.fireEvent("play", "left", 0);
+					kinectSource.fireEvent("play", "left", 0);
 				}
 				if((arg0.getKeyChar()) == 's')
 				{
-					kinect.fireEvent("volume", "left", 10);
+					kinectSource.fireEvent("volume", "left", 10);
 				}
 				if((arg0.getKeyChar()) == 'q')
 				{
-					kinect.fireEvent("volume", "left", -10);
+					kinectSource.fireEvent("volume", "left", -10);
 				}
-
 			}
 
 			public void keyReleased(KeyEvent arg0)
