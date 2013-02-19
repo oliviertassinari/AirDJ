@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname"
-    nsURI="http://defaultname/1.0" nsPrefix="defaultname">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname" nsURI="http://defaultname/1.0" nsPrefix="defaultname">
   <eClassifiers xsi:type="ecore:EDataType" name="EDataType0">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="baseType" value="EDataType0"/>
@@ -384,7 +382,19 @@
       <eOperations name="ModeleKinect">
         <eParameters name="modele" eType="#//Modele/Modele"/>
       </eOperations>
+      <eOperations name="getMessageDroite"/>
+      <eOperations name="getMessageGauche"/>
+      <eOperations name="setMessageDroite">
+        <eParameters name="string" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="setMessageGauche">
+        <eParameters eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
+      <eOperations name="setTimerDroite"/>
+      <eOperations name="setTimerGauche"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageDroite: EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageGauche: EString"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleFileTree">
       <eOperations name="ModeleFileTree"/>
