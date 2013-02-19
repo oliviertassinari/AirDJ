@@ -28,6 +28,8 @@ public class KinectGrabber
 	private float scaleA;
 	private float scaleB;
 	private boolean scaleIs = false;
+	private IplImage imageDepth;
+	private ByteBuffer depthByteBuffer;
 
 	/**
 	 * Initialise le grabber.
@@ -42,6 +44,9 @@ public class KinectGrabber
 
 			depthGenerator = DepthGenerator.create(context);
 			depthGenerator.setMapOutputMode(new MapOutputMode(640, 480, 30));
+
+			imageDepth = IplImage.create(640, 480, IPL_DEPTH_16U, 1);
+			depthByteBuffer = imageDepth.getByteBuffer();
 		}
 		catch(GeneralException e)
 		{
@@ -74,13 +79,10 @@ public class KinectGrabber
 		{
 			context.waitAnyUpdateAll();
 
-			IplImage imageDepth = IplImage.create(640, 480, IPL_DEPTH_16U, 1);
-			ByteBuffer depthByteBuffer = imageDepth.getByteBuffer();
-
 			DepthMap depthM = depthGenerator.getDepthMap();
 			depthM.copyToBuffer(depthByteBuffer, 640 * 480 * 2);
 
-			return scale(imageDepth);
+			return imageDepth;
 		}
 		catch(GeneralException e)
 		{
@@ -94,12 +96,10 @@ public class KinectGrabber
 	 * @param src image source
 	 * @return image trait�e
 	 */
-	public IplImage scale(IplImage src)
+	public void scale(IplImage src, IplImage dst)
 	{
-		ByteBuffer srcByteBuffer = src.getByteBuffer();
-
-		IplImage dst = IplImage.create(640, 480, IPL_DEPTH_8U, 1);
-		ByteBuffer dstByteBuffer = dst.getByteBuffer();
+		ByteBuffer srcBuffer = src.getByteBuffer();
+		ByteBuffer dstBuffer = dst.getByteBuffer();
 
 		/*
 		 * pour avoir tout le champ de vision int c1 = 65535; int c2 = -8000;
@@ -119,8 +119,7 @@ public class KinectGrabber
 				for(int y = 0; y < 480; y++)
 				{
 					int srcPixelIndex = 2 * x + 2 * 640 * y;
-
-					int value = (srcByteBuffer.get(srcPixelIndex + 1) & 0xff) * 256 + (srcByteBuffer.get(srcPixelIndex) & 0xff);
+					int value = (srcBuffer.get(srcPixelIndex + 1) & 0xff) * 256 + (srcBuffer.get(srcPixelIndex) & 0xff);
 
 					if(value < min)
 					{
@@ -168,7 +167,7 @@ public class KinectGrabber
 			for(int y = 0; y < 480; y++)
 			{
 				int srcPixelIndex = 2 * x + 2 * 640 * y;
-				float value = (srcByteBuffer.get(srcPixelIndex + 1) & 0xff) * 256 + (srcByteBuffer.get(srcPixelIndex) & 0xff);
+				float value = (srcBuffer.get(srcPixelIndex + 1) & 0xff) * 256 + (srcBuffer.get(srcPixelIndex) & 0xff);
 
 				value = (float)(scaleA * value + scaleB);
 				value = (float)(value / 256.0);
@@ -182,11 +181,30 @@ public class KinectGrabber
 					value = 255;
 				}
 
-				dstByteBuffer.put(srcPixelIndex / 2, (byte)(value));
+				dstBuffer.put(srcPixelIndex / 2, (byte)(value));
 			}
 		}
+	}
 
-		return dst;
+	public void correct(IplImage src, IplImage dst)
+	{
+		ByteBuffer srcBuffer = src.getByteBuffer();
+		ByteBuffer dstBuffer = dst.getByteBuffer();
+
+		for(int x = 0; x < 640; x++)
+		{
+			for(int y = 0; y < 480; y++)
+			{
+				int pixelIndex = 2 * x + 2 * 640 * y;
+				int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
+
+				if(value == 0)
+				{
+					dstBuffer.put(pixelIndex, (byte)(255)); // White
+					dstBuffer.put(pixelIndex+1, (byte)(255)); // White
+				}
+			}
+		}
 	}
 
 	/**

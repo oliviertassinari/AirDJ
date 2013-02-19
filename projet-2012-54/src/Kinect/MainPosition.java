@@ -13,6 +13,7 @@ public class MainPosition
 	private float[][] derivees;
 	private OneEuroFilter oneEuroFilterX;
 	private OneEuroFilter oneEuroFilterY;
+	private OneEuroFilter oneEuroFilterZ;
 
 	public MainPosition()
 	{
@@ -52,9 +53,9 @@ public class MainPosition
 
 		positionsFiltre[0][0] = (int)oneEuroFilterX.filter(centre.x());
 		positionsFiltre[0][1] = (int)oneEuroFilterY.filter(centre.y());
-		positionsFiltre[0][2] = depth;
+		positionsFiltre[0][2] = (int)oneEuroFilterZ.filter(depth);
 
-		// Calcule de d�riv�e
+		// Calcul de dérivée
 		for(int i = derivees.length - 1; i > 0; i--)
 		{
 			derivees[i][0] = derivees[i - 1][0];
@@ -90,8 +91,7 @@ public class MainPosition
 
 		oneEuroFilterX = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 		oneEuroFilterY = new OneEuroFilter(30, 1.0, 0.04, 1.0);
-
-		// System.out.println("reset");
+		oneEuroFilterZ = new OneEuroFilter(30, 0.4, 0.04, 0.4);
 	}
 
 	/**

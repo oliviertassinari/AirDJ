@@ -46,7 +46,7 @@ public class reconnaissanceMvt
 					ct1 = 0;
 				}
 
-				if(Math.abs(position[0] - positionCurrent[0]) < 40 && Math.abs(position[2] - positionCurrent[2]) < 40) // stable en x, z
+				if(Math.abs(position[0] - positionCurrent[0]) < 40 && Math.abs(position[2] - positionCurrent[2]) < 80) // stable en x, z
 				{
 					ct2 += 1;
 				}
@@ -55,7 +55,7 @@ public class reconnaissanceMvt
 					ct2 = 0;
 				}
 
-				if(Math.abs(position[1] - positionCurrent[1]) < 40 && Math.abs(position[2] - positionCurrent[2]) < 40) // stable en y, z
+				if(Math.abs(position[1] - positionCurrent[1]) < 40 && Math.abs(position[2] - positionCurrent[2]) < 80) // stable en y, z
 				{
 					ct3 += 1;
 				}
@@ -73,7 +73,7 @@ public class reconnaissanceMvt
 						dz += mainPosition.getDerivee(j)[2]; // z
 					}
 
-					if(dz < -0.25 && position[2] - positionCurrent[2] > 4)
+					if(dz < -2 && position[2] - positionCurrent[2] > 80)
 					{
 						timeOrigin = timeLastGrab + 500;
 						ct1 = 0;

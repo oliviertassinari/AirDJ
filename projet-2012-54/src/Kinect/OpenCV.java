@@ -24,6 +24,7 @@ public class OpenCV
 {
 	/**
 	 * Converts image from one color space to another
+	 * 
 	 * @param src The source 8-bit
 	 * @param dst The destination image
 	 * @param code Color conversion operation
@@ -74,6 +75,7 @@ public class OpenCV
 
 	/**
 	 * Finds global minimum and maximum in array or subarray
+	 * 
 	 * @param src The source array
 	 * @param minVal return minimum value
 	 * @param maxVal return maximum value
@@ -120,6 +122,7 @@ public class OpenCV
 
 	/**
 	 * Applies fixed-level threshold to array elements
+	 * 
 	 * @param src Source array
 	 * @param dst Destination array
 	 * @param threshold Threshold value
@@ -132,25 +135,46 @@ public class OpenCV
 		{
 			int width = src.width();
 			int height = src.height();
-			int pixelIndex;
 
 			ByteBuffer srcBuffer = src.getByteBuffer();
 			ByteBuffer dstBuffer = dst.getByteBuffer();
 
-			for(int x = 0; x < width; x++)
+			if(src.depth() == 8 && dst.depth() == 8)
 			{
-				for(int y = 0; y < height; y++)
+				for(int x = 0; x < width; x++)
 				{
-					pixelIndex = x + width * y;
-
-					if(getUnsignedByte(srcBuffer, pixelIndex) > threshold)
+					for(int y = 0; y < height; y++)
 					{
-						dstBuffer.put(pixelIndex, (byte)0);
+						int pixelIndex = x + width * y;
+
+						if(getUnsignedByte(srcBuffer, pixelIndex) > threshold)
+						{
+							dstBuffer.put(pixelIndex, (byte)0);
+						}
+						else
+						{
+							dstBuffer.put(pixelIndex, (byte)maxValue);
+						}
 					}
-					else
+				}
+			}
+			else if(src.depth() == 16 && dst.depth() == 8)
+			{
+				for(int x = 0; x < width; x++)
+				{
+					for(int y = 0; y < height; y++)
 					{
-						dstBuffer.put(pixelIndex, (byte)maxValue);
+						int pixelIndex = 2 * x + 2 * width * y;
+						int value = getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + getUnsignedByte(srcBuffer, pixelIndex);
 
+						if(value > threshold)
+						{
+							dstBuffer.put(pixelIndex/2, (byte)0);
+						}
+						else
+						{
+							dstBuffer.put(pixelIndex/2, (byte)maxValue);
+						}
 					}
 				}
 			}

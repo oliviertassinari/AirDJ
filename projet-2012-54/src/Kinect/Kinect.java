@@ -6,6 +6,7 @@ import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -32,6 +33,7 @@ public class Kinect implements Runnable
 	private MainPosition mainPositionLeft = new MainPosition();
 	private MainPosition mainPositionRight = new MainPosition();
 	private IplImage imageTraitement;
+	private IplImage imageGrab;
 	private long timeLastGrab;
 	private long[] timeList = new long[4];
 	private reconnaissanceMvt reconnaissanceMvtLeft;
@@ -61,7 +63,7 @@ public class Kinect implements Runnable
 
 			grabber.start();
 
-			IplImage imageGrab = grabber.grab();
+			imageGrab = grabber.grab();
 			int width = imageGrab.width();
 			int height = imageGrab.height();
 			CvPoint minPoint = new CvPoint();
@@ -92,25 +94,26 @@ public class Kinect implements Runnable
 			while((imageGrab = grabber.grab()) != null)
 			{
 				timeLastGrab = System.currentTimeMillis();
-				/*
-				 * imageTraitement = IplImage.create(width, height, IPL_DEPTH_8U, 1);
-				 * cvCvtColor(imageGrab, imageTraitement, CV_RGB2GRAY);
-				 * IplImage imageDislay2 = imageGrab.clone();
-				 */
 
+				
+				IplImage imageGrab2 = IplImage.create(width, height, IPL_DEPTH_8U, 1);
+				grabber.scale(imageGrab, imageGrab2);
 				IplImage imageDislay2 = IplImage.create(width, height, IPL_DEPTH_8U, 3);
-				cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
+				cvCvtColor(imageGrab2, imageDislay2, CV_GRAY2RGB);
 				// OpenCV.cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
+
+				grabber.correct(imageGrab, imageGrab);
 
 				imageTraitement = imageGrab.clone();
 
 				cvMinMaxLoc(imageTraitement, minVal, maxVal, minPoint, maxPoint, null);
 				// OpenCV.cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null);
+
 				cvCircle(imageDislay2, minPoint, 3, CvScalar.YELLOW, -1, 8, 0);
 
 				cvSmooth(imageTraitement, imageTraitement, CV_GAUSSIAN, 7, 7, 0, 0);
 
-				IplImage imageThreshold = imageTraitement.clone();
+				IplImage imageThreshold = IplImage.create(width, height, IPL_DEPTH_8U, 1);
 
 				int nbrIteration = 0;
 				int firstFound = 0;
@@ -123,8 +126,8 @@ public class Kinect implements Runnable
 
 					int nbrFound = 0;
 
-					cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * nbrIteration, 255, CV_THRESH_BINARY_INV);
-					// OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*nbrIteration, 255, CV_THRESH_BINARY_INV);
+					//cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * nbrIteration, 255, CV_THRESH_BINARY_INV);
+					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*nbrIteration, 255, CV_THRESH_BINARY_INV);
 
 					CvSeq contour = new CvSeq();
 					cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
@@ -155,8 +158,8 @@ public class Kinect implements Runnable
 
 				if(!isFound)
 				{
-					cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * firstFound, 255, CV_THRESH_BINARY_INV);
-					// OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5*firstFound, 255, CV_THRESH_BINARY_INV);
+					//cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * firstFound, 255, CV_THRESH_BINARY_INV);
+					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*firstFound, 255, CV_THRESH_BINARY_INV);
 				}
 
 				CvSeq contour = new CvSeq();
@@ -334,13 +337,13 @@ public class Kinect implements Runnable
 
 					if(centre2.x() > centre1.x()) // center1 : left
 					{
-						mainPositionLeft.add(timeLastGrab, centre1, getDepth(centre1), 0);
-						mainPositionRight.add(timeLastGrab, centre2, getDepth(centre2), 0);
+						mainPositionLeft.add(timeLastGrab, centre1, getValue(imageGrab, centre1), 0);
+						mainPositionRight.add(timeLastGrab, centre2, getValue(imageGrab, centre2), 0);
 					}
 					else
 					{
-						mainPositionLeft.add(timeLastGrab, centre2, getDepth(centre2), 0);
-						mainPositionRight.add(timeLastGrab, centre1, getDepth(centre1), 0);
+						mainPositionLeft.add(timeLastGrab, centre2, getValue(imageGrab, centre2), 0);
+						mainPositionRight.add(timeLastGrab, centre1, getValue(imageGrab, centre1), 0);
 					}
 				}
 			}
@@ -362,13 +365,13 @@ public class Kinect implements Runnable
 				if(minLengthListToLeft[1] < minLengthListToRight[1])
 				{
 					choose = 1;
-					mainPositionLeft.add(timeLastGrab, centerList.get(minLengthListToLeft[0]), getDepth(centerList.get(minLengthListToLeft[0])), 0);
+					mainPositionLeft.add(timeLastGrab, centerList.get(minLengthListToLeft[0]), getValue(imageGrab, centerList.get(minLengthListToLeft[0])), 0);
 					centerList.remove(minLengthListToLeft[0]);
 				}
 				else
 				{
 					choose = 2;
-					mainPositionRight.add(timeLastGrab, centerList.get(minLengthListToRight[0]), getDepth(centerList.get(minLengthListToRight[0])), 0);
+					mainPositionRight.add(timeLastGrab, centerList.get(minLengthListToRight[0]), getValue(imageGrab, centerList.get(minLengthListToRight[0])), 0);
 					centerList.remove(minLengthListToRight[0]);
 				}
 
@@ -376,11 +379,11 @@ public class Kinect implements Runnable
 				{
 					if(choose == 1)
 					{
-						mainPositionRight.add(timeLastGrab, centerList.get(0), getDepth(centerList.get(0)), 0);
+						mainPositionRight.add(timeLastGrab, centerList.get(0), getValue(imageGrab, centerList.get(0)), 0);
 					}
 					else
 					{
-						mainPositionLeft.add(timeLastGrab, centerList.get(0), getDepth(centerList.get(0)), 0);
+						mainPositionLeft.add(timeLastGrab, centerList.get(0), getValue(imageGrab, centerList.get(0)), 0);
 					}
 				}
 				else if(centerList.size() > 1)
@@ -409,7 +412,7 @@ public class Kinect implements Runnable
 
 		int[] minLengthList = getMinList(lengthList);
 
-		mainPosition.add(timeLastGrab, centerList.get(minLengthList[0]), getDepth(centerList.get(minLengthList[0])), 0);
+		mainPosition.add(timeLastGrab, centerList.get(minLengthList[0]), getValue(imageGrab, centerList.get(minLengthList[0])), 0);
 	}
 
 	public int getFPS()
@@ -461,9 +464,13 @@ public class Kinect implements Runnable
 		return new CvPoint((int)(moments.m10() / moments.m00()), (int)(moments.m01() / moments.m00()));
 	}
 
-	public int getDepth(CvPoint point)
+	public int getValue(IplImage src, CvPoint point)
 	{
-		return OpenCV.getUnsignedByte(imageTraitement.getByteBuffer(), point.x() + imageTraitement.width() * point.y());
+		ByteBuffer srcBuffer = src.getByteBuffer();
+		int pixelIndex = 2 * point.x() + 2 * 640 * point.y();
+		int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
+
+		return value;
 	}
 
 	public double getLenght(long x1, long y1, int x2, int y2)
