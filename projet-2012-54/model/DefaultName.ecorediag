@@ -712,10 +712,6 @@
       <children xmi:type="notation:Node" xmi:id="_Q0W6QFXeEeKlw4mxqgd7JQ" type="2003">
         <children xmi:type="notation:Node" xmi:id="_Q0Z9kFXeEeKlw4mxqgd7JQ" type="4002"/>
         <children xmi:type="notation:Node" xmi:id="_Q0Z9kVXeEeKlw4mxqgd7JQ" type="5004">
-          <children xmi:type="notation:Node" xmi:id="_bvekAFXeEeKlw4mxqgd7JQ" type="2001">
-            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTree/vueBrowserTree"/>
-            <layoutConstraint xmi:type="notation:Location" xmi:id="_bvekAVXeEeKlw4mxqgd7JQ"/>
-          </children>
           <children xmi:type="notation:Node" xmi:id="_d7RGIFXeEeKlw4mxqgd7JQ" type="2001">
             <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTree/blockOver"/>
             <layoutConstraint xmi:type="notation:Location" xmi:id="_d7RGIVXeEeKlw4mxqgd7JQ"/>
@@ -731,6 +727,14 @@
           <children xmi:type="notation:Node" xmi:id="_iAgdMFXeEeKlw4mxqgd7JQ" type="2001">
             <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTree/timer"/>
             <layoutConstraint xmi:type="notation:Location" xmi:id="_iAgdMVXeEeKlw4mxqgd7JQ"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_VA7a0HqdEeKeFf6rSLGL0w" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTree/vueBrowserTable"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_VA7a0XqdEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_bvekAFXeEeKlw4mxqgd7JQ" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTree/vueBrowserTree"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_bvekAVXeEeKlw4mxqgd7JQ"/>
           </children>
           <styles xmi:type="notation:DrawerStyle" xmi:id="_Q0Z9klXeEeKlw4mxqgd7JQ"/>
           <styles xmi:type="notation:SortingStyle" xmi:id="_Q0Z9k1XeEeKlw4mxqgd7JQ"/>
@@ -780,6 +784,82 @@
         <styles xmi:type="notation:ShapeStyle" xmi:id="_Q0W6QVXeEeKlw4mxqgd7JQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="10265827" lineColor="8421504"/>
         <element xmi:type="ecore:EClass" href="DefaultName.ecore#//Controle/ControleBrowserTree"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Q0W6QlXeEeKlw4mxqgd7JQ" x="300" y="17" width="233" height="273"/>
+      </children>
+      <children xmi:type="notation:Node" xmi:id="_lCSbEHqcEeKeFf6rSLGL0w" type="2003">
+        <children xmi:type="notation:Node" xmi:id="_lCTCIHqcEeKeFf6rSLGL0w" type="4002"/>
+        <children xmi:type="notation:Node" xmi:id="_lCTCIXqcEeKeFf6rSLGL0w" type="5004">
+          <children xmi:type="notation:Node" xmi:id="_pUPYcHqcEeKeFf6rSLGL0w" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTable/blockOver"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_pUPYcXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_qGNn8HqcEeKeFf6rSLGL0w" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTable/blockSelected"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_qGNn8XqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_qfPL8HqcEeKeFf6rSLGL0w" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTable/modele"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_qfPL8XqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_r6GAYHqcEeKeFf6rSLGL0w" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTable/offset"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_r6GAYXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_q3kzcHqcEeKeFf6rSLGL0w" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTable/timer"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_q3kzcXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_o7rugHqcEeKeFf6rSLGL0w" type="2001">
+            <element xmi:type="ecore:EAttribute" href="DefaultName.ecore#//Controle/ControleBrowserTable/vueBrowserTable"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_o7rugXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <styles xmi:type="notation:DrawerStyle" xmi:id="_lCTCInqcEeKeFf6rSLGL0w"/>
+          <styles xmi:type="notation:SortingStyle" xmi:id="_lCTCI3qcEeKeFf6rSLGL0w"/>
+          <styles xmi:type="notation:FilteringStyle" xmi:id="_lCTCJHqcEeKeFf6rSLGL0w"/>
+        </children>
+        <children xmi:type="notation:Node" xmi:id="_lCTpMHqcEeKeFf6rSLGL0w" type="5005">
+          <children xmi:type="notation:Node" xmi:id="_65xEsHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/ControleBrowserTable"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_65xEsXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_7tkgMHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mouseClicked"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_7tkgMXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_-TCtoHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mouseDragged"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_-TCtoXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="__BgWIHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mouseEntered"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="__BgWIXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_-p3SMHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mouseExited"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_-p3SMXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_801DMHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mouseMoved"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_801DMXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_8gdVsHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mousePressed"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_8gdVsXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_8FreMHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mouseReleased"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_8FreMXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_7ToWMHqcEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Controle/ControleBrowserTable/mouseWhellMoved"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_7ToWMXqcEeKeFf6rSLGL0w"/>
+          </children>
+          <styles xmi:type="notation:DrawerStyle" xmi:id="_lCTpMXqcEeKeFf6rSLGL0w"/>
+          <styles xmi:type="notation:SortingStyle" xmi:id="_lCTpMnqcEeKeFf6rSLGL0w"/>
+          <styles xmi:type="notation:FilteringStyle" xmi:id="_lCTpM3qcEeKeFf6rSLGL0w"/>
+        </children>
+        <styles xmi:type="notation:ShapeStyle" xmi:id="_lCSbEXqcEeKeFf6rSLGL0w" fontColor="4210752" fontName="Sans" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
+        <element xmi:type="ecore:EClass" href="DefaultName.ecore#//Controle/ControleBrowserTable"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_lCSbEnqcEeKeFf6rSLGL0w" x="315" y="293" width="243" height="333"/>
       </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_p8stBjeoEeKRg-vIx6Yw5w"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_p8stBzeoEeKRg-vIx6Yw5w"/>
