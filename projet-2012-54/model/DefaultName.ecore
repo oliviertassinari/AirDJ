@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname" nsURI="http://defaultname/1.0" nsPrefix="defaultname">
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="defaultname"
+    nsURI="http://defaultname/1.0" nsPrefix="defaultname">
   <eClassifiers xsi:type="ecore:EDataType" name="EDataType0">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="baseType" value="EDataType0"/>
@@ -52,33 +54,46 @@
       <eOperations name="getFormatMMSS" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
-      <eOperations name="repaint"/>
       <eOperations name="getImageBackground"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePitchCursor"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePlayCursor"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePlayCurrent"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="couleur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageButton"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="couleur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imagePitchCursor"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelePlay"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueSpectre"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueKinect">
       <eOperations name="VueKinect">
         <eParameters name="vue" eType="#//Vue/Vue"/>
       </eOperations>
+      <eOperations name="setKinectImage">
+        <eParameters name="kinectImage"/>
+        <eParameters name="kinectImage"/>
+        <eParameters name="kinectImage"/>
+      </eOperations>
+      <eOperations name="paintComponent">
+        <eParameters name="Graphics"/>
+      </eOperations>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="crossfinder"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="kinectImage"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="volume"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="kinectImageLeft"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="kinectImageRight"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pause"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="play"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueCrossfinder">
       <eOperations name="VueCorssfinder">
         <eParameters name="vue" eType="#//Vue/Vue"/>
       </eOperations>
-      <eOperations name="paintComponent"/>
-      <eOperations name="repaint"/>
+      <eOperations name="getImageBackground"/>
+      <eOperations name="paintComponent(Graphics)"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageVolumeCursor"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageCrossfinderCursor"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageDisplayVolumeOver"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageVolumeCursor"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EEnum" name="EEnum0"/>
@@ -106,38 +121,56 @@
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueBrowserTree">
       <eOperations name="VueBrowserTree"/>
-      <eOperations name="paintComponent"/>
-      <eOperations name="paintRoot"/>
-      <eOperations name="paintNode"/>
       <eOperations name="buildNode"/>
-      <eOperations name="getChildCount"/>
       <eOperations name="getChild"/>
-      <eOperations name="isLeaf" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-      <eOperations name="getNode"/>
+      <eOperations name="getChildCount"/>
       <eOperations name="getLength" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getNode"/>
+      <eOperations name="getScroll" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getScrollBarState"/>
+      <eOperations name="isLeaf" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <eOperations name="paintComponent"/>
+      <eOperations name="paintNode"/>
+      <eOperations name="paintRoot"/>
       <eOperations name="setLength">
         <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
-      <eOperations name="getScroll" upperBound="2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eOperations name="setScroll">
         <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
-      <eOperations name="getScrollBarState"/>
       <eOperations name="setScrollBarState"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="listRouts"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageTree"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageScrollBar"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageScrollBar"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageTree"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="length" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="root"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="scroll" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="scrollBarState"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="root"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="y" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueBrowserTable">
       <eOperations name="VueBrowserTable"/>
       <eOperations name="paintComponent"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="tableOver"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="pathList"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="scrollBarState"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="scroll"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="length"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageScrollBar"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageTable"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="VueSpectre">
+      <eOperations name="vueSpectre">
+        <eParameters name="" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="get">
+        <eParameters name="current" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="total" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        <eParameters name="player" eType="#//IPlayer"/>
+      </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="couleur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="Controle">
@@ -447,4 +480,3 @@
   </eSubpackages>
   <eSubpackages name="EPackage0"/>
 </ecore:EPackage>
-
