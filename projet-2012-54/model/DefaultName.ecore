@@ -27,12 +27,13 @@
       <eOperations name="getModele"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Vue/Vue"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Vue/VueBrowser"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueBrowser"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueKinect"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueCrossfinder"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vueKinect"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vuePlayP1"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="vuePlayP2"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="VueBrowser">
       <eOperations name="VueBrowser">
@@ -152,18 +153,22 @@
     <eClassifiers xsi:type="ecore:EClass" name="VueBrowserTable">
       <eOperations name="VueBrowserTable"/>
       <eOperations name="paintComponent"/>
-      <eOperations name="getExtension">
-        <eParameters name="filePath"/>
+      <eOperations name="getExtension" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        <eParameters name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </eOperations>
-      <eOperations name="getFilePath">
+      <eOperations name="getFilePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
         <eParameters name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       </eOperations>
-      <eOperations name="getLength"/>
-      <eOperations name="getScroll"/>
-      <eOperations name="paintNode"/>
+      <eOperations name="getLength" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="getScroll" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eOperations name="paintNode">
+        <eParameters name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </eOperations>
       <eOperations name="setLength"/>
       <eOperations name="setScroll"/>
-      <eOperations name="setScrollBarState"/>
+      <eOperations name="setScrollBarState">
+        <eParameters name="value"/>
+      </eOperations>
       <eOperations name="setTableOver"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="tableOver"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
