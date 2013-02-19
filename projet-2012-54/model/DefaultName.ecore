@@ -152,6 +152,19 @@
     <eClassifiers xsi:type="ecore:EClass" name="VueBrowserTable">
       <eOperations name="VueBrowserTable"/>
       <eOperations name="paintComponent"/>
+      <eOperations name="getExtension">
+        <eParameters name="filePath"/>
+      </eOperations>
+      <eOperations name="getFilePath">
+        <eParameters name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="getLength"/>
+      <eOperations name="getScroll"/>
+      <eOperations name="paintNode"/>
+      <eOperations name="setLength"/>
+      <eOperations name="setScroll"/>
+      <eOperations name="setScrollBarState"/>
+      <eOperations name="setTableOver"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="tableOver"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="imageBackground"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="pathList"/>

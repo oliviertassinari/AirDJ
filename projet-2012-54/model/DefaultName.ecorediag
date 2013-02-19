@@ -441,13 +441,49 @@
             <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/paintComponent"/>
             <layoutConstraint xmi:type="notation:Location" xmi:id="_DrQ1sVXhEeKlw4mxqgd7JQ"/>
           </children>
+          <children xmi:type="notation:Node" xmi:id="_HCAwQHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/getExtension"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_HCAwQXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_HWcvMHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/getFilePath"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_HWcvMXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_HoceIHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/getLength"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_HoceIXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_H85EIHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/getScroll"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_H85EIXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_xlJJkHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/paintNode"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_xlJJkXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_y8bFkHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/setLength"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_y8bFkXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_zT_4EHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/setScroll"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_zT_4EXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_zomPEHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/setScrollBarState"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_zomPEXqaEeKeFf6rSLGL0w"/>
+          </children>
+          <children xmi:type="notation:Node" xmi:id="_5MumAHqaEeKeFf6rSLGL0w" type="2002">
+            <element xmi:type="ecore:EOperation" href="DefaultName.ecore#//Vue/VueBrowserTable/setTableOver"/>
+            <layoutConstraint xmi:type="notation:Location" xmi:id="_5MumAXqaEeKeFf6rSLGL0w"/>
+          </children>
           <styles xmi:type="notation:DrawerStyle" xmi:id="_2ppZiVXgEeKlw4mxqgd7JQ"/>
           <styles xmi:type="notation:SortingStyle" xmi:id="_2ppZilXgEeKlw4mxqgd7JQ"/>
           <styles xmi:type="notation:FilteringStyle" xmi:id="_2ppZi1XgEeKlw4mxqgd7JQ"/>
         </children>
         <styles xmi:type="notation:ShapeStyle" xmi:id="_2ppZgVXgEeKlw4mxqgd7JQ" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="10265827" lineColor="8421504"/>
         <element xmi:type="ecore:EClass" href="DefaultName.ecore#//Vue/VueBrowserTable"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2ppZglXgEeKlw4mxqgd7JQ" x="745" y="23" width="169" height="243"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_2ppZglXgEeKlw4mxqgd7JQ" x="745" y="23" width="169" height="393"/>
       </children>
       <children xmi:type="notation:Node" xmi:id="__SOBwXqTEeKeFf6rSLGL0w" type="2003">
         <children xmi:type="notation:Node" xmi:id="__SPP4HqTEeKeFf6rSLGL0w" type="4002"/>
