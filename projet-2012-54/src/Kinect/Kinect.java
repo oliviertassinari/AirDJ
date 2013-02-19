@@ -30,10 +30,13 @@ import com.googlecode.javacv.cpp.opencv_imgproc.CvConvexityDefect;
 public class Kinect implements Runnable
 {
 	private Thread runner;
-	private MainPosition mainPositionLeft = new MainPosition();
-	private MainPosition mainPositionRight = new MainPosition();
+	private MainPosition mainPositionLeft;
+	private MainPosition mainPositionRight;
 	private IplImage imageTraitement;
 	private IplImage imageGrab;
+	private IplImage imageGrab2;
+	private IplImage imageDislay2;
+	private IplImage imageThreshold;
 	private long timeLastGrab;
 	private long[] timeList = new long[4];
 	private reconnaissanceMvt reconnaissanceMvtLeft;
@@ -42,12 +45,16 @@ public class Kinect implements Runnable
 
 	public Kinect(KinectSource kinectSource, Vue vue)
 	{
+		this.vue = vue;
+
+		mainPositionLeft = new MainPosition();
+		mainPositionRight = new MainPosition();
+
 		reconnaissanceMvtLeft = new reconnaissanceMvt(mainPositionLeft, "left", kinectSource);
 		reconnaissanceMvtRight = new reconnaissanceMvt(mainPositionRight, "right", kinectSource);
 
 		runner = new Thread(this, "kinect");
 		runner.start();
-		this.vue = vue;
 	}
 
 	public void run()
@@ -71,6 +78,9 @@ public class Kinect implements Runnable
 			double[] minVal = new double[1];
 			double[] maxVal = new double[1];
 
+			imageGrab2 = IplImage.create(width, height, IPL_DEPTH_8U, 1);
+			imageDislay2 = IplImage.create(width, height, IPL_DEPTH_8U, 3);
+
 			// creation window used to display the video, the object in JavaCv can use the material acceleration
 			JFrame Fenetre = new JFrame();
 			Fenetre.setLayout(new GridLayout(1, 2));
@@ -91,14 +101,14 @@ public class Kinect implements Runnable
 
 			CvMemStorage storage = CvMemStorage.create();
 
+			CvSeq points;
+			CvSeq contour;
+
 			while((imageGrab = grabber.grab()) != null)
 			{
 				timeLastGrab = System.currentTimeMillis();
 
-				
-				IplImage imageGrab2 = IplImage.create(width, height, IPL_DEPTH_8U, 1);
 				grabber.scale(imageGrab, imageGrab2);
-				IplImage imageDislay2 = IplImage.create(width, height, IPL_DEPTH_8U, 3);
 				cvCvtColor(imageGrab2, imageDislay2, CV_GRAY2RGB);
 				// OpenCV.cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
 
@@ -113,7 +123,7 @@ public class Kinect implements Runnable
 
 				cvSmooth(imageTraitement, imageTraitement, CV_GAUSSIAN, 7, 7, 0, 0);
 
-				IplImage imageThreshold = IplImage.create(width, height, IPL_DEPTH_8U, 1);
+				imageThreshold = IplImage.create(width, height, IPL_DEPTH_8U, 1);
 
 				int nbrIteration = 0;
 				int firstFound = 0;
@@ -129,7 +139,7 @@ public class Kinect implements Runnable
 					//cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * nbrIteration, 255, CV_THRESH_BINARY_INV);
 					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*nbrIteration, 255, CV_THRESH_BINARY_INV);
 
-					CvSeq contour = new CvSeq();
+					contour = new CvSeq();
 					cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
 					while(contour != null && !contour.isNull())
@@ -162,7 +172,7 @@ public class Kinect implements Runnable
 					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*firstFound, 255, CV_THRESH_BINARY_INV);
 				}
 
-				CvSeq contour = new CvSeq();
+				contour = new CvSeq();
 				cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
 				while(contour != null && !contour.isNull())
@@ -173,10 +183,7 @@ public class Kinect implements Runnable
 
 						if(aire > 1000 && aire < 10000)
 						{
-							// cvDrawContours(imageDislay2, contour, CvScalar.BLUE, CvScalar.BLUE, -1, 1, CV_AA);
-
-							CvSeq points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.002, 0);
-							// cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
+							points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.002, 0);
 
 							CvPoint centre = getContourCenter3(points, storage);
 							cvCircle(imageDislay2, centre, 3, CvScalar.RED, -1, 8, 0);
