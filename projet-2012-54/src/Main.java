@@ -20,7 +20,7 @@ public class Main
 
 		Controle controle = new Controle(vue, modele);
 
-		// modele.getModelePlayP1().setFilePath("/stud/users/promo15/ameyer/git/musique/Aerodynamic.wav");
+		 modele.getModelePlayP1().setFilePath("/stud/users/promo15/lisa-bost/git/musique/09_Heads_Will_Roll_A_Trak_Remix_.wav");
 
 		final KinectSource kinectSource = new KinectSource(vue, modele);
 

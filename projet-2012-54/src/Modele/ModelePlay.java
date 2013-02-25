@@ -138,8 +138,9 @@ public class ModelePlay
 			buttonPause = 0;
 		}
 		else if(state == "release")
-		{
+		{ if(this.state == 1 ){
 			buttonPlay = 2;
+		}
 		}
 		else if(state == "out")
 		{
@@ -172,7 +173,10 @@ public class ModelePlay
 		}
 		else if(state == "release")
 		{
-			buttonPause = 2;
+			 if(this.state == 0 ){
+				buttonPause = 2;
+			}
+		
 		}
 		else if(state == "out")
 		{
