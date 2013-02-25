@@ -49,8 +49,8 @@ public class Kinect implements Runnable
 		mainPositionLeft = new MainPosition();
 		mainPositionRight = new MainPosition();
 
-		reconnaissanceMvtLeft = new reconnaissanceMvt(mainPositionLeft, "left", kinectSource);
-		reconnaissanceMvtRight = new reconnaissanceMvt(mainPositionRight, "right", kinectSource);
+		reconnaissanceMvtLeft = new reconnaissanceMvt(this, mainPositionLeft, "left", kinectSource);
+		reconnaissanceMvtRight = new reconnaissanceMvt(this, mainPositionRight, "right", kinectSource);
 
 		runner = new Thread(this, "kinect");
 		runner.start();
@@ -115,7 +115,7 @@ public class Kinect implements Runnable
 
 				imageTraitement = imageGrab.clone();
 
-				cvMinMaxLoc(imageTraitement, minVal, maxVal, minPoint, maxPoint, null);
+				cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null);
 				// OpenCV.cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null);
 
 				cvCircle(imageDislay2, minPoint, 3, CvScalar.YELLOW, -1, 8, 0);
@@ -181,7 +181,7 @@ public class Kinect implements Runnable
 					{
 						double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0);
 
-						if(aire > 1000 && aire < 10000)
+						if(aire > 1000 && aire < 15000)
 						{
 							points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.005, 0);
 							cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
@@ -267,8 +267,8 @@ public class Kinect implements Runnable
 	{
 		int[] fingers = {0, 639, 479};
 
-		CvSeq convex = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 1);
-		cvDrawContours(imageDislay2, convex, CvScalar.RED, CvScalar.RED, -1, 1, CV_AA);
+		//CvSeq convex = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 1);
+		//cvDrawContours(imageDislay2, convex, CvScalar.RED, CvScalar.RED, -1, 1, CV_AA);
 
 		CvSeq hull = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 0);
 		CvSeq defect = cvConvexityDefects(contour, hull, storage);
@@ -316,6 +316,40 @@ public class Kinect implements Runnable
 
 		if(nbr == 0)
 		{
+/*			contour = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.02, 0);
+			cvDrawContours(imageDislay2, contour, CvScalar.RED, CvScalar.RED, -1, 1, CV_AA);
+
+			for(int i = 0; i < contour.total(); i++)
+			{
+				CvPoint point = new CvPoint(cvGetSeqElem(contour, i));
+				CvPoint prev;
+				CvPoint next;
+
+				if(i == contour.total() - 1)
+				{
+					next = new CvPoint(cvGetSeqElem(contour, 0));
+				}
+				else
+				{
+					next = new CvPoint(cvGetSeqElem(contour, i+1));
+				}
+
+				if(i == 0)
+				{
+					prev = new CvPoint(cvGetSeqElem(contour, contour.total() - 1));
+				}
+				else
+				{
+					prev = new CvPoint(cvGetSeqElem(contour, i-1));
+				}
+
+				if(getAngle(prev, point, next) < 40)
+				{
+					cvCircle(imageDislay2, point, 5, CvScalar.CYAN, -1, 8, 0);
+				}
+			}
+
+			hull = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 0);*/
 			defect = cvConvexityDefects(contour, hull, storage);
 
 			while(defect != null)
@@ -333,7 +367,7 @@ public class Kinect implements Runnable
 							cvCircle(imageDislay2, convexityDefect.start(), 3, CvScalar.MAGENTA, -1, 8, 0);
 							cvCircle(imageDislay2, convexityDefect.depth_point(), 3, CvScalar.WHITE, -1, 8, 0);
 							cvCircle(imageDislay2, convexityDefect.end(), 3, CvScalar.CYAN, -1, 8, 0);
-	*/
+*/
 							if(convexityDefect.start().y() < fingers[2])
 							{
 								fingers[1] = convexityDefect.start().x();

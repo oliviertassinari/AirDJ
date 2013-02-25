@@ -48,8 +48,18 @@ public class MainPosition
 		positions[0][2] = centre.y();
 		positions[0][3] = depth;
 		positions[0][4] = fingerList[0]; //nbr de doigts
-		positions[0][5] = fingerList[1]; //x
-		positions[0][6] = fingerList[2]; //y
+		
+		if(fingerList[0] == 1)
+		{
+			positions[0][5] = fingerList[1]; //x
+			positions[0][6] = fingerList[2]; //y
+		}
+		else
+		{
+			positions[0][5] = positions[1][5]; //x
+			positions[0][6] = positions[1][6]; //y
+		}
+
 		positions[0][7] = fingerZ;       //z
 
 		for(int i = positionsFiltre.length - 1; i > 0; i--)
@@ -64,8 +74,8 @@ public class MainPosition
 		positionsFiltre[0][0] = (int)oneEuroFilterX.filter(centre.x()); // x
 		positionsFiltre[0][1] = (int)oneEuroFilterY.filter(centre.y()); // y
 		positionsFiltre[0][2] = (int)oneEuroFilterZ.filter(depth); // z
-		positionsFiltre[0][3] = (int)oneEuroFilterFingerX.filter(fingerList[1]); // finger x
-		positionsFiltre[0][4] = (int)oneEuroFilterFingerY.filter(fingerList[2]); // finger y
+		positionsFiltre[0][3] = (int)oneEuroFilterFingerX.filter(positions[0][5]); // finger x
+		positionsFiltre[0][4] = (int)oneEuroFilterFingerY.filter(positions[0][6]); // finger y
 
 		// Calcul de dérivée
 		for(int i = derivees.length - 1; i > 0; i--)
@@ -104,9 +114,9 @@ public class MainPosition
 		oneEuroFilterX = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 		oneEuroFilterY = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 		oneEuroFilterZ = new OneEuroFilter(30, 0.4, 0.04, 0.4);
-		
-		oneEuroFilterFingerX = new OneEuroFilter(30, 1.0, 0.04, 1.0);
-		oneEuroFilterFingerY = new OneEuroFilter(30, 1.0, 0.04, 1.0);
+
+		oneEuroFilterFingerX = new OneEuroFilter(30, 0.3, 0.06, 0.25);
+		oneEuroFilterFingerY = new OneEuroFilter(30, 0.3, 0.06, 0.25);
 	}
 
 	/**

@@ -188,20 +188,23 @@ public class KinectGrabber
 
 	public void correct(IplImage src, IplImage dst)
 	{
+		int width = src.width();
+		int height = src.height();
 		ByteBuffer srcBuffer = src.getByteBuffer();
 		ByteBuffer dstBuffer = dst.getByteBuffer();
+		byte white = (byte)255;
 
-		for(int x = 0; x < 640; x++)
+		for(int x = 0; x < width; x++)
 		{
-			for(int y = 0; y < 480; y++)
+			for(int y = 0; y < height; y++)
 			{
-				int pixelIndex = 2 * x + 2 * 640 * y;
+				int pixelIndex = 2 * x + 2 * width * y;
 				int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
 
 				if(value == 0)
 				{
-					dstBuffer.put(pixelIndex, (byte)(255)); // White
-					dstBuffer.put(pixelIndex+1, (byte)(255)); // White
+					dstBuffer.put(pixelIndex, white);
+					dstBuffer.put(pixelIndex+1, white);
 				}
 			}
 		}

@@ -3,6 +3,7 @@ package Kinect;
 
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.event.InputEvent;
 
 import KinectControle.KinectSource;
 
@@ -11,6 +12,7 @@ import KinectControle.KinectSource;
  */
 public class reconnaissanceMvt
 {
+	private Kinect kinect;
 	private MainPosition mainPosition;
 	private String side;
 	private int ct1;
@@ -20,8 +22,9 @@ public class reconnaissanceMvt
 	private KinectSource kinectSource;
 	private Robot robot;
 
-	public reconnaissanceMvt(MainPosition mainPosition, String side, KinectSource kinectSource)
+	public reconnaissanceMvt(Kinect kinect, MainPosition mainPosition, String side, KinectSource kinectSource)
 	{
+		this.kinect = kinect;
 		this.mainPosition = mainPosition;
 		this.side = side;
 		ct1 = 0;
@@ -42,13 +45,51 @@ public class reconnaissanceMvt
 
 	public void compute(long timeLastGrab)
 	{
+		// Mouse move
 		if(side == "right")
 		{
-			System.out.println(mainPosition.get(0)[7]);
+			float statut = 0;
 
-			if(mainPosition.get(0)[4] == 1)
+			for(int i = 0; i < 19; i++)
 			{
-				robot.mouseMove((int)mainPosition.getFiltre(0)[3]*2, (int)mainPosition.getFiltre(0)[4]*2);
+				if(mainPosition.get(i)[4] == 1)
+				{
+					statut += 1;
+				}
+			}
+
+			if(statut/19 > 0.5)
+			{
+				robot.mouseMove((int)mainPosition.getFiltre(0)[3]*2, (int)mainPosition.getFiltre(0)[4]*2+10);
+				//System.out.println(statut/19);
+			}
+		}
+
+		if(mainPosition.get(0)[4] == 1 && mainPosition.get(1)[4] == 0)
+		{
+			int t1 = 0;
+			long fingerActuelX = mainPosition.get(0)[5];
+			long fingerActuelY = mainPosition.get(0)[6];
+
+			for(int i = 0; i < 30; i++)
+			{
+				if(mainPosition.get(i)[4] == 0) //fermé
+				{
+					t1 += 1;
+				}
+
+				if(t1 > 2)
+				{
+					double length = kinect.getLenght(fingerActuelX, fingerActuelY, (int)mainPosition.get(i)[5], (int)mainPosition.get(i)[6]);
+
+					if(length < 12)
+					{
+						robot.mousePress(InputEvent.BUTTON1_MASK);
+						robot.mouseRelease(InputEvent.BUTTON1_MASK);
+						System.out.println("click length:"+length);
+						break;
+					}
+				}
 			}
 		}
 
@@ -87,62 +128,80 @@ public class reconnaissanceMvt
 					ct3 = 0;
 				}
 
-				if(ct1 > 20)
+				if(ct1 > 20) // Suffisamment stable en x, y
 				{
 					float dz = 0;
+					float statut = 0;
 
 					for(int j = 0; j <= i; j++)
 					{
 						dz += mainPosition.getDerivee(j)[2]; // z
+
+						if(mainPosition.get(j)[4] > 1)
+						{
+							statut += 1;
+						}
 					}
 
-					if(dz < -2 && position[2] - positionCurrent[2] > 80)
+					if(dz < -2 && position[2] - positionCurrent[2] > 80 && statut/(i+1) > 0.7)
 					{
 						timeOrigin = timeLastGrab + 500;
 						ct1 = 0;
 						ct2 = 0;
 						ct3 = 0;
-						System.out.println(side + " pause " + dz + " " + (position[2] - positionCurrent[2]));
+						System.out.println(side + " pause dz:" + dz + " dx:" + (position[2] - positionCurrent[2]) + " statut:"+statut/(i+1));
 						kinectSource.fireEvent("play", side, 0);
 					}
 				}
 
-				if(ct2 > 20)
+				if(ct2 > 20) // Suffisamment stable en x, z
 				{
 					float dy = 0;
+					float statut = 0;
 
 					for(int j = 0; j <= i; j++)
 					{
 						dy += mainPosition.getDerivee(j)[1]; // y
+
+						if(mainPosition.get(j)[4] > 1)
+						{
+							statut += 1;
+						}
 					}
 
-					if(Math.abs(dy) > 3)
+					if(Math.abs(dy) > 3 && statut/(i+1) > 0.7)
 					{
 						timeOrigin = timeLastGrab + 500;
 						ct1 = 0;
 						ct2 = 0;
 						ct3 = 0;
-						System.out.println(side + " volume " + dy);
+						System.out.println(side + " volume dy:" + dy + " statut:"+statut/(i+1));
 						kinectSource.fireEvent("volume", side, (int)(-dy * 10));
 					}
 				}
 
-				if(ct3 > 20)
+				if(ct3 > 20) // Suffisamment stable en y, z
 				{
 					float dx = 0;
+					float statut = 0;
 
 					for(int j = 0; j <= i; j++)
 					{
 						dx += mainPosition.getDerivee(j)[0]; // x
+
+						if(mainPosition.get(j)[4] > 1)
+						{
+							statut += 1;
+						}
 					}
 
-					if((dx > 3 && side == "right") || (dx < -3 && side == "left"))
+					if(((dx > 3 && side == "right") || (dx < -3 && side == "left")) && statut/(i+1) > 0.6)
 					{
 						timeOrigin = timeLastGrab + 500;
 						ct1 = 0;
 						ct2 = 0;
 						ct3 = 0;
-						System.out.println(side + " crossfinder" + dx);
+						System.out.println(side + " crossfinder dx:" + dx + " statut:"+statut/(i+1));
 						kinectSource.fireEvent("crossfinder", side, (int)(dx * 20));
 					}
 				}
