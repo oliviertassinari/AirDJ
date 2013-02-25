@@ -82,7 +82,7 @@ public class reconnaissanceMvt
 				{
 					double length = kinect.getLenght(fingerActuelX, fingerActuelY, (int)mainPosition.get(i)[5], (int)mainPosition.get(i)[6]);
 
-					if(length < 12)
+					if(2 < length && length < 12)
 					{
 						robot.mousePress(InputEvent.BUTTON1_MASK);
 						robot.mouseRelease(InputEvent.BUTTON1_MASK);
