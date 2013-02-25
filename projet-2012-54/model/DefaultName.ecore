@@ -401,6 +401,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageDroite: EString"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageGauche: EString"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Vue/VueKinect"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleFileTree">
       <eOperations name="ModeleFileTree"/>
@@ -553,6 +554,7 @@
       <eOperations name="ListenToKinect">
         <eParameters name="kinectEvent" eType="#//KinectControle/KinectEvent"/>
       </eOperations>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Modele/ModeleKinect"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="KinectSource">
       <eOperations name="KinectSource()">
