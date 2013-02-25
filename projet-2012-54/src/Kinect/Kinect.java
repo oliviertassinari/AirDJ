@@ -4,10 +4,7 @@ package Kinect;
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 
-import java.awt.AWTException;
 import java.awt.GridLayout;
-import java.awt.Robot;
-import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -44,7 +41,6 @@ public class Kinect implements Runnable
 	private reconnaissanceMvt reconnaissanceMvtLeft;
 	private reconnaissanceMvt reconnaissanceMvtRight;
 	private Vue vue;
-	private Robot robot;
 
 	public Kinect(KinectSource kinectSource, Vue vue)
 	{
@@ -58,15 +54,6 @@ public class Kinect implements Runnable
 
 		runner = new Thread(this, "kinect");
 		runner.start();
-
-		try
-		{
-			robot = new Robot();
-		}
-		catch(AWTException e1)
-		{
-			e1.printStackTrace();
-		}
 	}
 
 	public void run()
@@ -214,11 +201,13 @@ public class Kinect implements Runnable
 				reconnaissanceMvtLeft.compute(timeLastGrab);
 				reconnaissanceMvtRight.compute(timeLastGrab);
 
-				// Affichage info
+				// Affichage position filtrée
 				cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
 				cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
 
-				//robot.mouseMove((int)mainPositionLeft.getFiltre(0)[0]*5, (int)mainPositionLeft.getFiltre(0)[1]*5);
+				// Affichage doigt
+				cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.get(0)[5], (int)mainPositionLeft.get(0)[6]), 5, CvScalar.CYAN, -1, 8, 0);
+				cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.get(0)[5], (int)mainPositionRight.get(0)[6]), 5, CvScalar.CYAN, -1, 8, 0);
 
 				CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.6, 1);
 
@@ -366,14 +355,13 @@ public class Kinect implements Runnable
 			if(fingers[1] != 639 && fingers[2] != 479)
 			{
 				fingers[0] = 1;
+				//cvCircle(imageDislay2, new CvPoint(fingers[1], fingers[2]), 5, CvScalar.CYAN, -1, 8, 0);
 			}
 		}
 		else
 		{
 			fingers[0] = nbr;
 		}
-
-		cvCircle(imageDislay2, new CvPoint(fingers[1], fingers[2]), 5, CvScalar.CYAN, -1, 8, 0);
 
 		return fingers;
 	}

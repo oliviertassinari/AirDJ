@@ -14,6 +14,8 @@ public class MainPosition
 	private OneEuroFilter oneEuroFilterX;
 	private OneEuroFilter oneEuroFilterY;
 	private OneEuroFilter oneEuroFilterZ;
+	private OneEuroFilter oneEuroFilterFingerX;
+	private OneEuroFilter oneEuroFilterFingerY;
 
 	public MainPosition()
 	{
@@ -52,14 +54,18 @@ public class MainPosition
 
 		for(int i = positionsFiltre.length - 1; i > 0; i--)
 		{
-			positionsFiltre[i][0] = positionsFiltre[i - 1][0];
-			positionsFiltre[i][1] = positionsFiltre[i - 1][1];
-			positionsFiltre[i][2] = positionsFiltre[i - 1][2];
+			positionsFiltre[i][0] = positionsFiltre[i - 1][0]; 
+			positionsFiltre[i][1] = positionsFiltre[i - 1][1]; 
+			positionsFiltre[i][2] = positionsFiltre[i - 1][2]; 
+			positionsFiltre[i][3] = positionsFiltre[i - 1][3];
+			positionsFiltre[i][4] = positionsFiltre[i - 1][4];
 		}
 
-		positionsFiltre[0][0] = (int)oneEuroFilterX.filter(centre.x());
-		positionsFiltre[0][1] = (int)oneEuroFilterY.filter(centre.y());
-		positionsFiltre[0][2] = (int)oneEuroFilterZ.filter(depth);
+		positionsFiltre[0][0] = (int)oneEuroFilterX.filter(centre.x()); // x
+		positionsFiltre[0][1] = (int)oneEuroFilterY.filter(centre.y()); // y
+		positionsFiltre[0][2] = (int)oneEuroFilterZ.filter(depth); // z
+		positionsFiltre[0][3] = (int)oneEuroFilterFingerX.filter(fingerList[1]); // finger x
+		positionsFiltre[0][4] = (int)oneEuroFilterFingerY.filter(fingerList[2]); // finger y
 
 		// Calcul de dérivée
 		for(int i = derivees.length - 1; i > 0; i--)
@@ -92,12 +98,15 @@ public class MainPosition
 	public void reset()
 	{
 		positions = new long[60][8];
-		positionsFiltre = new long[60][3];
+		positionsFiltre = new long[60][5];
 		derivees = new float[59][3];
 
 		oneEuroFilterX = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 		oneEuroFilterY = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 		oneEuroFilterZ = new OneEuroFilter(30, 0.4, 0.04, 0.4);
+		
+		oneEuroFilterFingerX = new OneEuroFilter(30, 1.0, 0.04, 1.0);
+		oneEuroFilterFingerY = new OneEuroFilter(30, 1.0, 0.04, 1.0);
 	}
 
 	/**
@@ -112,7 +121,7 @@ public class MainPosition
 	}
 
 	/**
-	 * Retourne une position filtr�.
+	 * Retourne une position filtré.
 	 * 
 	 * @param index index
 	 * @return position filtr� demand�e

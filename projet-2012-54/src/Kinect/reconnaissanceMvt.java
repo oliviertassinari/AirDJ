@@ -1,6 +1,9 @@
 
 package Kinect;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+
 import KinectControle.KinectSource;
 
 /**
@@ -15,6 +18,7 @@ public class reconnaissanceMvt
 	private int ct3;
 	private long timeOrigin;
 	private KinectSource kinectSource;
+	private Robot robot;
 
 	public reconnaissanceMvt(MainPosition mainPosition, String side, KinectSource kinectSource)
 	{
@@ -25,10 +29,29 @@ public class reconnaissanceMvt
 		ct3 = 0;
 		timeOrigin = System.currentTimeMillis();
 		this.kinectSource = kinectSource;
+
+		try
+		{
+			robot = new Robot();
+		}
+		catch(AWTException e1)
+		{
+			e1.printStackTrace();
+		}
 	}
 
 	public void compute(long timeLastGrab)
 	{
+		if(side == "right")
+		{
+			System.out.println(mainPosition.get(0)[7]);
+
+			if(mainPosition.get(0)[4] == 1)
+			{
+				robot.mouseMove((int)mainPosition.getFiltre(0)[3]*2, (int)mainPosition.getFiltre(0)[4]*2);
+			}
+		}
+
 		long[] positionCurrent = mainPosition.getFiltre(0);
 
 		for(int i = 0; i < 19; i++)
