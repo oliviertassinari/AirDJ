@@ -55,7 +55,7 @@ public class KinectGrabber
 	}
 
 	/**
-	 * D�marre le grabber.
+	 * Démarre le grabber.
 	 */
 	public void start()
 	{

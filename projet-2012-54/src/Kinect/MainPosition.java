@@ -22,12 +22,13 @@ public class MainPosition
 
 	/**
 	 * Ajouter une nouvelle position.
+	 * 
 	 * @param time temps en milliseconde depuis 1970
-	 * @param centre coordonn�es x y
-	 * @param depth coordonn�e z
-	 * @param state �tat de la main
+	 * @param centre coordonnée x y
+	 * @param depth coordonnée z
+	 * @param state état de la main
 	 */
-	public void add(long time, CvPoint centre, long depth, long state)
+	public void add(long time, CvPoint centre, long depth, int[] fingerList, long fingerZ)
 	{
 		for(int i = positions.length - 1; i > 0; i--)
 		{
@@ -36,13 +37,18 @@ public class MainPosition
 			positions[i][2] = positions[i - 1][2];
 			positions[i][3] = positions[i - 1][3];
 			positions[i][4] = positions[i - 1][4];
+			positions[i][5] = positions[i - 1][5];
+			positions[i][6] = positions[i - 1][6];
 		}
 
 		positions[0][0] = time;
 		positions[0][1] = centre.x();
 		positions[0][2] = centre.y();
 		positions[0][3] = depth;
-		positions[0][4] = state;
+		positions[0][4] = fingerList[0]; //nbr de doigts
+		positions[0][5] = fingerList[1]; //x
+		positions[0][6] = fingerList[2]; //y
+		positions[0][7] = fingerZ;       //z
 
 		for(int i = positionsFiltre.length - 1; i > 0; i--)
 		{
@@ -81,11 +87,11 @@ public class MainPosition
 	}
 
 	/**
-	 * R�initialise les donn�es
+	 * Réinitialiser les données
 	 */
 	public void reset()
 	{
-		positions = new long[60][5];
+		positions = new long[60][8];
 		positionsFiltre = new long[60][3];
 		derivees = new float[59][3];
 
@@ -96,6 +102,7 @@ public class MainPosition
 
 	/**
 	 * Retourne une position.
+	 * 
 	 * @param index index
 	 * @return position demand�e
 	 */
@@ -106,6 +113,7 @@ public class MainPosition
 
 	/**
 	 * Retourne une position filtr�.
+	 * 
 	 * @param index index
 	 * @return position filtr� demand�e
 	 */
@@ -116,6 +124,7 @@ public class MainPosition
 
 	/**
 	 * Retourne une d�riv�e.
+	 * 
 	 * @param index index
 	 * @return d�riv�e demand�e
 	 */

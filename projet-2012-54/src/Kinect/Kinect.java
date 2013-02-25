@@ -4,7 +4,9 @@ package Kinect;
 import static com.googlecode.javacv.cpp.opencv_core.*;
 import static com.googlecode.javacv.cpp.opencv_imgproc.*;
 
+import java.awt.AWTException;
 import java.awt.GridLayout;
+import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class Kinect implements Runnable
 	private reconnaissanceMvt reconnaissanceMvtLeft;
 	private reconnaissanceMvt reconnaissanceMvtRight;
 	private Vue vue;
+	private Robot robot;
 
 	public Kinect(KinectSource kinectSource, Vue vue)
 	{
@@ -55,6 +58,15 @@ public class Kinect implements Runnable
 
 		runner = new Thread(this, "kinect");
 		runner.start();
+
+		try
+		{
+			robot = new Robot();
+		}
+		catch(AWTException e1)
+		{
+			e1.printStackTrace();
+		}
 	}
 
 	public void run()
@@ -128,7 +140,6 @@ public class Kinect implements Runnable
 				int nbrIteration = 0;
 				int firstFound = 0;
 				boolean isFound = false;
-				ArrayList<CvPoint> centerList = new ArrayList<CvPoint>();
 
 				while(!isFound && nbrIteration < 6) // 5 iterations max
 				{
@@ -172,6 +183,8 @@ public class Kinect implements Runnable
 					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*firstFound, 255, CV_THRESH_BINARY_INV);
 				}
 
+				ArrayList<CvPoint> centerList = new ArrayList<CvPoint>();
+				ArrayList<int[]> fingersList = new ArrayList<int[]>();
 				contour = new CvSeq();
 				cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
@@ -183,12 +196,13 @@ public class Kinect implements Runnable
 
 						if(aire > 1000 && aire < 10000)
 						{
-							points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.002, 0);
+							points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.005, 0);
+							cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
 
 							CvPoint centre = getContourCenter3(points, storage);
 							cvCircle(imageDislay2, centre, 3, CvScalar.RED, -1, 8, 0);
 
-							getFingers(contour, storage, imageDislay2);
+							fingersList.add(getFingers(points, storage, imageDislay2));
 
 							centerList.add(centre);
 						}
@@ -196,13 +210,15 @@ public class Kinect implements Runnable
 					contour = contour.h_next();
 				}
 
-				getPositionHand(centerList);
+				getPositionHand(centerList, fingersList);
 				reconnaissanceMvtLeft.compute(timeLastGrab);
 				reconnaissanceMvtRight.compute(timeLastGrab);
 
 				// Affichage info
 				cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
 				cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
+
+				//robot.mouseMove((int)mainPositionLeft.getFiltre(0)[0]*5, (int)mainPositionLeft.getFiltre(0)[1]*5);
 
 				CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.6, 1);
 
@@ -258,21 +274,20 @@ public class Kinect implements Runnable
 		}
 	}
 
-	public void getFingers(CvSeq contour, CvMemStorage storage, IplImage imageDislay2)
+	public int[] getFingers(CvSeq contour, CvMemStorage storage, IplImage imageDislay2)
 	{
-		CvSeq points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.005, 0);
-		cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
+		int[] fingers = {0, 639, 479};
 
-		CvSeq convex = cvConvexHull2(points, storage, CV_COUNTER_CLOCKWISE, 1);
+		CvSeq convex = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 1);
 		cvDrawContours(imageDislay2, convex, CvScalar.RED, CvScalar.RED, -1, 1, CV_AA);
 
-		CvSeq hull = cvConvexHull2(points, storage, CV_COUNTER_CLOCKWISE, 0);
-		CvSeq defect = cvConvexityDefects(points, hull, storage);
+		CvSeq hull = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 0);
+		CvSeq defect = cvConvexityDefects(contour, hull, storage);
 
 		ArrayList<CvPoint> fingersList = new ArrayList<CvPoint>();
 		ArrayList<CvPoint> fingersList2 = new ArrayList<CvPoint>();
 
-		// System.out.println(getAngle(new CvConvexityDefect(cvGetSeqElem(defect, 0)).end(), new CvConvexityDefect(cvGetSeqElem(defect, 0)).depth_point(), new CvConvexityDefect(cvGetSeqElem(defect, 0)).start()));
+		int nbr = 0;
 
 		while(defect != null)
 		{
@@ -282,12 +297,8 @@ public class Kinect implements Runnable
 
 				if(convexityDefect.depth() > 10)
 				{
-
 					if(getAngle(convexityDefect.end(), convexityDefect.depth_point(), convexityDefect.start()) < 100)
 					{
-						/*
-						 * CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.5, 1); cvPutText(imageDislay2, Integer.toString(i), convexityDefect.start(), font, CvScalar.MAGENTA); cvCircle(imageDislay2, convexityDefect.start(), 3, CvScalar.MAGENTA, -1, 8, 0); cvCircle(imageDislay2, convexityDefect.depth_point(), 3, CvScalar.WHITE, -1, 8, 0); cvCircle(imageDislay2, convexityDefect.end(), 3, CvScalar.CYAN, -1, 8, 0);
-						 */
 						fingersList.add(convexityDefect.start());
 						fingersList.add(convexityDefect.end());
 					}
@@ -307,13 +318,67 @@ public class Kinect implements Runnable
 				}
 			}
 
+			nbr++;
+
 			cvCircle(imageDislay2, fingersList.get(i), 5, CvScalar.MAGENTA, -1, 8, 0);
 
 			fingersList2.add(fingersList.get(i));
 		}
+
+		if(nbr == 0)
+		{
+			defect = cvConvexityDefects(contour, hull, storage);
+
+			while(defect != null)
+			{
+				for(int i = 0; i < defect.total(); i++)
+				{
+					CvConvexityDefect convexityDefect = new CvConvexityDefect(cvGetSeqElem(defect, i));
+
+					if(convexityDefect.depth() > 10)
+					{
+						if(getAngle(convexityDefect.end(), convexityDefect.depth_point(), convexityDefect.start()) < 150)
+						{
+							/*CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.5, 1);
+							cvPutText(imageDislay2, Integer.toString(i), convexityDefect.start(), font, CvScalar.MAGENTA);
+							cvCircle(imageDislay2, convexityDefect.start(), 3, CvScalar.MAGENTA, -1, 8, 0);
+							cvCircle(imageDislay2, convexityDefect.depth_point(), 3, CvScalar.WHITE, -1, 8, 0);
+							cvCircle(imageDislay2, convexityDefect.end(), 3, CvScalar.CYAN, -1, 8, 0);
+	*/
+							if(convexityDefect.start().y() < fingers[2])
+							{
+								fingers[1] = convexityDefect.start().x();
+								fingers[2] = convexityDefect.start().y();
+							}
+	
+							if(convexityDefect.end().y() < fingers[2])
+							{
+								fingers[1] = convexityDefect.end().x();
+								fingers[2] = convexityDefect.end().y();
+							}
+						}
+					}
+				}
+
+				defect = defect.h_next();
+			}
+
+			if(fingers[1] != 639 && fingers[2] != 479)
+			{
+				fingers[0] = 1;
+			}
+		}
+		else
+		{
+			fingers[0] = nbr;
+		}
+
+		cvCircle(imageDislay2, new CvPoint(fingers[1], fingers[2]), 5, CvScalar.CYAN, -1, 8, 0);
+
+		return fingers;
 	}
 
-	public void getPositionHand(ArrayList<CvPoint> centerList)
+	public void getPositionHand(ArrayList<CvPoint> centerList, ArrayList<int[]> fingersList)
 	{
 		if(centerList.size() > 0)
 		{
@@ -326,12 +391,12 @@ public class Kinect implements Runnable
 				{
 					if(centreLeft[0] > centreRight[0]) // On a perdu la droite
 					{
-						addToClotherHand(centerList, centreLeft, mainPositionLeft);
+						addToClotherHand(centerList, fingersList, centreLeft, mainPositionLeft);
 					}
 					else
 					// On a perdu la gauche
 					{
-						addToClotherHand(centerList, centreRight, mainPositionRight);
+						addToClotherHand(centerList, fingersList, centreRight, mainPositionRight);
 					}
 				}
 				else if(centerList.size() >= 2) // On r�initialise les positions
@@ -344,13 +409,13 @@ public class Kinect implements Runnable
 
 					if(centre2.x() > centre1.x()) // center1 : left
 					{
-						mainPositionLeft.add(timeLastGrab, centre1, getValue(imageGrab, centre1), 0);
-						mainPositionRight.add(timeLastGrab, centre2, getValue(imageGrab, centre2), 0);
+						mainPositionLeft.add(timeLastGrab, centre1, getValue(imageGrab, centre1), fingersList.get(0), getValue(imageGrab, fingersList.get(0)));
+						mainPositionRight.add(timeLastGrab, centre2, getValue(imageGrab, centre2), fingersList.get(1), getValue(imageGrab, fingersList.get(1)));
 					}
 					else
 					{
-						mainPositionLeft.add(timeLastGrab, centre2, getValue(imageGrab, centre2), 0);
-						mainPositionRight.add(timeLastGrab, centre1, getValue(imageGrab, centre1), 0);
+						mainPositionLeft.add(timeLastGrab, centre2, getValue(imageGrab, centre2), fingersList.get(1), getValue(imageGrab, fingersList.get(1)));
+						mainPositionRight.add(timeLastGrab, centre1, getValue(imageGrab, centre1), fingersList.get(0), getValue(imageGrab, fingersList.get(0)));
 					}
 				}
 			}
@@ -372,43 +437,47 @@ public class Kinect implements Runnable
 				if(minLengthListToLeft[1] < minLengthListToRight[1])
 				{
 					choose = 1;
-					mainPositionLeft.add(timeLastGrab, centerList.get(minLengthListToLeft[0]), getValue(imageGrab, centerList.get(minLengthListToLeft[0])), 0);
-					centerList.remove(minLengthListToLeft[0]);
+					int i = minLengthListToLeft[0];
+					mainPositionLeft.add(timeLastGrab, centerList.get(i), getValue(imageGrab, centerList.get(i)), fingersList.get(i), getValue(imageGrab, fingersList.get(i)));
+					centerList.remove(i);
+					fingersList.remove(i);
 				}
 				else
 				{
 					choose = 2;
-					mainPositionRight.add(timeLastGrab, centerList.get(minLengthListToRight[0]), getValue(imageGrab, centerList.get(minLengthListToRight[0])), 0);
-					centerList.remove(minLengthListToRight[0]);
+					int i = minLengthListToRight[0];
+					mainPositionRight.add(timeLastGrab, centerList.get(i), getValue(imageGrab, centerList.get(i)), fingersList.get(i), getValue(imageGrab, fingersList.get(i)));
+					centerList.remove(i);
+					fingersList.remove(i);
 				}
 
 				if(centerList.size() == 1)
 				{
 					if(choose == 1)
 					{
-						mainPositionRight.add(timeLastGrab, centerList.get(0), getValue(imageGrab, centerList.get(0)), 0);
+						mainPositionRight.add(timeLastGrab, centerList.get(0), getValue(imageGrab, centerList.get(0)), fingersList.get(0), getValue(imageGrab, fingersList.get(0)));
 					}
 					else
 					{
-						mainPositionLeft.add(timeLastGrab, centerList.get(0), getValue(imageGrab, centerList.get(0)), 0);
+						mainPositionLeft.add(timeLastGrab, centerList.get(0), getValue(imageGrab, centerList.get(0)), fingersList.get(0), getValue(imageGrab, fingersList.get(0)));
 					}
 				}
 				else if(centerList.size() > 1)
 				{
 					if(choose == 1)
 					{
-						addToClotherHand(centerList, centreRight, mainPositionRight);
+						addToClotherHand(centerList, fingersList, centreRight, mainPositionRight);
 					}
 					else
 					{
-						addToClotherHand(centerList, centreLeft, mainPositionLeft);
+						addToClotherHand(centerList, fingersList, centreLeft, mainPositionLeft);
 					}
 				}
 			}
 		}
 	}
 
-	public void addToClotherHand(ArrayList<CvPoint> centerList, long[] center, MainPosition mainPosition)
+	public void addToClotherHand(ArrayList<CvPoint> centerList, ArrayList<int[]> fingersList, long[] center, MainPosition mainPosition)
 	{
 		double[] lengthList = new double[centerList.size()];
 
@@ -418,8 +487,9 @@ public class Kinect implements Runnable
 		}
 
 		int[] minLengthList = getMinList(lengthList);
+		int i = minLengthList[0];
 
-		mainPosition.add(timeLastGrab, centerList.get(minLengthList[0]), getValue(imageGrab, centerList.get(minLengthList[0])), 0);
+		mainPosition.add(timeLastGrab, centerList.get(i), getValue(imageGrab, centerList.get(i)), fingersList.get(i), getValue(imageGrab, fingersList.get(i)));
 	}
 
 	public int getFPS()
@@ -475,6 +545,15 @@ public class Kinect implements Runnable
 	{
 		ByteBuffer srcBuffer = src.getByteBuffer();
 		int pixelIndex = 2 * point.x() + 2 * 640 * point.y();
+		int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
+
+		return value;
+	}
+
+	public int getValue(IplImage src, int[] fingersList)
+	{
+		ByteBuffer srcBuffer = src.getByteBuffer();
+		int pixelIndex = 2 * fingersList[1] + 2 * 640 * fingersList[2];
 		int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
 
 		return value;
