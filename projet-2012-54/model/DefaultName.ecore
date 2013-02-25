@@ -12,6 +12,7 @@
     <eOperations name="Main"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IPlayer"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="KinectS"/>
   <eSubpackages name="Vue">
     <eClassifiers xsi:type="ecore:EClass" name="Vue">
       <eOperations name="Vue">
@@ -219,6 +220,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockSelected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/IModeleCrossfiner"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Modele/ModeleCrossfinder"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ControlePlay">
       <eOperations name="ControlePlay">
@@ -239,6 +241,8 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="blockSelected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="offset" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Modele/IModelePlay"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Vue/VuePlay"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Modele/ModelePlay"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ControleBrowserTree">
       <eOperations name="ControleBrowserTree">
@@ -352,6 +356,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="play" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="pause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
       <eStructuralFeatures xsi:type="ecore:EReference" name="" eType="#//Audio/IPlayer"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference1" eType="#//Vue/VuePlay"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleCrossfinder">
       <eOperations name="setCrossfinder">
@@ -377,6 +382,7 @@
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP1"/>
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayVolumeP2"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="EReference0" eType="#//Vue/VueCrossfinder"/>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="ModeleKinect">
       <eOperations name="ModeleKinect">
@@ -525,4 +531,55 @@
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="EPackage0"/>
+  <eSubpackages name="KinectControle">
+    <eClassifiers xsi:type="ecore:EClass" name="KinectEvent">
+      <eOperations name="KinectEvent">
+        <eParameters eType="#//KinectControle/KinectSource"/>
+        <eParameters eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="getCote" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getMessage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eOperations name="getSource" eType="#//KinectControle/KinectSource"/>
+      <eOperations name="getValeur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="serialVersionUID"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="cote"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="message"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="source"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="valeur"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="KinectListener">
+      <eOperations name="ListenToKinect">
+        <eParameters name="kinectEvent" eType="#//KinectControle/KinectEvent"/>
+      </eOperations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="KinectSource">
+      <eOperations name="KinectSource()">
+        <eParameters name="vue" eType="#//Vue/Vue"/>
+        <eParameters name="modele" eType="#//Modele/Modele"/>
+      </eOperations>
+      <eOperations name="addKinectListener">
+        <eParameters name="" eType="#//KinectControle/ListenerInterface"/>
+      </eOperations>
+      <eOperations name="fireEvent">
+        <eParameters name="message" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="cote" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <eParameters name="valeur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </eOperations>
+      <eOperations name="getModele" eType="#//Modele/Modele"/>
+      <eOperations name="removeKinectListener">
+        <eParameters name="" eType="#//KinectControle/ListenerInterface"/>
+      </eOperations>
+      <eOperations name="getVue" eType="#//Vue/Vue"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="listeners"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="modele"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="vue"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="ListenerInterface" eSuperTypes="#//KinectControle/KinectListener">
+      <eOperations name="listenToKinect">
+        <eParameters eType="#//KinectControle/KinectEvent"/>
+      </eOperations>
+    </eClassifiers>
+  </eSubpackages>
 </ecore:EPackage>
