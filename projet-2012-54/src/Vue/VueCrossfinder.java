@@ -47,9 +47,9 @@ public class VueCrossfinder extends JPanel
 	{
 		this.vue = vue;
 
-		imageVolumeCursor = new ImageIcon("image/volumeCursor.png").getImage();
-		imageCrossfinderCursor = new ImageIcon("image/crossfinderCursor.png").getImage();
-		imageDisplayVolumeOver = new ImageIcon("image/displayVolumeOver.png").getImage();
+		imageVolumeCursor = new ImageIcon(getClass().getResource("/image/volumeCursor.png")).getImage();
+		imageCrossfinderCursor = new ImageIcon(getClass().getResource("/image/crossfinderCursor.png")).getImage();
+		imageDisplayVolumeOver = new ImageIcon(getClass().getResource("/image/displayVolumeOver.png")).getImage();
 
 		imageBackground = getImageBackground();
 	}
@@ -112,14 +112,14 @@ public class VueCrossfinder extends JPanel
 		g.drawString("VOLUME", 128, 63);
 
 		// Images
-		Image imageSetVolumeGrid = new ImageIcon("image/volumeGrid.png").getImage();
+		Image imageSetVolumeGrid = new ImageIcon(getClass().getResource("/image/volumeGrid.png")).getImage();
 		g.drawImage(imageSetVolumeGrid, 95, 70, null);
 		g.drawImage(imageSetVolumeGrid, 135, 70, null);
 
-		Image imageCrossfinderGrid = new ImageIcon("image/crossfinderGrid.png").getImage();
+		Image imageCrossfinderGrid = new ImageIcon(getClass().getResource("/image/crossfinderGrid.png")).getImage();
 		g.drawImage(imageCrossfinderGrid, 45, 230, null);
 
-		Image imageVolumeGrid = new ImageIcon("image/displayVolumeGrid.png").getImage();
+		Image imageVolumeGrid = new ImageIcon(getClass().getResource("/image/displayVolumeGrid.png")).getImage();
 		g.drawImage(imageVolumeGrid, 30, 50, null);
 		g.drawImage(imageVolumeGrid, 193, 50, null);
 

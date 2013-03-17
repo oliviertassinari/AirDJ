@@ -205,10 +205,6 @@ public class Kinect implements Runnable
 				cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.getFiltre(0)[0], (int)mainPositionLeft.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
 				cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.getFiltre(0)[0], (int)mainPositionRight.getFiltre(0)[1]), 3, CvScalar.BLACK, -1, 8, 0);
 
-				// Affichage doigt
-				cvCircle(imageDislay2, new CvPoint((int)mainPositionLeft.get(0)[5], (int)mainPositionLeft.get(0)[6]), 5, CvScalar.CYAN, -1, 8, 0);
-				cvCircle(imageDislay2, new CvPoint((int)mainPositionRight.get(0)[5], (int)mainPositionRight.get(0)[6]), 5, CvScalar.CYAN, -1, 8, 0);
-
 				CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.6, 1);
 
 				if(mainPositionLeft.get(0)[0] == timeLastGrab)
@@ -389,7 +385,7 @@ public class Kinect implements Runnable
 			if(fingers[1] != 639 && fingers[2] != 479)
 			{
 				fingers[0] = 1;
-				//cvCircle(imageDislay2, new CvPoint(fingers[1], fingers[2]), 5, CvScalar.CYAN, -1, 8, 0);
+				cvCircle(imageDislay2, new CvPoint(fingers[1], fingers[2]), 5, CvScalar.CYAN, -1, 8, 0);
 			}
 		}
 		else

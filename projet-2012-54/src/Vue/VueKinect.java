@@ -38,10 +38,10 @@ public class VueKinect extends JPanel
 		this.vue = vue;
 		setPreferredSize(new Dimension(1000, 240));
 
-		play = new ImageIcon("image/playvuekinect.png").getImage();
-		pause = new ImageIcon("image/pausevuekinect.png").getImage();
-		volume = new ImageIcon("image/volumevuekinect.png").getImage();
-		crossfinder = new ImageIcon("image/crossfindervuekinect.png").getImage();
+		play = new ImageIcon(getClass().getResource("/image/playvuekinect.png")).getImage();
+		pause = new ImageIcon(getClass().getResource("/image/pausevuekinect.png")).getImage();
+		volume = new ImageIcon(getClass().getResource("/image/volumevuekinect.png")).getImage();
+		crossfinder = new ImageIcon(getClass().getResource("/image/crossfindervuekinect.png")).getImage();
 	}
 
 	protected void paintComponent(Graphics g)

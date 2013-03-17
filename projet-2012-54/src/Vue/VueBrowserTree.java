@@ -51,8 +51,8 @@ public class VueBrowserTree extends JPanel
 	 */
 	public VueBrowserTree()
 	{
-		imageTree = new ImageIcon("image/tree.png").getImage();
-		imageScrollBar = new ImageIcon("image/scrollBar.png").getImage();
+		imageTree = new ImageIcon(getClass().getResource("/image/tree.png")).getImage();
+		imageScrollBar = new ImageIcon(getClass().getResource("/image/scrollBar.png")).getImage();
 
 		setBackground(Color.BLUE);
 		setPreferredSize(new Dimension(350, 163));

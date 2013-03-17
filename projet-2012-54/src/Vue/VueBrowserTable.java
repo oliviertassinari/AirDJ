@@ -39,8 +39,8 @@ public class VueBrowserTable extends JPanel
 	 */
 	public VueBrowserTable()
 	{
-		imageScrollBar = new ImageIcon("image/scrollBar.png").getImage();
-		imageTable = new ImageIcon("image/table.png").getImage();
+		imageScrollBar = new ImageIcon(getClass().getResource("/image/scrollBar.png")).getImage();
+		imageTable = new ImageIcon(getClass().getResource("/image/table.png")).getImage();
 
 		setBackground(Color.RED);
 		setPreferredSize(new Dimension(645, 163));

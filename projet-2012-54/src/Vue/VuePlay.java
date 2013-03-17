@@ -46,15 +46,15 @@ public class VuePlay extends JPanel
 		this.modelePlay = modelePlay;
 		setPreferredSize(new Dimension((1000 - 250) / 2, 300));
 
-		imagePitchCursor = new ImageIcon("image/pitchCursor.png").getImage();
+		imagePitchCursor = new ImageIcon(getClass().getResource("/image/pitchCursor.png")).getImage();
 
 		if(couleur == 0)
 		{
-			imageButton = new ImageIcon("image/buttonBlue.png").getImage();
+			imageButton = new ImageIcon(getClass().getResource("/image/buttonBlue.png")).getImage();
 		}
 		else
 		{
-			imageButton = new ImageIcon("image/buttonRed.png").getImage();
+			imageButton = new ImageIcon(getClass().getResource("/image/buttonRed.png")).getImage();
 		}
 
 		vueSpectre = new VueSpectre(couleur);
@@ -106,10 +106,10 @@ public class VuePlay extends JPanel
 		g.drawString("PITCH", 8, 72);
 
 		// Images
-		Image imagePitchGrid = new ImageIcon("image/pitchGrid.png").getImage();
+		Image imagePitchGrid = new ImageIcon(getClass().getResource("/image/pitchGrid.png")).getImage();
 		g.drawImage(imagePitchGrid, 300, 120, null);
 
-		Image imagePlayButton = new ImageIcon("image/button.png").getImage();
+		Image imagePlayButton = new ImageIcon(getClass().getResource("/image/button.png")).getImage();
 		g.drawImage(imagePlayButton, 120, 170, null);
 
 		g.dispose();
