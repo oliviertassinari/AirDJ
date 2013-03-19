@@ -31,43 +31,22 @@ public class OpenCV
 	 */
 	public static void cvCvtColor(IplImage src, IplImage dst, int code)
 	{
-		if(code == CV_RGB2GRAY)
+		if(code == CV_GRAY2RGB)
 		{
 			int width = src.width();
 			int height = src.height();
-			int srcPixelIndex;
-
 			ByteBuffer srcBuffer = src.getByteBuffer();
 			ByteBuffer dstBuffer = dst.getByteBuffer();
 
-			for(int x = 0; x < width; x++)
+			dstBuffer.position(0);
+			for(int y = 0; y < height; y++)
 			{
-				for(int y = 0; y < height; y++)
+				for(int x = 0; x < width; x++)
 				{
-					srcPixelIndex = 3 * x + 3 * width * y;
-					dstBuffer.put(x + width * y, (byte)(0.299 * getUnsignedByte(srcBuffer, srcPixelIndex) + 0.587 * getUnsignedByte(srcBuffer, srcPixelIndex + 1) + 0.114 * getUnsignedByte(srcBuffer, srcPixelIndex + 2)));
-				}
-			}
-		}
-		else if(code == CV_GRAY2RGB)
-		{
-			int width = src.width();
-			int height = src.height();
-			int srcPixelIndex;
-			byte value;
+					byte value = (byte)(getUnsignedByte(srcBuffer, x + width * y));
+					byte[] values = { value, value, value };
 
-			ByteBuffer srcBuffer = src.getByteBuffer();
-			ByteBuffer dstBuffer = dst.getByteBuffer();
-
-			for(int x = 0; x < width; x++)
-			{
-				for(int y = 0; y < height; y++)
-				{
-					srcPixelIndex = 3 * x + 3 * width * y;
-					value = (byte)(getUnsignedByte(srcBuffer, x + width * y));
-					dstBuffer.put(srcPixelIndex, value);
-					dstBuffer.put(srcPixelIndex + 1, value);
-					dstBuffer.put(srcPixelIndex + 2, value);
+					dstBuffer.put(values);
 				}
 			}
 		}
@@ -97,7 +76,7 @@ public class OpenCV
 		{
 			for(int y = 0; y < height; y++)
 			{
-				value = getUnsignedByte(srcBuffer, x + width * y);
+				value = getUnsignedByte(srcBuffer, x + width * y + 1)*256 + getUnsignedByte(srcBuffer, x + width * y);
 
 				if(value < minVal[0])
 				{
@@ -135,45 +114,30 @@ public class OpenCV
 		{
 			int width = src.width();
 			int height = src.height();
+			byte black = (byte)0;
+			byte maxValueByte = (byte)maxValue;
 
 			ByteBuffer srcBuffer = src.getByteBuffer();
 			ByteBuffer dstBuffer = dst.getByteBuffer();
 
-			if(src.depth() == 8 && dst.depth() == 8)
+			if(src.depth() == 16 && dst.depth() == 8)
 			{
-				for(int x = 0; x < width; x++)
-				{
-					for(int y = 0; y < height; y++)
-					{
-						int pixelIndex = x + width * y;
+				dstBuffer.position(0);
 
-						if(getUnsignedByte(srcBuffer, pixelIndex) > threshold)
-						{
-							dstBuffer.put(pixelIndex, (byte)0);
-						}
-						else
-						{
-							dstBuffer.put(pixelIndex, (byte)maxValue);
-						}
-					}
-				}
-			}
-			else if(src.depth() == 16 && dst.depth() == 8)
-			{
-				for(int x = 0; x < width; x++)
+				for(int y = 0; y < height; y++)
 				{
-					for(int y = 0; y < height; y++)
+					for(int x = 0; x < width; x++)
 					{
 						int pixelIndex = 2 * x + 2 * width * y;
 						int value = getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + getUnsignedByte(srcBuffer, pixelIndex);
 
 						if(value > threshold)
 						{
-							dstBuffer.put(pixelIndex/2, (byte)0);
+							dstBuffer.put(black);
 						}
 						else
 						{
-							dstBuffer.put(pixelIndex/2, (byte)maxValue);
+							dstBuffer.put(maxValueByte);
 						}
 					}
 				}

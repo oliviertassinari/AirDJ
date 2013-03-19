@@ -70,7 +70,7 @@ public class KinectGrabber
 	}
 
 	/**
-	 * R�cup�re la derni�re image fourni par la kinect.
+	 * Récupérer la dernière image fourni par la kinect.
 	 * @return une image
 	 */
 	public IplImage grab()
@@ -80,7 +80,7 @@ public class KinectGrabber
 			context.waitAnyUpdateAll();
 
 			DepthMap depthM = depthGenerator.getDepthMap();
-			depthM.copyToBuffer(depthByteBuffer, 640 * 480 * 2);
+			depthM.copyToBuffer(depthByteBuffer, 614400); //16 bits
 
 			return imageDepth;
 		}
@@ -158,13 +158,14 @@ public class KinectGrabber
 			scaleI++;
 		}
 
+		dstBuffer.position(0);
 		// Renormalisation
 		// equivalent de cvNormalize(src, dst, -8000, 65535, CV_MINMAX, null);
 		// et conversion en 8Bit
 		// equivalent de cvConvertScale(src, dst, 1/256.0, 0);
-		for(int x = 0; x < 640; x++)
+		for(int y = 0; y < 480; y++)
 		{
-			for(int y = 0; y < 480; y++)
+			for(int x = 0; x < 640; x++)
 			{
 				int srcPixelIndex = 2 * x + 2 * 640 * y;
 				float value = (srcBuffer.get(srcPixelIndex + 1) & 0xff) * 256 + (srcBuffer.get(srcPixelIndex) & 0xff);
@@ -181,7 +182,7 @@ public class KinectGrabber
 					value = 255;
 				}
 
-				dstBuffer.put(srcPixelIndex / 2, (byte)(value));
+				dstBuffer.put((byte)(value));
 			}
 		}
 	}
@@ -192,26 +193,26 @@ public class KinectGrabber
 		int height = src.height();
 		ByteBuffer srcBuffer = src.getByteBuffer();
 		ByteBuffer dstBuffer = dst.getByteBuffer();
-		byte white = (byte)255;
+		byte[] white = {(byte)255, (byte)255};
 
-		for(int x = 0; x < width; x++)
+		for(int y = 0; y < height; y++)
 		{
-			for(int y = 0; y < height; y++)
+			for(int x = 0; x < width; x++)
 			{
 				int pixelIndex = 2 * x + 2 * width * y;
-				int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
+				int value = (srcBuffer.get(pixelIndex + 1) & 0xff) * 256 + (srcBuffer.get(pixelIndex) & 0xff);
 
 				if(value == 0)
 				{
-					dstBuffer.put(pixelIndex, white);
-					dstBuffer.put(pixelIndex+1, white);
+					dstBuffer.position(pixelIndex);
+					dstBuffer.put(white);
 				}
 			}
 		}
 	}
 
 	/**
-	 * Arr�te le grabber.
+	 * Arrêter le grabber.
 	 */
 	public void stop()
 	{
