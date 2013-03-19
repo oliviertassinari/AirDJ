@@ -22,7 +22,7 @@ public class Main
 
 		 //modele.getModelePlayP1().setFilePath("/stud/users/promo15/lisa-bost/git/musique/09_Heads_Will_Roll_A_Trak_Remix_.wav");
 		modele.getModelePlayP1().setFilePath("C:/Users/Arthur-MEYER/git/musique/acul.wav");
-		
+		modele.getModelePlayP2().setFilePath("C:/Users/Arthur-MEYER/git/musique/2.wav");		
 		final KinectSource kinectSource = new KinectSource(vue, modele);
 
 		// test controleKinect
