@@ -60,7 +60,7 @@ public class reconnaissanceMvt
 
 			if(statut/19 > 0.5)
 			{
-				robot.mouseMove((int)mainPosition.getFiltre(0)[3]*2, (int)mainPosition.getFiltre(0)[4]*2+10);
+				robot.mouseMove((int)mainPosition.getFiltre(0)[3]*2, (int)mainPosition.getFiltre(0)[4]*2);
 				//System.out.println(statut/19);
 			}
 		}

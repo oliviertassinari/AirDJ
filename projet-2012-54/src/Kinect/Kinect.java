@@ -60,6 +60,16 @@ public class Kinect implements Runnable
 	{
 		try
 		{
+			/*
+			timeLastGrab = System.currentTimeMillis();
+			for(int i = 0; i < 200; i++)
+			{
+				
+			}
+			System.out.println((System.currentTimeMillis()-timeLastGrab)/200f+"ms");
+			*/
+			
+			
 			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test1.mkv");
 			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test2.mpg");
 			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact42_test1.mkv");
@@ -79,6 +89,7 @@ public class Kinect implements Runnable
 
 			imageGrab2 = IplImage.create(width, height, IPL_DEPTH_8U, 1);
 			imageDislay2 = IplImage.create(width, height, IPL_DEPTH_8U, 3);
+			imageThreshold = IplImage.create(width, height, IPL_DEPTH_8U, 1);
 
 			// creation window used to display the video, the object in JavaCv can use the material acceleration
 			JFrame Fenetre = new JFrame();
@@ -107,22 +118,21 @@ public class Kinect implements Runnable
 			{
 				timeLastGrab = System.currentTimeMillis();
 
-				grabber.scale(imageGrab, imageGrab2);
-				cvCvtColor(imageGrab2, imageDislay2, CV_GRAY2RGB);
-				// OpenCV.cvCvtColor(imageGrab, imageDislay2, CV_GRAY2RGB);
+				grabber.scale(imageGrab, imageGrab2); // 1.5ms
 
-				grabber.correct(imageGrab, imageGrab);
+				cvCvtColor(imageGrab2, imageDislay2, CV_GRAY2RGB); // 0.35ms
+				//OpenCV.cvCvtColor(imageGrab2, imageDislay2, CV_GRAY2RGB); // 1.65ms
+
+				grabber.correct(imageGrab, imageGrab); // 0.63ms
 
 				imageTraitement = imageGrab.clone();
 
-				cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null);
-				// OpenCV.cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null);
+				cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null); // 0.31ms
+				//OpenCV.cvMinMaxLoc(imageGrab, minVal, maxVal, minPoint, maxPoint, null); // 0.94ms
 
 				cvCircle(imageDislay2, minPoint, 3, CvScalar.YELLOW, -1, 8, 0);
 
-				cvSmooth(imageTraitement, imageTraitement, CV_GAUSSIAN, 7, 7, 0, 0);
-
-				imageThreshold = IplImage.create(width, height, IPL_DEPTH_8U, 1);
+				cvSmooth(imageTraitement, imageTraitement, CV_GAUSSIAN, 7, 7, 0, 0); // 2.4ms
 
 				int nbrIteration = 0;
 				int firstFound = 0;
@@ -135,7 +145,7 @@ public class Kinect implements Runnable
 					int nbrFound = 0;
 
 					//cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * nbrIteration, 255, CV_THRESH_BINARY_INV);
-					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*nbrIteration, 255, CV_THRESH_BINARY_INV);
+					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*nbrIteration, 255, CV_THRESH_BINARY_INV); // 1.0ms
 
 					contour = new CvSeq();
 					cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
@@ -411,13 +421,12 @@ public class Kinect implements Runnable
 					{
 						addToClotherHand(centerList, fingersList, centreLeft, mainPositionLeft);
 					}
-					else
-					// On a perdu la gauche
+					else // On a perdu la gauche
 					{
 						addToClotherHand(centerList, fingersList, centreRight, mainPositionRight);
 					}
 				}
-				else if(centerList.size() >= 2) // On r�initialise les positions
+				else if(centerList.size() >= 2) // On réinitialise les positions
 				{
 					mainPositionLeft.reset();
 					mainPositionRight.reset();
