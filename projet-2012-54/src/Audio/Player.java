@@ -7,6 +7,11 @@ import javax.sound.sampled.*;
 public class Player implements Runnable, IPlayer
 {
 	/**
+	 * 
+	 */
+	private Filler filler;
+	
+	/**
 	 * File played
 	*/
 	private File file;
@@ -142,14 +147,13 @@ public class Player implements Runnable, IPlayer
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			line = (SourceDataLine) AudioSystem.getLine(info);
 			line.open(audioFormat);
-			System.out.println(info.toString());
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
 	 		volumeArray = new int[2][((int) (file.length()/(frameSize*frameRate)*20))+1];
 	 		
 	 		//Filling volumeArray
-			new Filler(this);
-			
+			filler = new Filler(this);
+					
 			//Initializing gainControl
 			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
 			setVolume(50);
@@ -389,5 +393,24 @@ public class Player implements Runnable, IPlayer
 	public float getBPM()
 	{
 		return bpm;
+	}
+
+	public void setBPM(int tmp1)
+	{
+		double tmp2 = 60/(tmp1*256/frameRate);
+		if (tmp2 >= 180) tmp2/=2;
+		if (tmp2 < 90) tmp2*=2;
+		System.out.println(tmp2);
+		this.bpm = (float) tmp2;
+	}
+	
+	public AudioFormat getAudioFormat()
+	{
+		return audioFormat;
+	}
+	
+	public void stop()
+	{
+		filler.stop();
 	}
 }

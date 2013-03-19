@@ -21,7 +21,8 @@ public class Main
 		Controle controle = new Controle(vue, modele);
 
 		 //modele.getModelePlayP1().setFilePath("/stud/users/promo15/lisa-bost/git/musique/09_Heads_Will_Roll_A_Trak_Remix_.wav");
-
+		modele.getModelePlayP1().setFilePath("C:/Users/Arthur-MEYER/git/musique/acul.wav");
+		
 		final KinectSource kinectSource = new KinectSource(vue, modele);
 
 		// test controleKinect

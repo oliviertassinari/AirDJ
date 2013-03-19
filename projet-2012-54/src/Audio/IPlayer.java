@@ -57,4 +57,9 @@ public interface IPlayer
 	 * Reset song
 	 */
 	public boolean reset();
+	
+	/**
+	 * Stop thread
+	 */
+	public void stop();
 }
