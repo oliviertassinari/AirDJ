@@ -23,6 +23,9 @@ public class Main2
 
 		final KinectSource kinectSource = new KinectSource(vue, modele);
 
+		modele.getModelePlayP1().setFilePath("C:/Users/Arthur-MEYER/git/musique/acul.wav");
+		modele.getModelePlayP2().setFilePath("C:/Users/Arthur-MEYER/git/musique/2.wav");	
+		
 		// test controleKinect
 		KinectListener listener = new KinectListener();
 		kinectSource.addKinectListener(listener);

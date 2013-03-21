@@ -394,7 +394,7 @@ public class Player implements Runnable, IPlayer
 	{
 		return bpm;
 	}
-
+	
 	public void setBPM(int tmp1)
 	{
 		double tmp2 = 60/(tmp1*256/frameRate);
