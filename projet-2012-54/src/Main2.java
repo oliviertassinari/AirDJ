@@ -23,8 +23,8 @@ public class Main2
 
 		final KinectSource kinectSource = new KinectSource(vue, modele);
 
-		modele.getModelePlayP1().setFilePath("C:/Users/Arthur-MEYER/git/musique/acul.wav");
-		modele.getModelePlayP2().setFilePath("C:/Users/Arthur-MEYER/git/musique/2.wav");	
+		//modele.getModelePlayP1().setFilePath("C:/Users/Arthur-MEYER/git/musique/acul.wav");
+		//modele.getModelePlayP2().setFilePath("C:/Users/Arthur-MEYER/git/musique/2.wav");	
 		
 		// test controleKinect
 		KinectListener listener = new KinectListener();
@@ -41,20 +41,20 @@ public class Main2
 				}
 				if((arg0.getKeyChar()) == 'm')
 				{
-					kinectSource.fireEvent("volume", "right", 10);
+					kinectSource.fireEvent("volumeUp", "right", 10);
 				}
 				if((arg0.getKeyChar()) == 'l')
 				{
-					kinectSource.fireEvent("volume", "right", -10);
+					kinectSource.fireEvent("volumeDown", "right", -10);
 				}
 
 				if((arg0.getKeyChar()) == 'b')
 				{
-					kinectSource.fireEvent("crossfinder", "...", 10);
+					kinectSource.fireEvent("crossfinderRight", "right", 10);
 				}
 				if((arg0.getKeyChar()) == 'v')
 				{
-					kinectSource.fireEvent("crossfinder", "...", -10);
+					kinectSource.fireEvent("crossfinderLeft", "left", -10);
 				}
 
 				if((arg0.getKeyChar()) == 'z')
@@ -63,11 +63,11 @@ public class Main2
 				}
 				if((arg0.getKeyChar()) == 's')
 				{
-					kinectSource.fireEvent("volume", "left", 10);
+					kinectSource.fireEvent("volumeUp", "left", 10);
 				}
 				if((arg0.getKeyChar()) == 'q')
 				{
-					kinectSource.fireEvent("volume", "left", -10);
+					kinectSource.fireEvent("volumeDown", "left", -10);
 				}
 			}
 

@@ -23,8 +23,10 @@ public class VueKinect extends JPanel
 	private BufferedImage kinectImage;
 	private Image play;
 	private Image pause;
-	private Image volume;
-	private Image crossfinder;
+	private Image volumeUp;
+	private Image volumeDown;
+	private Image crossfinderLeft;
+	private Image crossfinderRight;
 
 	/**
 	 * constructeur qui initialise le panel
@@ -36,10 +38,12 @@ public class VueKinect extends JPanel
 		this.vue = vue;
 		setPreferredSize(new Dimension(1000, 240));
 
-		play = new ImageIcon(getClass().getResource("/image/playvuekinect.png")).getImage();
-		pause = new ImageIcon(getClass().getResource("/image/pausevuekinect.png")).getImage();
-		volume = new ImageIcon(getClass().getResource("/image/volumevuekinect.png")).getImage();
-		crossfinder = new ImageIcon(getClass().getResource("/image/crossfindervuekinect.png")).getImage();
+		play = new ImageIcon(getClass().getResource("/image/kinectPlay.png")).getImage();
+		pause = new ImageIcon(getClass().getResource("/image/kinectPause.png")).getImage();
+		volumeUp = new ImageIcon(getClass().getResource("/image/kinectVolumeUp.png")).getImage();
+		volumeDown = new ImageIcon(getClass().getResource("/image/kinectVolumeDown.png")).getImage();
+		crossfinderLeft = new ImageIcon(getClass().getResource("/image/kinectCrossfinderLeft.png")).getImage();
+		crossfinderRight = new ImageIcon(getClass().getResource("/image/kinectCrossfinderRight.png")).getImage();
 	}
 
 	protected void paintComponent(Graphics g)
@@ -55,56 +59,70 @@ public class VueKinect extends JPanel
 
 		g.setColor(new Color(0x4e4c4b));
 		g.drawRect(335, 35, 311, 201);
+		g.setColor(Color.BLACK);
+		g.fillRect(336, 36, 310, 200);
 		g.setColor(Color.WHITE);
 		g.drawString("Main gauche", 450, 25);
 
 		g.setColor(new Color(0x4e4c4b));
 		g.drawRect(665, 35, 311, 201);
+		g.setColor(Color.BLACK);
+		g.fillRect(666, 36, 310, 200);
 		g.setColor(Color.WHITE);
 		g.drawString("Main droite", 780, 25);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 15));
 
-		if(messageDroite == "play")
-		{
-			g.drawImage(play, 730, 55, null);
-		}
-		if(messageDroite == "pause")
-		{
-			g.drawImage(pause, 730, 55, null);
-		}
-		if(messageDroite == "volume")
-		{
-			g.drawImage(volume, 740, 55, null);
-		}
-		if(messageDroite == "crossfinder")
-		{
-			g.drawImage(crossfinder, 745, 55, null);
-		}
-		else if(messageDroite == null)
-		{
-			g.drawImage(null, 740, 55, new Color(0x4e4c4b), null);
-		}
-
+		System.out.println(messageDroite);
+		
 		if(messageGauche == "play")
 		{
-			g.drawImage(play, 405, 55, null);
+			g.drawImage(play, 336, 36, null);
 		}
-		if(messageGauche == "pause")
+		else if(messageGauche == "pause")
 		{
-			g.drawImage(pause, 405, 55, null);
+			g.drawImage(pause, 336, 36, null);
 		}
-		if(messageGauche == "volume")
+		else if(messageGauche == "volumeUp")
 		{
-			g.drawImage(volume, 415, 55, null);
+			g.drawImage(volumeUp, 336, 36, null);
 		}
-		if(messageGauche == "crossfinder")
+		else if(messageGauche == "volumeDown")
 		{
-			g.drawImage(crossfinder, 420, 55, null);
+			g.drawImage(volumeDown, 336, 36, null);
 		}
-		else if(messageGauche == null)
+		else if(messageGauche == "crossfinderRight")
 		{
-			g.drawImage(null, 420, 55, new Color(0x4e4c4b), null);
+			g.drawImage(crossfinderRight, 336, 36, null);
+		}
+		else if(messageGauche == "crossfinderLeft")
+		{
+			g.drawImage(crossfinderLeft, 336, 36, null);
+		}
+
+		if(messageDroite == "play")
+		{
+			g.drawImage(play, 666, 36, null);
+		}
+		else if(messageDroite == "pause")
+		{
+			g.drawImage(pause, 666, 36, null);
+		}
+		else if(messageDroite == "volumeUp")
+		{
+			g.drawImage(volumeUp, 666, 36, null);
+		}
+		else if(messageDroite == "volumeDown")
+		{
+			g.drawImage(volumeDown, 666, 36, null);
+		}
+		else if(messageDroite == "crossfinderRight")
+		{
+			g.drawImage(crossfinderRight, 666, 36, null);
+		}
+		else if(messageDroite == "crossfinderLeft")
+		{
+			g.drawImage(crossfinderLeft, 666, 36, null);
 		}
 	}
 
