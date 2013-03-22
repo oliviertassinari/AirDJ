@@ -22,7 +22,7 @@ public class ModelePlay
 	private String title = "Drag a song on this desk to load it";
 	private String artist = "";
 
-	private float bpm = 0;
+	private double bpm = 0;
 	private int total = 0;
 	private int current = 0;
 	private int state = 0; // 0 pause - 1 play
@@ -31,6 +31,7 @@ public class ModelePlay
 	private IPlayer player = null;
 	private int cote; // 0 gauche - 1 droite
 	private int startFrom = 0;
+	private int buttonBPM = 0;
 
 	/**
 	 * 
@@ -81,7 +82,8 @@ public class ModelePlay
 		title = file.getName();
 		artist = file.getName();
 
-		bpm = player.getBPM();
+		//bpm = player.getBPM();
+		bpm = 103.95;
 		total = Math.round(player.getLength() * 10);
 
 		current = 0;
@@ -187,6 +189,20 @@ public class ModelePlay
 			}
 		}
 
+		vuePlay.repaint();
+	}
+	
+	public void setButtonBPM(String state)
+	{
+		if(state == "over")
+		{
+			buttonBPM = 1;
+		}
+		else
+		{
+			buttonBPM = 0;
+		}
+		
 		vuePlay.repaint();
 	}
 
@@ -386,5 +402,14 @@ public class ModelePlay
 	public IPlayer getPlayer()
 	{
 		return player;
+	}
+
+	/**
+	 * retourne l'etat du bouton BPM
+	 * @return etat button BPM
+	 */
+	public int getButtonBPM()
+	{
+		return buttonBPM;
 	}
 }

@@ -164,6 +164,15 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 					vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 			}
+			else if(330 <= x && x <= 330 + 31 && 17 <= y && y <= 17 + 15) // button BPM
+			{
+				if(blockOver != 5)
+				{
+					blockOver = 5;
+					vuePlay.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					modelePlay.setButtonBPM("over");
+				}
+			}
 			else if(blockOver != 0)
 			{
 				if(blockOver == 2)
@@ -173,6 +182,10 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 				else if(blockOver == 3)
 				{
 					modelePlay.setButtonPlay("out");
+				}
+				else if(blockOver == 5)
+				{
+					modelePlay.setButtonBPM("out");
 				}
 
 				blockOver = 0;

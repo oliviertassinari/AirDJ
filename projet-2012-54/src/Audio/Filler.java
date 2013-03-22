@@ -52,8 +52,8 @@ public class Filler implements Runnable
 	public void run()
 	{
 		this.fillVolumeArray();
-		double[] data = this.getSample(player.getFile(), 10);
-		player.setBPM(this.BPM(data));
+		//double[] data = this.getSample(player.getFile(), 10);
+		//player.setBPM(this.BPM(data));
 	}
 
 	/**

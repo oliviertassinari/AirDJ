@@ -30,6 +30,7 @@ public class VuePlay extends JPanel
 
 	private BufferedImage imageBackground;
 	private Image imagePitchCursor;
+	private Image imageBPM;
 	private Image imageButton;
 
 	/**
@@ -47,6 +48,7 @@ public class VuePlay extends JPanel
 		setPreferredSize(new Dimension((1000 - 250) / 2, 300));
 
 		imagePitchCursor = new ImageIcon(getClass().getResource("/image/pitchCursor.png")).getImage();
+		imageBPM = new ImageIcon(getClass().getResource("/image/bpm.png")).getImage();
 
 		if(couleur == 0)
 		{
@@ -127,6 +129,7 @@ public class VuePlay extends JPanel
 		int current = modelePlay.getCurrent();
 		int buttonPlay = modelePlay.getButtonPlay();
 		int buttonPause = modelePlay.getButtonPause();
+		int buttonBPM = modelePlay.getButtonBPM();
 
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -143,8 +146,11 @@ public class VuePlay extends JPanel
 		if(bpm != 0)
 		{
 			g.setFont(new Font("sansserif", Font.BOLD, 18));
-			g.drawString(String.valueOf(bpm + pitch), 300, 30);
+			g.drawString(String.valueOf(bpm + pitch), 270, 30);
 		}
+
+		// Button BPM
+		g.drawImage(imageBPM, 330, 17, 330+31, 17+15, 0, 15*buttonBPM, 31, 15*(1+buttonBPM), null);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 15));
 		g.setColor(new Color(0xD1D3BA));
