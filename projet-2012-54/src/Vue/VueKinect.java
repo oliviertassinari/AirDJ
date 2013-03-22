@@ -21,8 +21,6 @@ public class VueKinect extends JPanel
 {
 	private Vue vue;
 	private BufferedImage kinectImage;
-	private BufferedImage kinectImageLeft;
-	private BufferedImage kinectImageRight;
 	private Image play;
 	private Image pause;
 	private Image volume;
@@ -57,13 +55,11 @@ public class VueKinect extends JPanel
 
 		g.setColor(new Color(0x4e4c4b));
 		g.drawRect(335, 35, 311, 201);
-		g.drawImage(kinectImageLeft, 336, 36, null);
 		g.setColor(Color.WHITE);
 		g.drawString("Main gauche", 450, 25);
 
 		g.setColor(new Color(0x4e4c4b));
 		g.drawRect(665, 35, 311, 201);
-		g.drawImage(kinectImageRight, 666, 36, null);
 		g.setColor(Color.WHITE);
 		g.drawString("Main droite", 780, 25);
 
@@ -117,11 +113,9 @@ public class VueKinect extends JPanel
 	 * 
 	 * @param kinectImage
 	 */
-	public void setKinectImage(BufferedImage kinectImage, BufferedImage kinectImageLeft, BufferedImage kinectImageRight)
+	public void setKinectImage(BufferedImage kinectImage)
 	{
 		this.kinectImage = kinectImage;
-		this.kinectImageLeft = kinectImageLeft;
-		this.kinectImageRight = kinectImageRight;
 
 		repaint();
 	}

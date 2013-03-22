@@ -226,19 +226,13 @@ public class Kinect implements Runnable
 					cvPutText(imageDislay2, "Droite", cvPoint((int)mainPositionRight.getFiltre(0)[0] - 20, (int)mainPositionRight.getFiltre(0)[1] - 10), font, CvScalar.RED);
 				}
 
-				IplImage imageLeft = IplImage.create(310, 200, IPL_DEPTH_8U, 3);
-				cvGetRectSubPix(imageDislay2, imageLeft, getCvPointHand(mainPositionLeft));
-
-				IplImage imageRight = IplImage.create(310, 200, IPL_DEPTH_8U, 3);
-				cvGetRectSubPix(imageDislay2, imageRight, getCvPointHand(mainPositionRight));
-
 				CvFont fontFPS = new CvFont(CV_FONT_HERSHEY_COMPLEX, 1, 2);
 				cvPutText(imageDislay2, "FPS : " + Integer.toString(getFPS()), cvPoint(10, 465), fontFPS, CvScalar.RED);
 
 				IplImage resizeDisplay = IplImage.create(width / 2, height / 2, IPL_DEPTH_8U, 3);
 				cvResize(imageDislay2, resizeDisplay);
 
-				vue.getVueKinect().setKinectImage(resizeDisplay.getBufferedImage(), imageLeft.getBufferedImage(), imageRight.getBufferedImage());
+				vue.getVueKinect().setKinectImage(resizeDisplay.getBufferedImage());
 
 				fenetreFrame1.showImage(imageThreshold);
 				fenetreFrame2.showImage(imageDislay2);
@@ -631,31 +625,5 @@ public class Kinect implements Runnable
 		}
 
 		return (int)(Math.round(Math.toDegrees(angle)));
-	}
-
-	public CvPoint2D32f getCvPointHand(MainPosition mainPosition)
-	{
-		int x = (int)mainPosition.getFiltre(0)[0];
-		int y = (int)mainPosition.getFiltre(0)[1];
-
-		if(x < 155)
-		{
-			x = 155;
-		}
-		else if(x > 485)
-		{
-			x = 485;
-		}
-
-		if(y < 100)
-		{
-			y = 100;
-		}
-		else if(y > 380)
-		{
-			y = 380;
-		}
-
-		return new CvPoint2D32f(x, y);
 	}
 }
