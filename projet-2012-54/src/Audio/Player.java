@@ -2,11 +2,10 @@ package Audio;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 
 import javax.sound.sampled.*;
+
+import Modele.ModelePlay;
 
 public class Player implements Runnable, IPlayer
 {
@@ -14,6 +13,8 @@ public class Player implements Runnable, IPlayer
 	 * 
 	 */
 	private Filler filler;
+	
+	private ComputeBPM computeBPM;
 	
 	/**
 	 * File played
@@ -157,7 +158,7 @@ public class Player implements Runnable, IPlayer
 	 		
 	 		//Filling volumeArray
 			filler = new Filler(this);
-					
+
 			//Initializing gainControl
 			gainControl = (FloatControl) line.getControl(FloatControl.Type.MASTER_GAIN);
 			setVolume(50);
@@ -394,57 +395,32 @@ public class Player implements Runnable, IPlayer
 		return volumeArray[j][i];
 	}
 
-	public double getBPM()
+	public void computeBPM(ModelePlay modelePlay)
 	{
-		//double a = System.currentTimeMillis();
-		double[] data = filler.getSample(this.getFile(), 10);
-		//System.out.println(System.currentTimeMillis()-a);
-		//a = System.currentTimeMillis();
-		this.setBPM(filler.BPM(data));
-		//System.out.println(System.currentTimeMillis()-a);
-		return bpm;
+		if(computeBPM == null)
+		{
+			computeBPM = new ComputeBPM(this, modelePlay);
+		}
 	}
 	
-	public void setBPM(int tmp1)
+	public void computeBPMEnd()
 	{
-		double tmp2 = 60/(tmp1*256/frameRate);
-		if (tmp2 >= 180) tmp2/=2;
-		if (tmp2 < 90) tmp2*=2;
-
-		tmp2 = getFormatedBPM(tmp2);
-
-		System.out.println(tmp2);
-
-		bpm = tmp2;
+		computeBPM = null;
 	}
 
-	private double getFormatedBPM(double value)
-	{
-		DecimalFormat df = new DecimalFormat();
-		df.setMaximumFractionDigits(2); 
-
-		Number n = null;
-		NumberFormat formater3 = new DecimalFormat(".##");
-		String str = formater3.format(value);
-		try
-		{
-			n = formater3.parse(str);
-		}
-		catch(ParseException pe)
-		{
-			System.out.println("parse : " + pe);
-		}
- 
-		return n.doubleValue();
-	}
-	
 	public AudioFormat getAudioFormat()
 	{
 		return audioFormat;
 	}
 	
-	public void stop()
+	public Filler getFiller()
 	{
-		filler.stop();
+		return filler;
+	}
+	
+	public void interrupt()
+	{
+		filler.interrupt();
+		runner.interrupt();
 	}
 }

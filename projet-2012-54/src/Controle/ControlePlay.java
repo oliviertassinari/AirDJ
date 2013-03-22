@@ -78,6 +78,10 @@ public class ControlePlay implements MouseListener, MouseMotionListener, MouseWh
 			offset = 0;
 			mouseDragged(e);
 		}
+		else if(blockOver == 5) // BPM
+		{
+			modelePlay.computeBPM();
+		}
 	}
 
 	/**

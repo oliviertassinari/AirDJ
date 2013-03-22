@@ -143,7 +143,12 @@ public class VuePlay extends JPanel
 		g.setColor(Color.WHITE);
 		g.drawString(artist, 8, 23);
 
-		if(bpm != 0)
+		if(bpm == -1)
+		{
+			g.setFont(new Font("sansserif", Font.BOLD, 18));
+			g.drawString("......", 290, 30);
+		}
+		else if(bpm != 0)
 		{
 			g.setFont(new Font("sansserif", Font.BOLD, 18));
 			g.drawString(String.valueOf(bpm + pitch), 270, 30);

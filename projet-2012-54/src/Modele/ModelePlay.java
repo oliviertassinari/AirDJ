@@ -62,7 +62,7 @@ public class ModelePlay
 		if(player != null && state == 1)
 		{
 			player.setPause();
-			player.stop();
+			player.interrupt();
 		}
 
 		filePath = value;
@@ -84,8 +84,7 @@ public class ModelePlay
 
 		total = Math.round(player.getLength() * 10);
 
-		bpm = player.getBPM();
-		//bpm = 103.95;
+		bpm = 0;
 
 		current = 0;
 		state = 0;
@@ -351,6 +350,18 @@ public class ModelePlay
 		return bpm;
 	}
 
+	public void computeBPM()
+	{
+		bpm = -1;
+
+		player.computeBPM(this);
+	}
+	
+	public void computeBPMEnd(double bpm)
+	{		
+		this.bpm = bpm;
+	}
+
 	/**
 	 * 
 	 * @return int
@@ -403,6 +414,11 @@ public class ModelePlay
 	public IPlayer getPlayer()
 	{
 		return player;
+	}
+
+	public double getBPM()
+	{
+		return bpm;
 	}
 
 	/**

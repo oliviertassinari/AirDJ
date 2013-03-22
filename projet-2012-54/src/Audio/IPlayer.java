@@ -1,5 +1,7 @@
 package Audio;
 
+import Modele.ModelePlay;
+
 public interface IPlayer
 {
 	/** 
@@ -49,7 +51,7 @@ public interface IPlayer
 	 */
 	public float getLength();
 
-	public double getBPM();
+	public void computeBPM(ModelePlay modelePlay);
 
 	public int[][] getVolumeArray();
 
@@ -61,5 +63,5 @@ public interface IPlayer
 	/**
 	 * Stop thread
 	 */
-	public void stop();
+	public void interrupt();
 }
