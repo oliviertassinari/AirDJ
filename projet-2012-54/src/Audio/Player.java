@@ -2,6 +2,10 @@ package Audio;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 import javax.sound.sampled.*;
 
 public class Player implements Runnable, IPlayer
@@ -29,7 +33,7 @@ public class Player implements Runnable, IPlayer
 	/** 
 	 * 
 	 */
-	private float bpm;
+	private double bpm;
 	
 	/** 
 	 * 
@@ -390,8 +394,14 @@ public class Player implements Runnable, IPlayer
 		return volumeArray[j][i];
 	}
 
-	public float getBPM()
+	public double getBPM()
 	{
+		//double a = System.currentTimeMillis();
+		double[] data = filler.getSample(this.getFile(), 10);
+		//System.out.println(System.currentTimeMillis()-a);
+		//a = System.currentTimeMillis();
+		this.setBPM(filler.BPM(data));
+		//System.out.println(System.currentTimeMillis()-a);
 		return bpm;
 	}
 	
@@ -400,8 +410,32 @@ public class Player implements Runnable, IPlayer
 		double tmp2 = 60/(tmp1*256/frameRate);
 		if (tmp2 >= 180) tmp2/=2;
 		if (tmp2 < 90) tmp2*=2;
+
+		tmp2 = getFormatedBPM(tmp2);
+
 		System.out.println(tmp2);
-		this.bpm = (float) tmp2;
+
+		bpm = tmp2;
+	}
+
+	private double getFormatedBPM(double value)
+	{
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2); 
+
+		Number n = null;
+		NumberFormat formater3 = new DecimalFormat(".##");
+		String str = formater3.format(value);
+		try
+		{
+			n = formater3.parse(str);
+		}
+		catch(ParseException pe)
+		{
+			System.out.println("parse : " + pe);
+		}
+ 
+		return n.doubleValue();
 	}
 	
 	public AudioFormat getAudioFormat()

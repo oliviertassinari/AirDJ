@@ -52,8 +52,6 @@ public class Filler implements Runnable
 	public void run()
 	{
 		this.fillVolumeArray();
-		//double[] data = this.getSample(player.getFile(), 10);
-		//player.setBPM(this.BPM(data));
 	}
 
 	/**
@@ -202,18 +200,20 @@ public class Filler implements Runnable
 		for (int f = 0; f < Nfft/2; f++)
 		{
 			/************ FFT + Module² ************/
+			//double a = System.currentTimeMillis();
+			double cst = 2*Math.PI/4/sizeBis*44100/Nfft*f;
 			for (int m = 0; m < size2-4; m++)
 			{
 				for (int n = 0; n < sizeBis*4; n++)
-				{
-					tmp[0] += sequence[n+m*sizeBis]*Math.cos(2*Math.PI*n/4/sizeBis*44100/Nfft*f);
-					tmp[1] += sequence[n+m*sizeBis]*Math.sin(2*Math.PI*n/4/sizeBis*44100/Nfft*f);
+				{	
+					tmp[0] += sequence[n+m*sizeBis]*Math.cos((float)(n*cst));
+					tmp[1] += sequence[n+m*sizeBis]*Math.sin((float)(n*cst));
 				}
 				outputBis[f][m] = tmp[0]*tmp[0] + tmp[1]*tmp[1];
 				tmp[0] = 0;
 				tmp[1] = 0;
 			}
-			
+			//System.out.println(System.currentTimeMillis()-a);
 			/************ LowPassFilter ************/
 			for (int m = 0; m < size2; m++)
 			{

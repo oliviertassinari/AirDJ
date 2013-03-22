@@ -72,7 +72,7 @@ public class VueKinect extends JPanel
 		g.drawString("Main droite", 780, 25);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 15));
-
+		
 		if(messageGauche == "play")
 		{
 			g.drawImage(play, 336, 36, null);

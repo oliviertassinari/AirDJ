@@ -12,8 +12,8 @@ public class ModeleKinect
 	private Modele modele;
 	private String messageDroite = "";
 	private String messageGauche = "";
-	private Timer timerLeft;
 	private Timer timerRight;
+	private Timer timerLeft;
 
 	public ModeleKinect(Modele modele)
 	{
@@ -58,7 +58,7 @@ public class ModeleKinect
 
 		modele.getVue().getVueKinect().repaint();
 		
-		if(messageGauche == "")
+		if(messageGauche != "")
 		{
 			if(timerLeft != null)
 			{

@@ -49,7 +49,7 @@ public interface IPlayer
 	 */
 	public float getLength();
 
-	public float getBPM();
+	public double getBPM();
 
 	public int[][] getVolumeArray();
 
