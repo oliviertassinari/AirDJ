@@ -26,12 +26,10 @@ public class KinectListener implements ListenerInterface
 			if(event.getCote() == "left")
 			{
 				modelePlay = event.getSource().getModele().getModelePlayP1();
-				modeleKinect.setTimerGauche();
 			}
 			else
 			{
 				modelePlay = event.getSource().getModele().getModelePlayP2();
-				modeleKinect.setTimerDroite();
 			}
 
 			if(modelePlay.getState() == 0 && modelePlay.getPlayer() != null)
@@ -43,13 +41,10 @@ public class KinectListener implements ListenerInterface
 				if(event.getCote() == "left")
 				{
 					modeleKinect.setMessageGauche("play");
-					modeleKinect.setTimerGauche();
 				}
 				else if(event.getCote() == "right")
 				{
 					modeleKinect.setMessageDroite("play");
-					modeleKinect.setTimerDroite();
-		
 				}
 			}
 			else if(modelePlay.getState() == 1)
@@ -61,14 +56,10 @@ public class KinectListener implements ListenerInterface
 				if(event.getCote() == "left")
 				{
 					modeleKinect.setMessageGauche("pause");
-				
-					modeleKinect.setTimerGauche();
 				}
 				else if(event.getCote() == "right")
 				{
 					modeleKinect.setMessageDroite("pause");
-					
-					modeleKinect.setTimerDroite();
 				}
 			}
 		}
@@ -88,8 +79,6 @@ public class KinectListener implements ListenerInterface
 				{
 					modeleKinect.setMessageGauche("volumeDown");
 				}
-				
-				modeleKinect.setTimerGauche();
 			}
 			else if(event.getCote() == "right")
 			{
@@ -103,8 +92,6 @@ public class KinectListener implements ListenerInterface
 				{
 					modeleKinect.setMessageDroite("volumeDown");
 				}
-
-				modeleKinect.setTimerDroite();
 			}
 		}
 		else if(event.getMessage() == "crossfinder")
@@ -123,8 +110,6 @@ public class KinectListener implements ListenerInterface
 				{
 					modeleKinect.setMessageGauche("crossfinderRight");
 				}
-
-				modeleKinect.setTimerGauche();
 			}
 			else if(event.getCote() == "right")
 			{
@@ -138,8 +123,6 @@ public class KinectListener implements ListenerInterface
 				{
 					modeleKinect.setMessageDroite("crossfinderRight");
 				}
-
-				modeleKinect.setTimerDroite();
 			}
 		}
 

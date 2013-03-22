@@ -9,13 +9,27 @@ import Audio.IPlayer;
 
 public class VueSpectre
 {
+	/**
+	 * couleur de l'avancement de la musique où niveau de la forme d'onde
+	 */
 	private int couleur;
-	
+
+	/**
+	 * 
+	 * @param couleur
+	 */
 	public VueSpectre(int couleur)
 	{
 		this.couleur = couleur;
 	}
 
+	/**
+	 * 
+	 * @param current
+	 * @param total
+	 * @param player
+	 * @return
+	 */
 	public BufferedImage get(int current, int total, IPlayer player)
 	{
 		if(player != null)

@@ -84,7 +84,7 @@ public class Filler implements Runnable
 			byte bytes[] = new byte[bytesDemiDixiemeSeconde];
 			int pos = 0;
 			int i = 0;
-			double max = 0;
+			double max = 5000000;
 			double tmp[] = new double[2];
 
 			while(((ais.read(bytes, 0, bytes.length)) != -1))
