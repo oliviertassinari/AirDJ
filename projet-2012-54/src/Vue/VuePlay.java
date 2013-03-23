@@ -23,7 +23,7 @@ import Modele.ModelePlay;
  */
 public class VuePlay extends JPanel
 {
-	private int couleur; // 0 = blue, 1 = red
+	private static final long serialVersionUID = 328034180530039435L;
 	private Vue vue;
 	private ModelePlay modelePlay;
 	private VueSpectre vueSpectre;
@@ -35,14 +35,14 @@ public class VuePlay extends JPanel
 
 	/**
 	 * constructeur
-	 * @param couleur
+	 * 
+	 * @param couleur 0 = blue, 1 = red
 	 * @param vue
 	 * @param modelePlay
 	 */
 
 	public VuePlay(int couleur, Vue vue, ModelePlay modelePlay)
 	{
-		this.couleur = couleur;
 		this.vue = vue;
 		this.modelePlay = modelePlay;
 		setPreferredSize(new Dimension((1000 - 250) / 2, 300));
@@ -155,7 +155,7 @@ public class VuePlay extends JPanel
 		}
 
 		// Button BPM
-		g.drawImage(imageBPM, 330, 17, 330+31, 17+15, 0, 15*buttonBPM, 31, 15*(1+buttonBPM), null);
+		g.drawImage(imageBPM, 330, 17, 330 + 31, 17 + 15, 0, 15 * buttonBPM, 31, 15 * (1 + buttonBPM), null);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 15));
 		g.setColor(new Color(0xD1D3BA));

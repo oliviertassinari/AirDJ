@@ -10,6 +10,10 @@ import javax.swing.JPanel;
 
 public class VueBrowser extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2434229119897581826L;
 	private Vue vue;
 	private VueBrowserTree vueBrowserTree;
 	private VueBrowserTable vueBrowserTable;

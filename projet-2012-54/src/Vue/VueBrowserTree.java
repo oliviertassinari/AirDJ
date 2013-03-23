@@ -24,6 +24,10 @@ public class VueBrowserTree extends JPanel
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 9066576621640081581L;
+	/**
+	 * 
+	 */
 	private Image imageTree;
 	/**
 	 * image de la barre de d efilement

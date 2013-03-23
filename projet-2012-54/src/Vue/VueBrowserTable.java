@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 
 public class VueBrowserTable extends JPanel
 {
+	private static final long serialVersionUID = -3655883389805563009L;
+
 	/** 
 	 * image de la barre de défilement
 	 */

@@ -19,6 +19,10 @@ import Modele.ModeleCrossfinder;
 public class VueCrossfinder extends JPanel
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 507864433965915931L;
+	/**
 	 * Vue contenant le panel
 	 */
 	private Vue vue;

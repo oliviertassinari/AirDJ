@@ -34,11 +34,6 @@ public class Player implements Runnable, IPlayer
 	/** 
 	 * 
 	 */
-	private double bpm;
-	
-	/** 
-	 * 
-	 */
 	private float frameRate;
 	
 	/** 

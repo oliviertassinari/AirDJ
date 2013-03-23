@@ -19,6 +19,7 @@ import javax.swing.JPanel;
  */
 public class VueKinect extends JPanel
 {
+	private static final long serialVersionUID = 8433320407184008738L;
 	private Vue vue;
 	private BufferedImage kinectImage;
 	private Image play;

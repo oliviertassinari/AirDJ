@@ -2,7 +2,6 @@
 package Kinect;
 
 import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_16U;
-import static com.googlecode.javacv.cpp.opencv_core.IPL_DEPTH_8U;
 
 import java.nio.ByteBuffer;
 
