@@ -83,8 +83,9 @@ public class Player implements Runnable, IPlayer
 	{
 		try
 		{	
+			byte bytesPrev[] = null;
 			byte bytes[] = new byte[5*frameSize];
-			
+
 			synchronized(this)
 			{
 				while(((audioInputStream.read(bytes, 0, 5*frameSize)) != -1))
@@ -115,6 +116,39 @@ public class Player implements Runnable, IPlayer
 					if (pos > 7) pos -= 7;
 					currentVolume[0] = volumeArray[0][pos];
 					currentVolume[1] = volumeArray[1][pos];
+
+					if(bytesPrev != null)
+					{
+						byte[] bytesBoth = new byte[bytes.length + bytesPrev.length];
+						System.arraycopy(bytesPrev, 0, bytesBoth, 0, bytes.length);
+						System.arraycopy(bytes, 0, bytesBoth, bytes.length, bytesPrev.length);
+
+						bytesPrev = bytes;
+
+						//double[] a = { 0.12944685, 0.23299822, 0.27510983, 0.23299822, 0.12944685 };
+						double[] a = { 1, 0, 0, 0, 0 };
+
+						for(int i = 0; i < 5; i++)
+						{
+							double valueLeft = 0;
+							double valueRight = 0;
+
+							for(int j = 0; j < 5; j++)
+							{
+								valueLeft += a[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+								valueRight += a[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+							}
+
+							byte[] resLeft = shortToByte((short)valueLeft);
+							byte[] resRight = shortToByte((short)valueRight);
+
+							bytes[4*i] = resLeft[0];
+							bytes[4*i+1] = resLeft[1];
+							bytes[4*i+2] = resRight[0];
+							bytes[4*i+3] = resRight[1];
+						}
+					}					
+
 					line.write(bytes, 0, bytes.length);
 				}
 	
@@ -127,6 +161,36 @@ public class Player implements Runnable, IPlayer
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public short byteToShort(byte byte1, byte byte2)
+	{
+		if(audioFormat.isBigEndian())
+		{
+			return (short)((byte1 & 0xFF) | (byte2 << 8));
+		}
+		else
+		{
+			return (short)((byte2 & 0xFF) | (byte1 << 8));
+		}
+	}
+
+	public byte[] shortToByte(short value)
+	{
+		byte[] bytes = new byte[2];
+
+		if(audioFormat.isBigEndian())
+		{
+			bytes[0] = (byte)(value & 0xff);
+			bytes[1] = (byte)((value >> 8) & 0xff);
+		}
+		else
+		{
+			bytes[1] = (byte)(value & 0xff);
+			bytes[0] = (byte)((value >> 8) & 0xff);
+		}
+
+		return bytes;
 	}
 
 	/** 
