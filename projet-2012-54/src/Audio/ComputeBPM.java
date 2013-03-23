@@ -172,7 +172,7 @@ public class ComputeBPM implements Runnable
 				for (int n = 0; n < sizeBis*4; n++)
 				{	
 					tmp[0] += sequence[n+m*sizeBis]*Math.cos((float)(n*cst));
-					tmp[1] += sequence[n+m*sizeBis]*xsin((float)(n*cst));
+					tmp[1] += sequence[n+m*sizeBis]*Math.sin((float)(n*cst));
 				}
 				outputBis[f][m] = tmp[0]*tmp[0] + tmp[1]*tmp[1];
 				tmp[0] = 0;

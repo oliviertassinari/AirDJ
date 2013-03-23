@@ -151,6 +151,7 @@ public class Player implements Runnable, IPlayer
 			audioFormat = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			line = (SourceDataLine) AudioSystem.getLine(info);
+			System.out.println(info.toString());
 			line.open(audioFormat);
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
