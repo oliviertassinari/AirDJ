@@ -151,7 +151,6 @@ public class Player implements Runnable, IPlayer
 			audioFormat = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			line = (SourceDataLine) AudioSystem.getLine(info);
-			System.out.println(info.toString());
 			line.open(audioFormat);
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
@@ -400,7 +399,7 @@ public class Player implements Runnable, IPlayer
 	{
 		if(computeBPM == null)
 		{
-			computeBPM = new ComputeBPM(this, modelePlay);
+			computeBPM = new ComputeBPM(this, modelePlay, byteFromBeginning);
 		}
 	}
 	
@@ -413,15 +412,18 @@ public class Player implements Runnable, IPlayer
 	{
 		return audioFormat;
 	}
-	
-	public Filler getFiller()
+
+	public void stop()
 	{
-		return filler;
-	}
-	
-	public void interrupt()
-	{
-		filler.interrupt();
-		runner.interrupt();
+		setPause();
+
+		filler.stop();
+
+		if(computeBPM != null)
+		{
+			computeBPM.stop();
+		}
+
+		runner.stop();
 	}
 }

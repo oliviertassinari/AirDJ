@@ -1,3 +1,4 @@
+
 package Audio;
 
 import java.io.File;
@@ -10,26 +11,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Filler implements Runnable
 {
-	/**
-	 * 
-	 */
 	private Thread filler;
-
-	/**
-	 * Player we will the arrayVolume
-	 */
 	private Player player;
 
 	/**
-	 * As Thread start he calls this method
-	 */
-	public void run()
-	{
-		this.fillVolumeArray();
-	}
-
-	/**
 	 * CONSTRUCTOR
+	 * 
 	 * @param player
 	 */
 	public Filler(Player player)
@@ -39,10 +26,11 @@ public class Filler implements Runnable
 		filler.start();
 	}
 
-	/** 
+	/**
+	 * As Thread start he calls this method
 	 * Fill the arrayVolume of the player provided
 	 */
-	public void fillVolumeArray()
+	public void run()
 	{
 		try
 		{
@@ -65,30 +53,35 @@ public class Filler implements Runnable
 				{
 					if(af.isBigEndian())
 					{
-							tmp[0] += 4*(((bytes[i + 0] << 8) | (bytes[i + 1] & 0xFF))*((bytes[i + 0] << 8) | (bytes[i + 1] & 0xFF)))/bytes.length ;
-							tmp[1] += 4*(((bytes[i + 2] << 8) | (bytes[i + 3] & 0xFF))*((bytes[i + 2] << 8) | (bytes[i + 3] & 0xFF)))/bytes.length;
+						tmp[0] += 4 * (((bytes[i + 0] << 8) | (bytes[i + 1] & 0xFF)) * ((bytes[i + 0] << 8) | (bytes[i + 1] & 0xFF))) / bytes.length;
+						tmp[1] += 4 * (((bytes[i + 2] << 8) | (bytes[i + 3] & 0xFF)) * ((bytes[i + 2] << 8) | (bytes[i + 3] & 0xFF))) / bytes.length;
 					}
 					else
 					{
-							tmp[0] += 4*(((bytes[i + 0] & 0xFF) | (bytes[i + 1] << 8))*((bytes[i + 0] & 0xFF) | (bytes[i + 1] << 8)))/bytes.length;
-							tmp[1] += 4*(((bytes[i + 2] & 0xFF) | (bytes[i + 3] << 8))*((bytes[i + 2] & 0xFF) | (bytes[i + 3] << 8)))/bytes.length;
+						tmp[0] += 4 * (((bytes[i + 0] & 0xFF) | (bytes[i + 1] << 8)) * ((bytes[i + 0] & 0xFF) | (bytes[i + 1] << 8))) / bytes.length;
+						tmp[1] += 4 * (((bytes[i + 2] & 0xFF) | (bytes[i + 3] << 8)) * ((bytes[i + 2] & 0xFF) | (bytes[i + 3] << 8))) / bytes.length;
 					}
 					i += 4;
 				}
-				if(max<tmp[0]) max = tmp[0];
-				if(max<tmp[1]) max = tmp[1];
-				tmp[0]=tmp[0]/max*100;
-				tmp[1]=tmp[1]/max*100;
+
+				if(max < tmp[0])
+					max = tmp[0];
+				if(max < tmp[1])
+					max = tmp[1];
+				tmp[0] = tmp[0] / max * 100;
+				tmp[1] = tmp[1] / max * 100;
+
 				if(pos == 0)
 				{
-					player.setVolumeArray((int) tmp[0], pos, 0);
-					player.setVolumeArray((int) tmp[1], pos, 1);
+					player.setVolumeArray((int)tmp[0], pos, 0);
+					player.setVolumeArray((int)tmp[1], pos, 1);
 				}
-				if(pos != 0)
+				else if(pos != 0)
 				{
 					player.setVolumeArray((int)(0.2 * player.getVolumeArray(pos - 1, 0) + 0.8 * tmp[0]), pos, 0);
 					player.setVolumeArray((int)(0.2 * player.getVolumeArray(pos - 1, 1) + 0.8 * tmp[1]), pos, 1);
 				}
+
 				pos++;
 				i = 0;
 				tmp[0] = 0;
@@ -105,8 +98,8 @@ public class Filler implements Runnable
 		}
 	}
 
-	public void interrupt()
+	public void stop()
 	{
-		filler.interrupt();
+		filler.stop();
 	}
 }

@@ -63,5 +63,5 @@ public interface IPlayer
 	/**
 	 * Stop thread
 	 */
-	public void interrupt();
+	public void stop();
 }

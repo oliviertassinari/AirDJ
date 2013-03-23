@@ -61,8 +61,7 @@ public class ModelePlay
 	{
 		if(player != null && state == 1)
 		{
-			player.setPause();
-			player.interrupt();
+			player.stop();
 		}
 
 		filePath = value;
