@@ -351,9 +351,12 @@ public class ModelePlay
 
 	public void computeBPM()
 	{
-		bpm = -1;
-
-		player.computeBPM(this);
+		if(player != null)
+		{
+			bpm = -1;
+	
+			player.computeBPM(this);
+		}
 	}
 	
 	public void computeBPMEnd(double bpm)

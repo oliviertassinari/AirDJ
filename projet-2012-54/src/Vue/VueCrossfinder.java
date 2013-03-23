@@ -42,6 +42,10 @@ public class VueCrossfinder extends JPanel
 	 * image d'arrière plan de l'affichage du volume
 	 */
 	private Image imageDisplayVolumeOver;
+	
+	private Image imageEQ1;
+	private Image imageEQ2;
+	private Image imageEQ3;
 
 	/**
 	* constructeur
@@ -54,6 +58,10 @@ public class VueCrossfinder extends JPanel
 		imageVolumeCursor = new ImageIcon(getClass().getResource("/image/volumeCursor.png")).getImage();
 		imageCrossfinderCursor = new ImageIcon(getClass().getResource("/image/crossfinderCursor.png")).getImage();
 		imageDisplayVolumeOver = new ImageIcon(getClass().getResource("/image/displayVolumeOver.png")).getImage();
+
+		imageEQ1 = new ImageIcon(getClass().getResource("/image/vueEQ1.png")).getImage();
+		imageEQ2 = new ImageIcon(getClass().getResource("/image/vueEQ2.png")).getImage();
+		imageEQ3 = new ImageIcon(getClass().getResource("/image/vueEQ3.png")).getImage();
 
 		imageBackground = getImageBackground();
 	}
@@ -124,8 +132,8 @@ public class VueCrossfinder extends JPanel
 		g.drawImage(imageCrossfinderGrid, 45, 230, null);
 
 		Image imageVolumeGrid = new ImageIcon(getClass().getResource("/image/displayVolumeGrid.png")).getImage();
-		g.drawImage(imageVolumeGrid, 30, 50, null);
-		g.drawImage(imageVolumeGrid, 193, 50, null);
+		g.drawImage(imageVolumeGrid, 50, 50, null);
+		g.drawImage(imageVolumeGrid, 173, 50, null);
 
 		g.dispose();
 
@@ -155,14 +163,65 @@ public class VueCrossfinder extends JPanel
 
 		// displayVolume
 		g.setColor(new Color(0x28acff));
-		g.fillRect(34, 53 + 120 - (int)(displayVolumeP1[0] * 1.2 / 100 * modeleCrossfinder.getVolumeP1() * modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[0] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP1() * modeleCrossfinder.getVolumeP1()));
-		g.fillRect(44, 53 + 120 - (int)(displayVolumeP1[1] * 1.2 / 100 * modeleCrossfinder.getVolumeP1() * modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[1] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP1() * modeleCrossfinder.getVolumeP1()));
+		g.fillRect(54, 53 + 120 - (int)(displayVolumeP1[0] * 1.2 / 100 * modeleCrossfinder.getVolumeP1() * modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[0] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP1() * modeleCrossfinder.getVolumeP1()));
+		g.fillRect(64, 53 + 120 - (int)(displayVolumeP1[1] * 1.2 / 100 * modeleCrossfinder.getVolumeP1() * modeleCrossfinder.getCoefVolumeP1()), 9, (int)(displayVolumeP1[1] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP1() * modeleCrossfinder.getVolumeP1()));
 
 		g.setColor(new Color(0xff171a));
-		g.fillRect(197, 53 + 120 - (int)(displayVolumeP2[0] * 1.2 / 100 * modeleCrossfinder.getVolumeP2() * modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[0] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP2() * modeleCrossfinder.getVolumeP2()));
-		g.fillRect(207, 53 + 120 - (int)(displayVolumeP2[1] * 1.2 / 100 * modeleCrossfinder.getVolumeP2() * modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[1] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP2() * modeleCrossfinder.getVolumeP2()));
+		g.fillRect(177, 53 + 120 - (int)(displayVolumeP2[0] * 1.2 / 100 * modeleCrossfinder.getVolumeP2() * modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[0] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP2() * modeleCrossfinder.getVolumeP2()));
+		g.fillRect(187, 53 + 120 - (int)(displayVolumeP2[1] * 1.2 / 100 * modeleCrossfinder.getVolumeP2() * modeleCrossfinder.getCoefVolumeP2()), 9, (int)(displayVolumeP2[1] * 1.2 / 100 * modeleCrossfinder.getCoefVolumeP2() * modeleCrossfinder.getVolumeP2()));
 
-		g.drawImage(imageDisplayVolumeOver, 34, 53, null);
-		g.drawImage(imageDisplayVolumeOver, 197, 53, null);
+		g.drawImage(imageDisplayVolumeOver, 54, 53, null);
+		g.drawImage(imageDisplayVolumeOver, 177, 53, null);
+
+		g.drawImage(getImageEQ(0, -5 , 0), 10, 10, null);
+	}
+
+	/**
+	 * 
+	 * @param state 0 : normal / 1 : hover / 2 : press
+	 * @param value entre -10 et 10
+	 * @param color 0 : blue / 1 : red
+	 * @return
+	 */
+	public BufferedImage getImageEQ(int state, int value, int color)
+	{
+		BufferedImage imageEQ = new BufferedImage(38, 38, BufferedImage.TRANSLUCENT);
+		Graphics g = imageEQ.getGraphics();
+		Graphics2D g2d = (Graphics2D)g;
+
+		if(color == 0)
+		{
+			g.setColor(new Color(0x28ACFF));
+		}
+		else
+		{
+			g.setColor(new Color(0xFF171A));
+		}
+
+		g.fillArc(0, 2, 37, 37, 90, -value*13);
+
+		g.drawImage(imageEQ2, 0, 0, null);
+
+		if(state == 0 || state == 1)
+		{
+			g.drawImage(imageEQ1, 7, 9, 7+24, 9+24, state*24, 0, 24 + state*24, 24, null);
+		}
+		else if(state == 2)
+		{
+			if(color == 0)
+			{
+				g.drawImage(imageEQ1, 7, 9, 7+24, 9+24, 2*24, 0, 24 + 2*24, 24, null);
+			}
+			else
+			{
+				g.drawImage(imageEQ1, 7, 9, 7+24, 9+24, 3*24, 0, 24 + 3*24, 24, null);
+			}
+		}
+
+		g2d.rotate(Math.toRadians(value*13), 19, 21);
+
+		g.drawImage(imageEQ3, 7, 9, 7+24, 9+24, 0, 0, 24, 24, null);
+
+		return imageEQ;
 	}
 }
