@@ -14,11 +14,11 @@ import Vue.VueCrossfinder;
 public class ControleCrossfinder implements MouseListener, MouseMotionListener, MouseWheelListener
 {
 	/**
-	 * VueCrossFinder controlée
+	 * VueCrossFinder contrôlée
 	 */
 	private VueCrossfinder vueCrossfinder;
 	/**
-	 * ModeleCrossFinder controlé
+	 * ModeleCrossFinder contrôlé
 	 */
 	private ModeleCrossfinder modeleCrossfinder;
 	/**
@@ -27,6 +27,7 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 	int blockOver = 0;
 	int blockSelected = 0;
 	int offset = 0;
+	int offset2 = 0;
 
 	/**
 	 * @param Controle
@@ -42,7 +43,8 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 	}
 
 	/**
-	 * controle de l'évènement appui sur la souris
+	 * Contrôle de l'évènement appui sur la souris
+	 * 
 	 * @param MouseEvent
 	 */
 
@@ -97,22 +99,97 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 			mouseDragged(e);
 			vueCrossfinder.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		}
+		else if(blockOver == 411) // Equalizer P1 Mid
+		{
+			if(e.getClickCount() > 1)
+			{
+				modeleCrossfinder.setEqualizerP1(0, 0);
+			}
+			else
+			{
+				offset = e.getX();
+				offset2 = e.getY();
+				blockSelected = 411;
+				modeleCrossfinder.setEqualizerP1(2, 2);
+			}
+		}
+		else if(blockOver == 412) // Equalizer P1 Bass
+		{
+			if(e.getClickCount() > 1)
+			{
+				modeleCrossfinder.setEqualizerP1(1, 0);
+			}
+			else
+			{
+				offset = e.getX();
+				offset2 = e.getY();
+				blockSelected = 412;
+				modeleCrossfinder.setEqualizerP1(3, 2);
+			}
+		}
+		else if(blockOver == 421) // Equalizer P2 Mid
+		{
+			if(e.getClickCount() > 1)
+			{
+				modeleCrossfinder.setEqualizerP2(0, 0);
+			}
+			else
+			{
+				offset = e.getX();
+				offset2 = e.getY();
+				blockSelected = 421;
+				modeleCrossfinder.setEqualizerP2(2, 2);
+			}
+		}
+		else if(blockOver == 422) // Equalizer P2 Bass
+		{
+			if(e.getClickCount() > 1)
+			{
+				modeleCrossfinder.setEqualizerP2(1, 0);
+			}
+			else
+			{
+				offset = e.getX();
+				offset2 = e.getY();
+				blockSelected = 422;
+				modeleCrossfinder.setEqualizerP2(3, 2);
+			}
+		}
 	}
 
 	/**
-	 * controle de l'évènement mouseReleased
+	 * Contrôle de l'évènement mouseReleased
+	 * 
 	 * @param MouseEvent
 	 */
-
 	public void mouseReleased(MouseEvent e)
 	{
+		if(blockSelected == 411) // Equalizer P1 Mid
+		{
+			modeleCrossfinder.setEqualizerP1(2, 1);
+		}
+		else if(blockSelected == 412) // Equalizer P1 Bass
+		{
+			modeleCrossfinder.setEqualizerP1(3, 1);
+		}
+		else if(blockSelected == 421) // Equalizer P2 Mid
+		{
+			modeleCrossfinder.setEqualizerP2(2, 1);
+		}
+		else if(blockSelected == 422) // Equalizer P2 Bass
+		{
+			modeleCrossfinder.setEqualizerP2(3, 1);
+		}
+
 		blockSelected = 0;
 		offset = 0;
+		offset2 = 0;
 		mouseMoved(e);
 	}
 
 	/**
 	 * controle de l'évènement mouseEntered
+	 * 
 	 * @param MouseEvent
 	 */
 	public void mouseEntered(MouseEvent e)
@@ -121,6 +198,7 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 
 	/**
 	 * controle de l'évènement mouseExited
+	 * 
 	 * @param MouseEvent
 	 */
 	public void mouseExited(MouseEvent e)
@@ -129,6 +207,7 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 
 	/**
 	 * controle de l'évènement mouseMoved
+	 * 
 	 * @param MouseEvent
 	 */
 	public void mouseMoved(MouseEvent e)
@@ -189,8 +268,61 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 					vueCrossfinder.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 			}
+			else if(7 <= x && x <= 45 && 50 <= y && y <= 88)
+			{
+				if(blockOver != 411) // Equializer P1 Mid
+				{
+					blockOver = 411;
+					vueCrossfinder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					modeleCrossfinder.setEqualizerP1(2, 1);
+				}
+			}
+			else if(7 <= x && x <= 45 && 110 <= y && y <= 148)
+			{
+				if(blockOver != 412) // Equializer P1 Bass
+				{
+					blockOver = 412;
+					vueCrossfinder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					modeleCrossfinder.setEqualizerP1(3, 1);
+				}
+			}
+			else if(203 <= x && x <= 241 && 50 <= y && y <= 88)
+			{
+				if(blockOver != 421) // Equializer P2 Mid
+				{
+					blockOver = 421;
+					vueCrossfinder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					modeleCrossfinder.setEqualizerP2(2, 1);
+				}
+			}
+			else if(203 <= x && x <= 241 && 110 <= y && y <= 148)
+			{
+				if(blockOver != 422) // Equializer P2 Bass
+				{
+					blockOver = 422;
+					vueCrossfinder.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					modeleCrossfinder.setEqualizerP2(3, 1);
+				}
+			}
 			else if(blockOver != 0)
 			{
+				if(blockOver == 411)
+				{
+					modeleCrossfinder.setEqualizerP1(2, 0);
+				}
+				else if(blockOver == 412)
+				{
+					modeleCrossfinder.setEqualizerP1(3, 0);
+				}
+				else if(blockOver == 421)
+				{
+					modeleCrossfinder.setEqualizerP2(2, 0);
+				}
+				else if(blockOver == 422)
+				{
+					modeleCrossfinder.setEqualizerP2(3, 0);
+				}
+
 				blockOver = 0;
 				vueCrossfinder.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
@@ -199,6 +331,7 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 
 	/**
 	 * controle de l'évènement mouseDragged
+	 * 
 	 * @param MouseEvent
 	 */
 	public void mouseDragged(MouseEvent e)
@@ -229,10 +362,39 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 				modeleCrossfinder.setCrossfinder(2 * (x + offset - 116));
 			}
 		}
+		else if(blockSelected == 411)
+		{
+			modeleCrossfinder.setEqualizerP1(0, modeleCrossfinder.getEqualizerP1()[0] + (e.getX() - offset) + (offset2 - e.getY()));
+
+			offset = e.getX();
+			offset2 = e.getY();
+		}
+		else if(blockSelected == 412)
+		{
+			modeleCrossfinder.setEqualizerP1(1, modeleCrossfinder.getEqualizerP1()[1] + (e.getX() - offset) + (offset2 - e.getY()));
+
+			offset = e.getX();
+			offset2 = e.getY();
+		}
+		else if(blockSelected == 421)
+		{
+			modeleCrossfinder.setEqualizerP2(0, modeleCrossfinder.getEqualizerP2()[0] + (e.getX() - offset) + (offset2 - e.getY()));
+
+			offset = e.getX();
+			offset2 = e.getY();
+		}
+		else if(blockSelected == 422)
+		{
+			modeleCrossfinder.setEqualizerP2(1, modeleCrossfinder.getEqualizerP2()[1] + (e.getX() - offset) + (offset2 - e.getY()));
+
+			offset = e.getX();
+			offset2 = e.getY();
+		}
 	}
 
 	/**
 	 * controle de l'évènement mouseWheelMoved
+	 * 
 	 * @param MouseEvent
 	 */
 	public void mouseWheelMoved(MouseWheelEvent e)
@@ -248,6 +410,22 @@ public class ControleCrossfinder implements MouseListener, MouseMotionListener, 
 		else if(blockOver == 3 || blockOver == 31)
 		{
 			modeleCrossfinder.setCrossfinder(modeleCrossfinder.getCrossfinder() - 8 * e.getWheelRotation());
+		}
+		else if(blockOver == 411)
+		{
+			modeleCrossfinder.setEqualizerP1(0, modeleCrossfinder.getEqualizerP1()[0] - 5*e.getWheelRotation());
+		}
+		else if(blockOver == 412)
+		{
+			modeleCrossfinder.setEqualizerP1(1, modeleCrossfinder.getEqualizerP1()[1] - 5*e.getWheelRotation());
+		}
+		else if(blockOver == 421)
+		{
+			modeleCrossfinder.setEqualizerP2(0, modeleCrossfinder.getEqualizerP2()[0] - 5*e.getWheelRotation());
+		}
+		else if(blockOver == 422)
+		{
+			modeleCrossfinder.setEqualizerP2(1, modeleCrossfinder.getEqualizerP2()[1] - 5*e.getWheelRotation());
 		}
 	}
 }

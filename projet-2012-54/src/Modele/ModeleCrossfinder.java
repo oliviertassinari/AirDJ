@@ -25,6 +25,15 @@ public class ModeleCrossfinder
 	private int[] displayVolumeP2 = {0, 0};
 
 	/**
+	 * index 0 : Mid
+	 * index 1 : Bass
+	 * index 2 : Mid button
+	 * index 3 : Bass button
+	 */
+	private int[] equalizerP1 = {0, 0, 0, 0};
+	private int[] equalizerP2 = {0, 0, 0, 0};
+
+	/**
 	 * constructeur
 	 * @param Modele
 	 */
@@ -123,6 +132,38 @@ public class ModeleCrossfinder
 		modele.getVue().getVueCrossfinder().repaint();
 	}
 
+	public void setEqualizerP1(int index, int value)
+	{
+		if((index == 0 || index == 1) && value > 50)
+		{
+			value = 50;
+		}
+		else if((index == 0 || index == 1) && value < -50)
+		{
+			value = -50;
+		}
+
+		equalizerP1[index] = value;
+
+		modele.getVue().getVueCrossfinder().repaint();
+	}
+
+	public void setEqualizerP2(int index, int value)
+	{
+		if((index == 0 || index == 1) && value > 50)
+		{
+			value = 50;
+		}
+		else if((index == 0 || index == 1) && value < -50)
+		{
+			value = -50;
+		}
+
+		equalizerP2[index] = value;
+
+		modele.getVue().getVueCrossfinder().repaint();
+	}
+
 	/**
 	 * @return float le coefficient à appliquer au volume de la piste 1 en fonction de la valeur du crossfinder
 	 */
@@ -191,5 +232,15 @@ public class ModeleCrossfinder
 	public int[] getDisplayVolumeP2()
 	{
 		return displayVolumeP2;
+	}
+
+	public int[] getEqualizerP1()
+	{
+		return equalizerP1;
+	}
+
+	public int[] getEqualizerP2()
+	{
+		return equalizerP2;
 	}
 }

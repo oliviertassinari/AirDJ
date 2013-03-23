@@ -119,9 +119,16 @@ public class VueCrossfinder extends JPanel
 
 		// Texte
 		g.setFont(new Font("sansserif", Font.PLAIN, 8));
-		g.setColor(new Color(0x908F8D));
+		g.setColor(new Color(0xaaaaaa));
 		g.drawString("VOLUME", 88, 63);
 		g.drawString("VOLUME", 128, 63);
+
+		g.setFont(new Font("sansserif", Font.PLAIN, 10));
+		g.drawString("Mid", 18, 97);
+		g.drawString("Bass", 15, 156);
+	
+		g.drawString("Mid", 213, 97);
+		g.drawString("Bass", 210, 156);
 
 		// Images
 		Image imageSetVolumeGrid = new ImageIcon(getClass().getResource("/image/volumeGrid.png")).getImage();
@@ -152,6 +159,8 @@ public class VueCrossfinder extends JPanel
 		int volumeP2 = modeleCrossfinder.getVolumeP2();
 		int[] displayVolumeP1 = modeleCrossfinder.getDisplayVolumeP1();
 		int[] displayVolumeP2 = modeleCrossfinder.getDisplayVolumeP2();
+		int[] equalizerP1 = modeleCrossfinder.getEqualizerP1();
+		int[] equalizerP2 = modeleCrossfinder.getEqualizerP2();
 
 		g.drawImage(imageBackground, 0, 0, this);
 
@@ -173,13 +182,18 @@ public class VueCrossfinder extends JPanel
 		g.drawImage(imageDisplayVolumeOver, 54, 53, null);
 		g.drawImage(imageDisplayVolumeOver, 177, 53, null);
 
-		g.drawImage(getImageEQ(0, -5 , 0), 10, 10, null);
+		// Bouton Equalizer
+		g.drawImage(getImageEQ(equalizerP1[2], equalizerP1[0], 0), 7, 50, null);
+		g.drawImage(getImageEQ(equalizerP1[3], equalizerP1[1], 0), 7, 110, null);
+
+		g.drawImage(getImageEQ(equalizerP2[2], equalizerP2[0], 1), 203, 50, null);
+		g.drawImage(getImageEQ(equalizerP2[3], equalizerP2[1], 1), 203, 110, null);
 	}
 
 	/**
 	 * 
 	 * @param state 0 : normal / 1 : hover / 2 : press
-	 * @param value entre -10 et 10
+	 * @param value entre -50 et 50
 	 * @param color 0 : blue / 1 : red
 	 * @return
 	 */
@@ -188,6 +202,10 @@ public class VueCrossfinder extends JPanel
 		BufferedImage imageEQ = new BufferedImage(38, 38, BufferedImage.TRANSLUCENT);
 		Graphics g = imageEQ.getGraphics();
 		Graphics2D g2d = (Graphics2D)g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+		g.setColor(new Color(0x2F2F30));
+		g.fillArc(0, 2, 37, 37, 0, 380);
 
 		if(color == 0)
 		{
@@ -198,7 +216,7 @@ public class VueCrossfinder extends JPanel
 			g.setColor(new Color(0xFF171A));
 		}
 
-		g.fillArc(0, 2, 37, 37, 90, -value*13);
+		g.fillArc(0, 2, 37, 37, 90, -(value*140)/50);
 
 		g.drawImage(imageEQ2, 0, 0, null);
 
@@ -218,7 +236,7 @@ public class VueCrossfinder extends JPanel
 			}
 		}
 
-		g2d.rotate(Math.toRadians(value*13), 19, 21);
+		g2d.rotate(Math.toRadians((value*140)/50), 19, 21);
 
 		g.drawImage(imageEQ3, 7, 9, 7+24, 9+24, 0, 0, 24, 24, null);
 
