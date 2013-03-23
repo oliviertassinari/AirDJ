@@ -141,6 +141,11 @@ public class VuePlay extends JPanel
 		// Texte
 		g.setFont(new Font("sansserif", Font.BOLD, 17));
 		g.setColor(Color.WHITE);
+
+		if(artist.length() > 30)
+		{
+			artist = artist.substring(0, 29) + "...";
+		}
 		g.drawString(artist, 8, 23);
 
 		if(bpm == -1)
@@ -159,6 +164,10 @@ public class VuePlay extends JPanel
 
 		g.setFont(new Font("sansserif", Font.BOLD, 15));
 		g.setColor(new Color(0xD1D3BA));
+		if(title.length() > 30)
+		{
+			title = title.substring(0, 29) + "...";
+		}
 		g.drawString(title, 8, 40);
 
 		g.setFont(new Font("sansserif", Font.BOLD, 12));
