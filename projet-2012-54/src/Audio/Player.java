@@ -84,7 +84,7 @@ public class Player implements Runnable, IPlayer
 	 */
 	public void run()
 	{
-		//Filtre RIF, bande passante 200Hz -> 20 000Hz -> reduit les Bass
+		//Filtre RIF, bande passante 200Hz -> 20 000Hz -> Réduit les Bass
 		double[] aLowerBass = new double[49];
 		aLowerBass[0] =	-0.008787861;
 		aLowerBass[1] =	-0.0099598095;
@@ -136,59 +136,83 @@ public class Player implements Runnable, IPlayer
 		aLowerBass[47] =	-0.0099598095;
 		aLowerBass[48] =	-0.008787861;
 
-		double[] aLower = new double[49];
-		
+		//Filtre RIF, bande passante 200Hz -> 2 000Hz -> Réduit Mid
+		double[] aLowerMid = {
+				-3.53469083669411E-003,
+				-2.04417403552522E-003,
+				7.18204584999788E-004,
+				4.60624810386546E-003,
+				9.35489283788638E-003,
+				1.45936768599084E-002,
+				1.98698234934287E-002,
+				2.46794719123869E-002,
+				2.85048530392627E-002,
+				3.08546366989605E-002,
+				3.13043178066969E-002,
+				2.95334005589486E-002,
+				2.53562951020205E-002,
+				1.87442539225236E-002,
+				9.83631643083466E-003,
+				-1.06194856652329E-003,
+				-1.34921758849029E-002,
+				-2.68687081513636E-002,
+				-4.05142277562520E-002,
+				-5.37030498843225E-002,
+				-6.57089710363407E-002,
+				-7.58541669662924E-002,
+				-8.35555068164655E-002,
+				-8.83648091612411E-002,
+				9.10000000000000E-001,
+				-8.83648091612411E-002,
+				-8.35555068164655E-002,
+				-7.58541669662924E-002,
+				-6.57089710363407E-002,
+				-5.37030498843225E-002,
+				-4.05142277562520E-002,
+				-2.68687081513636E-002,
+				-1.34921758849029E-002,
+				-1.06194856652329E-003,
+				9.83631643083466E-003,
+				1.87442539225236E-002,
+				2.53562951020205E-002,
+				2.95334005589486E-002,
+				3.13043178066969E-002,
+				3.08546366989605E-002,
+				2.85048530392627E-002,
+				2.46794719123869E-002,
+				1.98698234934287E-002,
+				1.45936768599084E-002,
+				9.35489283788638E-003,
+				4.60624810386546E-003,
+				7.18204584999788E-004,
+				-2.04417403552522E-003,
+				-3.53469083669411E-003
+		};
+
 		//Filtre RIF, bande passante 20Hz -> 200Hz
-		double[] aHigerBass = new double[49];
-		aHigerBass[0] =	-0.01078301;
-		aHigerBass[1] =	-0.012320813;
-		aHigerBass[2] =	-0.013392618;
-		aHigerBass[3] =	-0.013906638;
-		aHigerBass[4] =	-0.013785316;
-		aHigerBass[5] =	-0.012968764;
-		aHigerBass[6] =	-0.0114176655;
-		aHigerBass[7] =	-0.0091155125;
-		aHigerBass[8] =	-0.006070085;
-		aHigerBass[9] =	-0.002314086;
-		aHigerBass[10] =	0.002095092;
-		aHigerBass[11] =	0.007076491;
-		aHigerBass[12] =	0.012527576;
-		aHigerBass[13] =	0.018327016;
-		aHigerBass[14] =	0.024338216;
-		aHigerBass[15] =	0.03041341;
-		aHigerBass[16] =	0.036398225;
-		aHigerBass[17] =	0.0421366;
-		aHigerBass[18] =	0.04747575;
-		aHigerBass[19] =	0.05227117;
-		aHigerBass[20] =	0.05639134;
-		aHigerBass[21] =	0.059722103;
-		aHigerBass[22] =	0.062170453;
-		aHigerBass[23] =	0.06366763;
-		aHigerBass[24] =	0.06417143;
-		aHigerBass[25] =	0.06366763;
-		aHigerBass[26] =	0.062170453;
-		aHigerBass[27] =	0.059722103;
-		aHigerBass[28] =	0.05639134;
-		aHigerBass[29] =	0.05227117;
-		aHigerBass[30] =	0.04747575;
-		aHigerBass[31] =	0.0421366;
-		aHigerBass[32] =	0.036398225;
-		aHigerBass[33] =	0.03041341;
-		aHigerBass[34] =	0.024338216;
-		aHigerBass[35] =	0.018327016;
-		aHigerBass[36] =	0.012527576;
-		aHigerBass[37] =	0.007076491;
-		aHigerBass[38] =	0.002095092;
-		aHigerBass[39] =	-0.002314086;
-		aHigerBass[40] =	-0.006070085;
-		aHigerBass[41] =	-0.0091155125;
-		aHigerBass[42] =	-0.0114176655;
-		aHigerBass[43] =	-0.012968764;
-		aHigerBass[44] =	-0.013785316;
-		aHigerBass[45] =	-0.013906638;
-		aHigerBass[46] =	-0.013392618;
-		aHigerBass[47] =	-0.012320813;
-		aHigerBass[48] =	-0.01078301;
+		double[] aHigerBass = {
+				-0.06199343012362483,
+				-0.12734281024612137,
+				-0.19306673273335834,
+				-0.19836144344003853,
+				-0.07802111578023155,
+				0.21473324659324544,
+				0.6787964504910906,
+				1.2496950611197415,
+				1.8091490755346467,
+				2.2192872723608876,
+				3.3700196522744337,
+				2.2192872723608876,
+				1.8091490755346467,
+				1.2496950611197415,
+				0.6787964504910906,
+				0.21473324659324544,
+				-0.07802111578023155,
+				-0.19836144344003853,
+				-0.19306673273335834,
+				-0.12734281024612137,
+				-0.06199343012362483
+		};
 
 		try
 		{	
@@ -245,7 +269,7 @@ public class Player implements Runnable, IPlayer
 								valueLeft += ((double)(50+bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
 								valueRight += ((double)(50+bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
 
-								for(int j = 1; j < 49; j++)
+								for(int j = 0; j < 49; j++)
 								{
 									valueLeft += ((-(double)bass)/50)*aLowerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
 									valueRight += ((-(double)bass)/50)*aLowerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
@@ -256,16 +280,33 @@ public class Player implements Runnable, IPlayer
 								valueLeft += ((double)(bass-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
 								valueRight += ((double)(bass-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
 
-								valueLeft += 0.5*(((double)bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
-								valueRight += 0.5*(((double)bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
-
-								for(int j = 1; j < 49; j++)
+								for(int j = 0; j < 21; j++)
 								{
-									valueLeft += 0.5*(((double)bass)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
-									valueRight += 0.5*(((double)bass)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
+									valueLeft += (((double)bass)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+									valueRight += (((double)bass)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
 								}
-								
-								System.out.println((((double)bass)/50));
+							}
+							else if(mid < 0)
+							{
+								valueLeft += ((double)(50+mid)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+								valueRight += ((double)(50+mid)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
+
+								for(int j = 0; j < 49; j++)
+								{
+									valueLeft += ((-(double)mid)/50)*aLowerMid[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+									valueRight += ((-(double)mid)/50)*aLowerMid[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
+								}
+							}
+							else if(mid > 0)
+							{
+								valueLeft += ((double)(mid-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+								valueRight += ((double)(mid-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
+
+								for(int j = 0; j < 49; j++)
+								{
+									valueLeft += (((double)mid)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+									valueRight += (((double)mid)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
+								}
 							}
 							else
 							{
