@@ -39,6 +39,10 @@ public interface IPlayer
 	 */
 	public void setPosition(float position);
 
+	public void setMid(int value);
+	
+	public void setBass(int value);
+
 	/**
 	 * 
 	 * @return volume of the current 0.05s played (0-left  1-right)

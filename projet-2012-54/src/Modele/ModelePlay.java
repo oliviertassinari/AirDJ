@@ -283,6 +283,22 @@ public class ModelePlay
 		}
 	}
 
+	public void setBass(int value)
+	{
+		if(player != null)
+		{
+			player.setBass(value);
+		}
+	}
+
+	public void setMid(int value)
+	{
+		if(player != null)
+		{
+			player.setMid(value);
+		}
+	}
+
 	/**
 	 * 
 	 * @return int[]

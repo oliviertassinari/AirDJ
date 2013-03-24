@@ -142,6 +142,15 @@ public class ModeleCrossfinder
 		{
 			value = -50;
 		}
+		
+		if(index == 0) //Mid
+		{
+			modele.getModelePlayP1().setMid(value);
+		}
+		else if(index == 1) //Bass
+		{
+			modele.getModelePlayP1().setBass(value);
+		}
 
 		equalizerP1[index] = value;
 
@@ -157,6 +166,15 @@ public class ModeleCrossfinder
 		else if((index == 0 || index == 1) && value < -50)
 		{
 			value = -50;
+		}
+
+		if(index == 0) //Mid
+		{
+			modele.getModelePlayP2().setMid(value);
+		}
+		else if(index == 1) //Bass
+		{
+			modele.getModelePlayP2().setBass(value);
 		}
 
 		equalizerP2[index] = value;

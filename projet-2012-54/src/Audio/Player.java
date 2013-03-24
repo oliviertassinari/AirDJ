@@ -76,19 +76,128 @@ public class Player implements Runnable, IPlayer
 	 */
 	private int byteFromBeginning;
 	
+	private int bass = 0;
+	private int mid = 0;
+	
 	/** 
 	 * As Thread start he calls this method
 	 */
 	public void run()
 	{
+		//Filtre RIF, bande passante 200Hz -> 20 000Hz -> reduit les Bass
+		double[] aLowerBass = new double[49];
+		aLowerBass[0] =	-0.008787861;
+		aLowerBass[1] =	-0.0099598095;
+		aLowerBass[2] =	-0.011140668;
+		aLowerBass[3] =	-0.01232451;
+		aLowerBass[4] =	-0.01350546;
+		aLowerBass[5] =	-0.014677407;
+		aLowerBass[6] =	-0.015834318;
+		aLowerBass[7] =	-0.016970146;
+		aLowerBass[8] =	-0.018078908;
+		aLowerBass[9] =	-0.019154703;
+		aLowerBass[10] =	-0.020191766;
+		aLowerBass[11] =	-0.02118451;
+		aLowerBass[12] =	-0.022127545;
+		aLowerBass[13] =	-0.023015667;
+		aLowerBass[14] =	-0.023844099;
+		aLowerBass[15] =	-0.024608238;
+		aLowerBass[16] =	-0.025303854;
+		aLowerBass[17] =	-0.02592709;
+		aLowerBass[18] =	-0.026474472;
+		aLowerBass[19] =	-0.026942857;
+		aLowerBass[20] =	-0.027329797;
+		aLowerBass[21] =	-0.027633052;
+		aLowerBass[22] =	-0.027850812;
+		aLowerBass[23] =	-0.027981985;
+		aLowerBass[24] =	0.88091856;
+		aLowerBass[25] =	-0.027981985;
+		aLowerBass[26] =	-0.027850812;
+		aLowerBass[27] =	-0.027633052;
+		aLowerBass[28] =	-0.027329797;
+		aLowerBass[29] =	-0.026942857;
+		aLowerBass[30] =	-0.026474472;
+		aLowerBass[31] =	-0.02592709;
+		aLowerBass[32] =	-0.025303854;
+		aLowerBass[33] =	-0.024608238;
+		aLowerBass[34] =	-0.023844099;
+		aLowerBass[35] =	-0.023015667;
+		aLowerBass[36] =	-0.022127545;
+		aLowerBass[37] =	-0.02118451;
+		aLowerBass[38] =	-0.020191766;
+		aLowerBass[39] =	-0.019154703;
+		aLowerBass[40] =	-0.018078908;
+		aLowerBass[41] =	-0.016970146;
+		aLowerBass[42] =	-0.015834318;
+		aLowerBass[43] =	-0.014677407;
+		aLowerBass[44] =	-0.01350546;
+		aLowerBass[45] =	-0.01232451;
+		aLowerBass[46] =	-0.011140668;
+		aLowerBass[47] =	-0.0099598095;
+		aLowerBass[48] =	-0.008787861;
+
+		double[] aLower = new double[49];
+		
+		//Filtre RIF, bande passante 20Hz -> 200Hz
+		double[] aHigerBass = new double[49];
+		aHigerBass[0] =	-0.01078301;
+		aHigerBass[1] =	-0.012320813;
+		aHigerBass[2] =	-0.013392618;
+		aHigerBass[3] =	-0.013906638;
+		aHigerBass[4] =	-0.013785316;
+		aHigerBass[5] =	-0.012968764;
+		aHigerBass[6] =	-0.0114176655;
+		aHigerBass[7] =	-0.0091155125;
+		aHigerBass[8] =	-0.006070085;
+		aHigerBass[9] =	-0.002314086;
+		aHigerBass[10] =	0.002095092;
+		aHigerBass[11] =	0.007076491;
+		aHigerBass[12] =	0.012527576;
+		aHigerBass[13] =	0.018327016;
+		aHigerBass[14] =	0.024338216;
+		aHigerBass[15] =	0.03041341;
+		aHigerBass[16] =	0.036398225;
+		aHigerBass[17] =	0.0421366;
+		aHigerBass[18] =	0.04747575;
+		aHigerBass[19] =	0.05227117;
+		aHigerBass[20] =	0.05639134;
+		aHigerBass[21] =	0.059722103;
+		aHigerBass[22] =	0.062170453;
+		aHigerBass[23] =	0.06366763;
+		aHigerBass[24] =	0.06417143;
+		aHigerBass[25] =	0.06366763;
+		aHigerBass[26] =	0.062170453;
+		aHigerBass[27] =	0.059722103;
+		aHigerBass[28] =	0.05639134;
+		aHigerBass[29] =	0.05227117;
+		aHigerBass[30] =	0.04747575;
+		aHigerBass[31] =	0.0421366;
+		aHigerBass[32] =	0.036398225;
+		aHigerBass[33] =	0.03041341;
+		aHigerBass[34] =	0.024338216;
+		aHigerBass[35] =	0.018327016;
+		aHigerBass[36] =	0.012527576;
+		aHigerBass[37] =	0.007076491;
+		aHigerBass[38] =	0.002095092;
+		aHigerBass[39] =	-0.002314086;
+		aHigerBass[40] =	-0.006070085;
+		aHigerBass[41] =	-0.0091155125;
+		aHigerBass[42] =	-0.0114176655;
+		aHigerBass[43] =	-0.012968764;
+		aHigerBass[44] =	-0.013785316;
+		aHigerBass[45] =	-0.013906638;
+		aHigerBass[46] =	-0.013392618;
+		aHigerBass[47] =	-0.012320813;
+		aHigerBass[48] =	-0.01078301;
+
 		try
 		{	
 			byte bytesPrev[] = null;
-			byte bytes[] = new byte[5*frameSize];
+			byte bytes[] = new byte[50*frameSize];
 
 			synchronized(this)
 			{
-				while(((audioInputStream.read(bytes, 0, 5*frameSize)) != -1))
+				while(((audioInputStream.read(bytes, 0, 50*frameSize)) != -1))
 				{
 					while(status != 1)
 					{
@@ -111,7 +220,7 @@ public class Player implements Runnable, IPlayer
 						line.start();
 					}
 
-					byteFromBeginning += 5*frameSize;
+					byteFromBeginning += 50*frameSize;
 					int pos = (int) ((byteFromBeginning*20)/(frameSize*frameRate));
 					if (pos > 7) pos -= 7;
 					currentVolume[0] = volumeArray[0][pos];
@@ -119,24 +228,49 @@ public class Player implements Runnable, IPlayer
 
 					if(bytesPrev != null)
 					{
-						byte[] bytesBoth = new byte[bytes.length + bytesPrev.length];
+						byte[] bytesBoth = new byte[bytes.length*2];
 						System.arraycopy(bytesPrev, 0, bytesBoth, 0, bytes.length);
-						System.arraycopy(bytes, 0, bytesBoth, bytes.length, bytesPrev.length);
+						System.arraycopy(bytes, 0, bytesBoth, bytes.length, bytes.length);
 
-						bytesPrev = bytes;
+						bytesPrev = new byte[bytes.length];
+						System.arraycopy(bytes, 0, bytesPrev, 0, bytes.length);
 
-						//double[] a = { 0.12944685, 0.23299822, 0.27510983, 0.23299822, 0.12944685 };
-						double[] a = { 1, 0, 0, 0, 0 };
-
-						for(int i = 0; i < 5; i++)
+						for(int i = 0; i < 50; i++)
 						{
 							double valueLeft = 0;
 							double valueRight = 0;
 
-							for(int j = 0; j < 5; j++)
+							if(bass < 0)
 							{
-								valueLeft += a[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
-								valueRight += a[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+								valueLeft += ((double)(50+bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+								valueRight += ((double)(50+bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
+
+								for(int j = 1; j < 49; j++)
+								{
+									valueLeft += ((-(double)bass)/50)*aLowerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+									valueRight += ((-(double)bass)/50)*aLowerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
+								}
+							}
+							else if(bass > 0)
+							{
+								valueLeft += ((double)(bass-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+								valueRight += ((double)(bass-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
+
+								valueLeft += 0.5*(((double)bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+								valueRight += 0.5*(((double)bass)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
+
+								for(int j = 1; j < 49; j++)
+								{
+									valueLeft += 0.5*(((double)bass)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
+									valueRight += 0.5*(((double)bass)/50)*aHigerBass[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
+								}
+								
+								System.out.println((((double)bass)/50));
+							}
+							else
+							{
+								valueLeft += byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+								valueRight += byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
 							}
 
 							byte[] resLeft = shortToByte((short)valueLeft);
@@ -147,11 +281,15 @@ public class Player implements Runnable, IPlayer
 							bytes[4*i+2] = resRight[0];
 							bytes[4*i+3] = resRight[1];
 						}
-					}					
+					}
+					else
+					{
+						bytesPrev = bytes;
+					}
 
 					line.write(bytes, 0, bytes.length);
 				}
-	
+
 				line.drain();
 				line.stop();
 				line.close();
@@ -167,11 +305,11 @@ public class Player implements Runnable, IPlayer
 	{
 		if(audioFormat.isBigEndian())
 		{
-			return (short)((byte1 & 0xFF) | (byte2 << 8));
+			return (short)((byte2 & 0xFF) | (byte1 << 8));
 		}
 		else
 		{
-			return (short)((byte2 & 0xFF) | (byte1 << 8));
+			return (short)((byte1 & 0xFF) | (byte2 << 8));
 		}
 	}
 
@@ -181,16 +319,26 @@ public class Player implements Runnable, IPlayer
 
 		if(audioFormat.isBigEndian())
 		{
-			bytes[0] = (byte)(value & 0xff);
-			bytes[1] = (byte)((value >> 8) & 0xff);
-		}
-		else
-		{
 			bytes[1] = (byte)(value & 0xff);
 			bytes[0] = (byte)((value >> 8) & 0xff);
 		}
+		else
+		{
+			bytes[0] = (byte)(value & 0xff);
+			bytes[1] = (byte)((value >> 8) & 0xff);
+		}
 
 		return bytes;
+	}
+
+	public void setMid(int value)
+	{
+		mid = value;
+	}
+
+	public void setBass(int value)
+	{
+		bass = value;
 	}
 
 	/** 
