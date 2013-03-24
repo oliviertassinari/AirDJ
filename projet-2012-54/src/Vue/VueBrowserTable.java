@@ -135,7 +135,7 @@ public class VueBrowserTable extends JPanel
 
 			for(int i = 0; i < listFiles.length; i++)
 			{
-				if(listFiles[i].isFile() && getExtension(listFiles[i].getName()).equals(".wav"))
+				if(listFiles[i].isFile() && getExtension(listFiles[i].getName()).equals(".wav") || getExtension(listFiles[i].getName()).equals(".mp3"))
 				{
 					pathList.add(listFiles[i].getPath());
 				}

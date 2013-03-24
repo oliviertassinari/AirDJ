@@ -84,8 +84,8 @@ public class ModelePlay
 			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP2() * modele.getModeleCrossfinder().getCoefVolumeP2()));
 		}
 
-		title = file.getName();
-		artist = file.getName();
+		title = player.getTitle();
+		artist = player.getArtist();
 
 		total = Math.round(player.getLength() * 10);
 

@@ -6,5 +6,8 @@
 	<classpathentry kind="lib" path="lib/javacv-windows-x86_64.jar"/>
 	<classpathentry kind="lib" path="lib/javacv.jar"/>
 	<classpathentry kind="lib" path="lib/org.OpenNI.jar"/>
+	<classpathentry kind="lib" path="lib/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/mp3spi1.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/tritonus_share.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

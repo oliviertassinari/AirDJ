@@ -39,6 +39,7 @@ public class Filler implements Runnable
 			File file = player.getFile();
 			AudioFormat af = player.getAudioFormat();
 			AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+			ais = AudioSystem.getAudioInputStream(af, ais);
 
 			int bytesDemiDixiemeSeconde = (int)(frameSize * frameRate / 20);
 			byte bytes[] = new byte[bytesDemiDixiemeSeconde];

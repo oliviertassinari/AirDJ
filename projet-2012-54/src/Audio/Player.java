@@ -2,8 +2,13 @@ package Audio;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
 
 import javax.sound.sampled.*;
+
+import org.tritonus.share.sampled.TAudioFormat;
+import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 import Modele.ModelePlay;
 
@@ -503,7 +508,64 @@ public class Player implements Runnable, IPlayer
 	 */
 	public Player(String fileName)
 	{
-		status = 0;
+		/*try
+		{
+			/*URL url = new URL("http://ec-media.soundcloud.com/K6hjhqw6FEw6.128.mp3?ff61182e3c2ecefa438cd02102d0e385713f0c1faf3b0339595665fe0e00e810cdd694f30d569d6876f50c8cf5a9c2760f3d3ffd4b9dfcd54b4730efa6a58473027fcbfe28&AWSAccessKeyId=AKIAJ4IAZE5EOI7PA7VQ&Expires=1364153418&Signature=zrsobEfjmAY9Z42dGNBDbWbfLpA%3D");
+            InputStream inputStream = url.openStream();
+            AdvancedPlayer pl = new AdvancedPlayer(inputStream);
+            pl.play();
+            			
+			file = new File("E:/Musique/2012/Daughter - Medicine (Sound Remedy Remix).mp3");
+			FileInputStream fileInputStream = new FileInputStream(file);
+			AdvancedPlayer pl = new AdvancedPlayer(fileInputStream);
+            pl.play();
+		}
+		catch(IOException e1)
+		{
+			e1.printStackTrace();
+		}*/
+		
+		/*AudioInputStream din = null;
+		try {
+			File file = new File("E:/Musique/2012/Daughter - Medicine (Sound Remedy Remix).mp3");
+			AudioInputStream in = AudioSystem.getAudioInputStream(file);
+			AudioFormat baseFormat = in.getFormat();
+			AudioFormat decodedFormat = new AudioFormat(
+					AudioFormat.Encoding.PCM_SIGNED,
+					baseFormat.getSampleRate(), 16, baseFormat.getChannels(),
+					baseFormat.getChannels() * 2, baseFormat.getSampleRate(),
+					false);
+			din = AudioSystem.getAudioInputStream(decodedFormat, in);
+			DataLine.Info info = new DataLine.Info(SourceDataLine.class, decodedFormat);
+			SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
+			if(line != null) {
+				line.open(decodedFormat);
+				byte[] data = new byte[4096];
+				// Start
+				line.start();
+				
+				int nBytesRead;
+				while ((nBytesRead = din.read(data, 0, data.length)) != -1) {	
+					line.write(data, 0, nBytesRead);
+				}
+				// Stop
+				line.drain();
+				line.stop();
+				line.close();
+				din.close();
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(din != null) {
+				try { din.close(); } catch(IOException e) { }
+			}
+		}
+		*/
+
 		file = new File(fileName);
 		byteFromBeginning = 0;
 		runner = new Thread(this, "player");
@@ -512,6 +574,14 @@ public class Player implements Runnable, IPlayer
 			//Initializing music player
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat();
+
+			audioFormat = new AudioFormat(
+					AudioFormat.Encoding.PCM_SIGNED,
+					audioFormat.getSampleRate(), 16, audioFormat.getChannels(),
+					audioFormat.getChannels() * 2, audioFormat.getSampleRate(),
+					false);
+			audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
+
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			line = (SourceDataLine) AudioSystem.getLine(info);
 			line.open(audioFormat);
@@ -781,6 +851,72 @@ public class Player implements Runnable, IPlayer
 	public AudioFormat getAudioFormat()
 	{
 		return audioFormat;
+	}
+
+	public String getTitle()
+	{
+		String title = "";
+
+		try
+		{
+			AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(file);
+
+			if(baseFileFormat instanceof TAudioFileFormat)
+			{
+			    Map properties = ((TAudioFileFormat)baseFileFormat).properties();
+
+			    title = (String) properties.get("title");
+			}
+		}
+		catch(UnsupportedAudioFileException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		if(title == "")
+		{
+			title = file.getName();
+			title = title.substring(0, title.lastIndexOf("."));
+		}
+
+		return title;
+	}
+
+	public String getArtist()
+	{
+		String artist = "";
+
+		try
+		{
+			AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(file);
+
+			if(baseFileFormat instanceof TAudioFileFormat)
+			{
+			    Map properties = ((TAudioFileFormat)baseFileFormat).properties();
+
+			    artist = (String) properties.get("author");
+			}
+		}
+		catch(UnsupportedAudioFileException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		if(artist == "")
+		{
+			artist = file.getName();
+			artist = artist.substring(0, artist.lastIndexOf("."));
+		}
+
+		return artist;
 	}
 
 	public void stop()
