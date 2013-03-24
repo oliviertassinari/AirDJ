@@ -587,7 +587,7 @@ public class Player implements Runnable, IPlayer
 			line.open(audioFormat);
 			frameSize = audioFormat.getFrameSize();
 	 		frameRate = audioFormat.getFrameRate();
-	 		volumeArray = new int[2][((int) (file.length()/(frameSize*frameRate)*20))+1];
+	 		volumeArray = new int[2][(int)((getLength()*20)+1)];
 	 		
 	 		//Filling volumeArray
 			filler = new Filler(this);
@@ -695,6 +695,7 @@ public class Player implements Runnable, IPlayer
 
 			AudioInputStream audioInputStream2 = audioInputStream;
 			audioInputStream = AudioSystem.getAudioInputStream(file);
+			audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
 			audioInputStream.skip(n);
 
 			audioInputStream2.close();
@@ -733,11 +734,33 @@ public class Player implements Runnable, IPlayer
 
 	/**
 	 * 
-	 * @return total length of the file
+	 * @return total length of the file in seconds
 	 */
 	public float getLength()
 	{
-	    return file.length()/(frameSize*frameRate);
+		float length = file.length()/(frameSize*frameRate);
+		
+		try
+		{
+			AudioFileFormat baseFileFormat = AudioSystem.getAudioFileFormat(file);
+
+			if(baseFileFormat instanceof TAudioFileFormat)
+			{
+			    Map properties = ((TAudioFileFormat)baseFileFormat).properties();
+
+			    length = ((long)properties.get("duration"))/1000000f;
+			}
+		}
+		catch(UnsupportedAudioFileException e)
+		{
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		return length;
 	}
 
 	/**

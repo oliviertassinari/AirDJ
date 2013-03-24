@@ -25,6 +25,10 @@ public class ModelePlay
 	private double bpm = 0;
 	private int bass = 0;
 	private int mid = 0;
+
+	/**
+	 * longueur du morceau en dixième de secondes
+	 */
 	private int total = 0;
 	private int current = 0;
 	private int state = 0; // 0 pause - 1 play
