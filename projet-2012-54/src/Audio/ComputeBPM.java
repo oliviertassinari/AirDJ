@@ -107,26 +107,6 @@ public class ComputeBPM implements Runnable
 		return output;
 	}
 
-	private double getFormatedBPM(double value)
-	{
-		DecimalFormat df = new DecimalFormat();
-		df.setMaximumFractionDigits(2);
-
-		Number n = null;
-		NumberFormat formater3 = new DecimalFormat(".##");
-		String str = formater3.format(value);
-		try
-		{
-			n = formater3.parse(str);
-		}
-		catch(ParseException pe)
-		{
-			System.out.println("parse : " + pe);
-		}
-
-		return n.doubleValue();
-	}
-
 	public void run()
 	{
 		double[] data = getSample();
@@ -138,8 +118,6 @@ public class ComputeBPM implements Runnable
 			tmp2 /= 2;
 		if(tmp2 < 90)
 			tmp2 *= 2;
-
-		tmp2 = getFormatedBPM(tmp2);
 
 		player.computeBPMEnd();
 		modelePlay.computeBPMEnd(tmp2);

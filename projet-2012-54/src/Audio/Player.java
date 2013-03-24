@@ -75,9 +75,10 @@ public class Player implements Runnable, IPlayer
 	 * Number of bytes elapsed since the beginning of the music
 	 */
 	private int byteFromBeginning;
-	
+
 	private int bass = 0;
 	private int mid = 0;
+	private double vitesse = 1;
 
 	/**
 	 * Filtre RIF, coupe bande : 200Hz -> 20 000Hz : Réduit les Bass
@@ -351,7 +352,26 @@ public class Player implements Runnable, IPlayer
 					bytes = res2[0];
 					bytesPrev2 = res2[1];
 
-					line.write(bytes, 0, bytes.length);
+					// Vitesse de lecture
+					byte bytes2[] = new byte[(int)Math.round(50/vitesse)*frameSize];
+
+					for(int i = 0; i < bytes2.length/frameSize; i++)
+					{
+						int index = (int)Math.floor(49*i/(bytes2.length/frameSize-1));
+
+						double valueLeft = byteToShort(bytes[4 * index + 0], bytes[4 * index + 1]);
+						double valueRight = byteToShort(bytes[4 * index + 2], bytes[4 * index + 3]);
+
+						byte[] resLeft = shortToByte((short)valueLeft);
+						byte[] resRight = shortToByte((short)valueRight);
+
+						bytes2[4*i] = resLeft[0];
+						bytes2[4*i+1] = resLeft[1];
+						bytes2[4*i+2] = resRight[0];
+						bytes2[4*i+3] = resRight[1];
+					}
+
+					line.write(bytes2, 0, bytes2.length);
 				}
 
 				line.drain();
@@ -384,7 +404,7 @@ public class Player implements Runnable, IPlayer
 
 			System.arraycopy(bytes, 0, bytesPrev, 0, bytes.length);
 
-			for(int i = 0; i < 50; i++)
+			for(int i = 0; i < bytes.length/frameSize; i++)
 			{
 				if(value < 0)
 				{
@@ -552,13 +572,20 @@ public class Player implements Runnable, IPlayer
 	}
 
 	/** 
-	 * USELESS
-	 * @deprecated
 	 * @param vitesse
 	 */
-	public void setVitesse(int vitesse)
+	public void setVitesse(double vitesse)
 	{
-		
+		if(vitesse > 2)
+		{
+			vitesse = 2;
+		}
+		else if(vitesse <= 0)
+		{
+			vitesse = 0.1;
+		}
+
+		this.vitesse = vitesse;
 	}
 
 	/** 

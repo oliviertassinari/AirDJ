@@ -23,6 +23,8 @@ public class ModelePlay
 	private String artist = "";
 
 	private double bpm = 0;
+	private int bass = 0;
+	private int mid = 0;
 	private int total = 0;
 	private int current = 0;
 	private int state = 0; // 0 pause - 1 play
@@ -69,6 +71,10 @@ public class ModelePlay
 		File file = new File(filePath);
 
 		player = new Player(value);
+		player.setBass(bass);
+		player.setMid(mid);
+		setPitch(pitch);
+
 		if(cote == 0)
 		{
 			player.setVolume((int)(modele.getModeleCrossfinder().getVolumeP1() * modele.getModeleCrossfinder().getCoefVolumeP1()));
@@ -207,7 +213,7 @@ public class ModelePlay
 
 	/**
 	 * 
-	 * @param value
+	 * @param value Pitch entre -100 et 100
 	 */
 	public void setPitch(int value)
 	{
@@ -224,7 +230,7 @@ public class ModelePlay
 
 		if(player != null)
 		{
-			player.setVitesse(pitch);
+			player.setVitesse(1+pitch/100f);
 		}
 
 		vuePlay.repaint();
@@ -287,6 +293,7 @@ public class ModelePlay
 	{
 		if(player != null)
 		{
+			bass = value;
 			player.setBass(value);
 		}
 	}
@@ -295,6 +302,7 @@ public class ModelePlay
 	{
 		if(player != null)
 		{
+			mid = value;
 			player.setMid(value);
 		}
 	}

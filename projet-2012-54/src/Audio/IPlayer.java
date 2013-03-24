@@ -21,11 +21,9 @@ public interface IPlayer
 	public void setVolume(float volume);
 
 	/** 
-	 * USELESS
-	 * @deprecated
 	 * @param vitesse
 	 */
-	public void setVitesse(int vitesse);
+	public void setVitesse(double vitesse);
 
 	/** 
 	 * 
@@ -63,7 +61,7 @@ public interface IPlayer
 	 * Reset song
 	 */
 	public boolean reset();
-	
+
 	/**
 	 * Stop thread
 	 */

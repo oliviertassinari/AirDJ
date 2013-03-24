@@ -11,6 +11,9 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -156,7 +159,7 @@ public class VuePlay extends JPanel
 		else if(bpm != 0)
 		{
 			g.setFont(new Font("sansserif", Font.BOLD, 18));
-			g.drawString(String.valueOf(bpm + pitch), 270, 30);
+			g.drawString(String.valueOf(getFormatBPM(bpm * (1 + pitch/100f))), 270, 30);
 		}
 
 		// Button BPM
@@ -237,5 +240,25 @@ public class VuePlay extends JPanel
 		}
 
 		return minuteSting + ":" + secondeSting + "." + ms;
+	}
+
+	private double getFormatBPM(double value)
+	{
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
+
+		Number n = null;
+		NumberFormat formater3 = new DecimalFormat(".##");
+		String str = formater3.format(value);
+		try
+		{
+			n = formater3.parse(str);
+		}
+		catch(ParseException pe)
+		{
+			System.out.println("parse : " + pe);
+		}
+
+		return n.doubleValue();
 	}
 }
