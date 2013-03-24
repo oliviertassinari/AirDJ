@@ -79,7 +79,9 @@ public class Player implements Runnable, IPlayer
 	private int bass = 0;
 	private int mid = 0;
 
-	//Filtre RIF, bande passante 200Hz -> 20 000Hz -> Réduit les Bass
+	/**
+	 * Filtre RIF, coupe bande : 200Hz -> 20 000Hz : Réduit les Bass
+	 */
 	private double[] aLowerBass = {
 			-0.008787861,
 			-0.0099598095,
@@ -132,7 +134,9 @@ public class Player implements Runnable, IPlayer
 			-0.008787861
 	};
 
-	//Filtre RIF, bande passante 200Hz -> 2 000Hz -> Réduit Mid
+	/**
+	 * Filtre RIF, coupe bande : 200Hz -> 2 000Hz : Réduit Mid
+	 */
 	private double[] aLowerMid = {
 			-3.53469083669411E-003,
 			-2.04417403552522E-003,
@@ -185,7 +189,9 @@ public class Player implements Runnable, IPlayer
 			-3.53469083669411E-003
 	};
 
-	//Filtre RIF, bande augmenté 20Hz -> 200Hz
+	/**
+	 * Filtre RIF, bande augmenté : 20Hz -> 200Hz
+	 */
 	private double[] aHigherBass = {
 			6.44172522792564E-002,
 			1.20780368416833E-002,
@@ -238,7 +244,9 @@ public class Player implements Runnable, IPlayer
 			6.44172522792564E-002
 	};
 
-	//Filtre RIF, bande augmenté 200Hz -> 2 000Hz
+	/**
+	 * Filtre RIF, bande augmenté : 200Hz -> 2 000Hz
+	 */
 	private double[] aHigherMid = {
 			-2.33289875956047E-001,
 			1.83297406985040E-002,
@@ -357,6 +365,15 @@ public class Player implements Runnable, IPlayer
 		}
 	}
 
+	/**
+	 * Implémentation d'un filtre RIF
+	 * @param bytes valeurs non filtrées
+	 * @param bytesPrev valeurs non filtrées précédentes
+	 * @param value coefficient du filtre
+	 * @param aLower coefficients du filtre coupe bande
+	 * @param aHigher coefficients du filtre augmentation bande
+	 * @return valeurs filtrées
+	 */
 	public byte[][] getFiltredValue(byte[] bytes, byte[] bytesPrev, int value, double[] aLower, double[] aHigher)
 	{
 		if(bytesPrev != null)
@@ -369,44 +386,44 @@ public class Player implements Runnable, IPlayer
 
 			for(int i = 0; i < 50; i++)
 			{
-				double valueLeft = 0;
-				double valueRight = 0;
-
 				if(value < 0)
 				{
-					valueLeft += ((double)(50+value)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
-					valueRight += ((double)(50+value)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
+					double valueLeft = ((double)(50+value)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+					double valueRight = ((double)(50+value)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
 
 					for(int j = 0; j < 49; j++)
 					{
 						valueLeft += ((-(double)value)/50)*aLower[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
 						valueRight += ((-(double)value)/50)*aLower[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
 					}
+
+					byte[] resLeft = shortToByte((short)valueLeft);
+					byte[] resRight = shortToByte((short)valueRight);
+
+					bytes[4*i] = resLeft[0];
+					bytes[4*i+1] = resLeft[1];
+					bytes[4*i+2] = resRight[0];
+					bytes[4*i+3] = resRight[1];
 				}
 				else if(value > 0)
 				{
-					valueLeft += ((double)(value-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
-					valueRight += ((double)(value-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
+					double valueLeft = ((double)(value-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
+					double valueRight = ((double)(value-50)/50)*byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
 
 					for(int j = 0; j < 49; j++)
 					{
 						valueLeft += (((double)value)/50)*aHigher[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 0], bytesBoth[bytes.length + 4 * (i-j) + 1]);
 						valueRight += (((double)value)/50)*aHigher[j]*byteToShort(bytesBoth[bytes.length + 4 * (i-j) + 2], bytesBoth[bytes.length + 4 * (i-j) + 3]);
 					}
-				}
-				else
-				{
-					valueLeft += byteToShort(bytesBoth[bytes.length + 4 * i + 0], bytesBoth[bytes.length + 4 * i + 1]);
-					valueRight += byteToShort(bytesBoth[bytes.length + 4 * i + 2], bytesBoth[bytes.length + 4 * i + 3]);
-				}
 
-				byte[] resLeft = shortToByte((short)valueLeft);
-				byte[] resRight = shortToByte((short)valueRight);
+					byte[] resLeft = shortToByte((short)valueLeft);
+					byte[] resRight = shortToByte((short)valueRight);
 
-				bytes[4*i] = resLeft[0];
-				bytes[4*i+1] = resLeft[1];
-				bytes[4*i+2] = resRight[0];
-				bytes[4*i+3] = resRight[1];
+					bytes[4*i] = resLeft[0];
+					bytes[4*i+1] = resLeft[1];
+					bytes[4*i+2] = resRight[0];
+					bytes[4*i+3] = resRight[1];
+				}
 			}
 		}
 		else
