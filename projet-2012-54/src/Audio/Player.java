@@ -3,9 +3,15 @@ package Audio;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 import javax.sound.sampled.*;
+
+import javazoom.jl.decoder.Bitstream;
+import javazoom.jl.decoder.BitstreamException;
+import javazoom.jl.decoder.Header;
 
 import org.tritonus.share.sampled.TAudioFormat;
 import org.tritonus.share.sampled.file.TAudioFileFormat;
@@ -524,48 +530,7 @@ public class Player implements Runnable, IPlayer
 		{
 			e1.printStackTrace();
 		}*/
-		
-		/*AudioInputStream din = null;
-		try {
-			File file = new File("E:/Musique/2012/Daughter - Medicine (Sound Remedy Remix).mp3");
-			AudioInputStream in = AudioSystem.getAudioInputStream(file);
-			AudioFormat baseFormat = in.getFormat();
-			AudioFormat decodedFormat = new AudioFormat(
-					AudioFormat.Encoding.PCM_SIGNED,
-					baseFormat.getSampleRate(), 16, baseFormat.getChannels(),
-					baseFormat.getChannels() * 2, baseFormat.getSampleRate(),
-					false);
-			din = AudioSystem.getAudioInputStream(decodedFormat, in);
-			DataLine.Info info = new DataLine.Info(SourceDataLine.class, decodedFormat);
-			SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
-			if(line != null) {
-				line.open(decodedFormat);
-				byte[] data = new byte[4096];
-				// Start
-				line.start();
-				
-				int nBytesRead;
-				while ((nBytesRead = din.read(data, 0, data.length)) != -1) {	
-					line.write(data, 0, nBytesRead);
-				}
-				// Stop
-				line.drain();
-				line.stop();
-				line.close();
-				din.close();
-			}
-			
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		finally {
-			if(din != null) {
-				try { din.close(); } catch(IOException e) { }
-			}
-		}
-		*/
-
+	
 		file = new File(fileName);
 		byteFromBeginning = 0;
 		runner = new Thread(this, "player");
@@ -574,6 +539,12 @@ public class Player implements Runnable, IPlayer
 			//Initializing music player
 			audioInputStream = AudioSystem.getAudioInputStream(file);
 			audioFormat = audioInputStream.getFormat();
+
+			/*
+			URL url = new URL("https://api.soundcloud.com/tracks/30081783/stream.json?client_id=99930188494c2734343f9fa1656fe653");
+            InputStream inputStream = url.openStream();
+            audioInputStream = AudioSystem.getAudioInputStream(url);
+            */
 
 			audioFormat = new AudioFormat(
 					AudioFormat.Encoding.PCM_SIGNED,
@@ -695,8 +666,8 @@ public class Player implements Runnable, IPlayer
 
 			AudioInputStream audioInputStream2 = audioInputStream;
 			audioInputStream = AudioSystem.getAudioInputStream(file);
-			audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
 			audioInputStream.skip(n);
+			audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
 
 			audioInputStream2.close();
 
