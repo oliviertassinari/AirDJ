@@ -665,9 +665,15 @@ public class Player implements Runnable, IPlayer
 			byteFromBeginning = (int)n;
 
 			AudioInputStream audioInputStream2 = audioInputStream;
+
 			audioInputStream = AudioSystem.getAudioInputStream(file);
-			audioInputStream.skip(n);
+			long toSkip = (int)(position*AudioSystem.getAudioFileFormat(file).getByteLength()/getLength());
+
+			long skipped = audioInputStream.skip(toSkip);
 			audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
+			audioInputStream.skip(toSkip-skipped);
+			
+			System.out.println(toSkip + " "+skipped);
 
 			audioInputStream2.close();
 
@@ -719,7 +725,9 @@ public class Player implements Runnable, IPlayer
 			{
 			    Map properties = ((TAudioFileFormat)baseFileFormat).properties();
 
-			    length = ((long)properties.get("duration"))/1000000f;
+			    length = (float)((long)properties.get("duration"))/1000000f;
+			    
+			    System.out.println(length);
 			}
 		}
 		catch(UnsupportedAudioFileException e)
