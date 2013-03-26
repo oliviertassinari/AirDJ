@@ -109,6 +109,10 @@ public class VuePlay extends JPanel
 		g.drawString("ELAPSED", 8, 60);
 		g.drawString("REMAIN", 140, 60);
 		g.drawString("PITCH", 8, 72);
+	
+		g.setFont(new Font("sansserif", Font.PLAIN, 8));
+		g.setColor(new Color(0xaaaaaa));
+		g.drawString("PITCH", 303, 267);
 
 		// Images
 		Image imagePitchGrid = new ImageIcon(getClass().getResource("/image/pitchGrid.png")).getImage();
@@ -116,7 +120,7 @@ public class VuePlay extends JPanel
 
 		Image imagePlayButton = new ImageIcon(getClass().getResource("/image/button.png")).getImage();
 		g.drawImage(imagePlayButton, 120, 170, null);
-
+		
 		g.dispose();
 
 		return image;
