@@ -224,7 +224,7 @@ public class OpenCV
 
 	public static CvSeq cv2FindContours(IplImage src, CvMemStorage storage, CvSeq first_contour, int header_size, int mode, int method)
 	{
-		if(mode == CV_RETR_LIST && method == CV_CHAIN_APPROX_SIMPLE)
+		if(mode == CV_RETR_EXTERNAL && method == CV_CHAIN_APPROX_SIMPLE)
 		{
 			int width = src.width();
 			int height = src.height();
@@ -250,7 +250,7 @@ public class OpenCV
 
 	public static CvSeq cv3FindContours(IplImage src, CvMemStorage storage, CvSeq first_contour, int header_size, int mode, int method)
 	{
-		if(mode == CV_RETR_LIST && method == CV_CHAIN_APPROX_SIMPLE)
+		if(mode == CV_RETR_EXTERNAL && method == CV_CHAIN_APPROX_SIMPLE)
 		{
 			int width = src.width();
 			int height = src.height();
@@ -284,11 +284,11 @@ public class OpenCV
 		{
 			marquer(srcBuffer, width, height, contour, pixelMarque, x - 1, y - 1);
 
-			if(srcBuffer.get(x - 1 + width * y) == 0) // Noir
+			if(srcBuffer.get(x - 1 + width * y) == -1) // Blanc
 			{
 				pixelMarque[x - 1][y] = 1;
 			}
-			if(srcBuffer.get(x + width * (y - 1)) == 0)
+			if(srcBuffer.get(x + width * (y - 1)) == -1)
 			{
 				pixelMarque[x][y - 1] = 1;
 			}
@@ -301,11 +301,11 @@ public class OpenCV
 		{
 			marquer(srcBuffer, width, height, contour, pixelMarque, x + 1, y - 1);
 
-			if(srcBuffer.get(x + width * (y - 1)) == 0) // Noir
+			if(srcBuffer.get(x + width * (y - 1)) == -1) // Blanc
 			{
 				pixelMarque[x][y - 1] = 1;
 			}
-			if(srcBuffer.get(x + 1 + width * y) == 0)
+			if(srcBuffer.get(x + 1 + width * y) == -1)
 			{
 				pixelMarque[x + 1][y] = 1;
 			}
@@ -322,11 +322,11 @@ public class OpenCV
 		{
 			marquer(srcBuffer, width, height, contour, pixelMarque, x - 1, y + 1);
 
-			if(srcBuffer.get(x - 1 + width * y) == 0) // Noir
+			if(srcBuffer.get(x - 1 + width * y) == -1) // Blanc
 			{
 				pixelMarque[x - 1][y] = 1;
 			}
-			if(srcBuffer.get(x + width * (y + 1)) == 0)
+			if(srcBuffer.get(x + width * (y + 1)) == -1)
 			{
 				pixelMarque[x][y + 1] = 1;
 			}
@@ -339,11 +339,11 @@ public class OpenCV
 		{
 			marquer(srcBuffer, width, height, contour, pixelMarque, x + 1, y + 1);
 
-			if(srcBuffer.get(x + 1 + width * y) == 0) // Noir
+			if(srcBuffer.get(x + 1 + width * y) == -1) // Blanc
 			{
 				pixelMarque[x + 1][y] = 1;
 			}
-			if(srcBuffer.get(x + width * (y + 1)) == 0)
+			if(srcBuffer.get(x + width * (y + 1)) == -1)
 			{
 				pixelMarque[x][y + 1] = 1;
 			}
@@ -361,37 +361,37 @@ public class OpenCV
 
 	public static boolean isOnContour(ByteBuffer srcBuffer, int width, int height, int x, int y)
 	{
-		if(srcBuffer.get(x + width * y) == 0) // Noir
+		if(srcBuffer.get(x + width * y) == -1) // Blanc
 		{
-			if(x - 1 >= 0 && y - 1 >= 0 && srcBuffer.get(x - 1 + width * (y - 1)) == -1) // Blanc
+			if(x - 1 >= 0 && y - 1 >= 0 && srcBuffer.get(x - 1 + width * (y - 1)) == 0)  // Noir
 			{
 				return true;
 			}
-			else if(y - 1 >= 0 && srcBuffer.get(x + width * (y - 1)) == -1)
+			else if(y - 1 >= 0 && srcBuffer.get(x + width * (y - 1)) == 0)
 			{
 				return true;
 			}
-			else if(x + 1 < width && y - 1 >= 0 && srcBuffer.get(x + 1 + width * (y - 1)) == -1)
+			else if(x + 1 < width && y - 1 >= 0 && srcBuffer.get(x + 1 + width * (y - 1)) == 0)
 			{
 				return true;
 			}
-			else if(x - 1 >= 0 && srcBuffer.get(x - 1 + width * y) == -1)
+			else if(x - 1 >= 0 && srcBuffer.get(x - 1 + width * y) == 0)
 			{
 				return true;
 			}
-			else if(x + 1 < width && srcBuffer.get(x + 1 + width * y) == -1)
+			else if(x + 1 < width && srcBuffer.get(x + 1 + width * y) == 0)
 			{
 				return true;
 			}
-			else if(x - 1 >= 0 && y + 1 < height && srcBuffer.get(x - 1 + width * (y + 1)) == -1)
+			else if(x - 1 >= 0 && y + 1 < height && srcBuffer.get(x - 1 + width * (y + 1)) == 0)
 			{
 				return true;
 			}
-			else if(y + 1 < height && srcBuffer.get(x + width * (y + 1)) == -1)
+			else if(y + 1 < height && srcBuffer.get(x + width * (y + 1)) == 0)
 			{
 				return true;
 			}
-			else if(x + 1 < width && y + 1 < height && srcBuffer.get(x + 1 + width * (y + 1)) == -1)
+			else if(x + 1 < width && y + 1 < height && srcBuffer.get(x + 1 + width * (y + 1)) == 0)
 			{
 				return true;
 			}
@@ -411,14 +411,17 @@ public class OpenCV
 		CvPoint[] coordonne = new CvPoint[contour.total()];
 		int width = src.width();
 		ByteBuffer srcBuffer = src.getByteBuffer();
+		byte blue = (byte)external_color.getVal(0);
+		byte green = (byte)external_color.getVal(1);
+		byte red = (byte)external_color.getVal(2);
 
 		for(int i = 0; i < contour.total(); i++)
 		{
 			coordonne[i] = new CvPoint(cvGetSeqElem(contour, i));
 
-			srcBuffer.put(3 * coordonne[i].x() + 3 * width * coordonne[i].y(), (byte)255);
-			srcBuffer.put(3 * coordonne[i].x() + 3 * width * coordonne[i].y() + 1, (byte)0);
-			srcBuffer.put(3 * coordonne[i].x() + 3 * width * coordonne[i].y() + 2, (byte)0);
+			srcBuffer.put(3 * coordonne[i].x() + 3 * width * coordonne[i].y(), blue);
+			srcBuffer.put(3 * coordonne[i].x() + 3 * width * coordonne[i].y() + 1, green);
+			srcBuffer.put(3 * coordonne[i].x() + 3 * width * coordonne[i].y() + 2, red);
 		}
 	}
 }

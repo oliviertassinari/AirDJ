@@ -60,15 +60,13 @@ public class Kinect implements Runnable
 		try
 		{
 			/*
-			timeLastGrab = System.currentTimeMillis();
-			for(int i = 0; i < 200; i++)
-			{
-				
-			}
-			System.out.println((System.currentTimeMillis()-timeLastGrab)/200f+"ms");
-			*/
-			
-			
+			 timeLastGrab = System.currentTimeMillis();
+			 for(int i = 0; i < 200; i++)
+			 {
+			 }
+			 System.out.println((System.currentTimeMillis()-timeLastGrab)/200f+"ms");
+			*/ 
+
 			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test1.mkv");
 			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact54_test2.mpg");
 			// OpenCVFrameGrabber grabber = new OpenCVFrameGrabber("video/depth_pact42_test1.mkv");
@@ -143,17 +141,19 @@ public class Kinect implements Runnable
 
 					int nbrFound = 0;
 
-					//cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * nbrIteration, 255, CV_THRESH_BINARY_INV);
-					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*nbrIteration, 255, CV_THRESH_BINARY_INV); // 1.0ms
+					//cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100 * nbrIteration, 255, CV_THRESH_BINARY_INV); Marche pas avec les images 16 Bits
+					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100 * nbrIteration, 255, CV_THRESH_BINARY_INV); // 1.0ms
 
 					contour = new CvSeq();
-					cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+					cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE); // 0.7ms
+					//contour = OpenCV.cv3FindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE); // 5.0ms
 
 					while(contour != null && !contour.isNull())
 					{
 						if(contour.elem_size() > 0)
 						{
-							double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0);
+							double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0); // < 0.01ms
+							//double aire = OpenCV.cvContourArea(contour, CV_WHOLE_SEQ, 0); // < 0.1ms et Moins de 3% de difference
 
 							if(aire > 1000 && aire < 10000)
 							{
@@ -176,24 +176,29 @@ public class Kinect implements Runnable
 				if(!isFound)
 				{
 					//cvThreshold(imageTraitement, imageThreshold, minVal[0] + 5 * firstFound, 255, CV_THRESH_BINARY_INV);
-					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100*firstFound, 255, CV_THRESH_BINARY_INV);
+					OpenCV.cvThreshold(imageTraitement, imageThreshold, minVal[0] + 100 * firstFound, 255, CV_THRESH_BINARY_INV);
 				}
 
 				ArrayList<CvPoint> centerList = new ArrayList<CvPoint>();
 				ArrayList<int[]> fingersList = new ArrayList<int[]>();
 				contour = new CvSeq();
-				cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+				
+				cvFindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE); // 0.7ms
+				//contour = OpenCV.cv3FindContours(imageThreshold.clone(), storage, contour, Loader.sizeof(CvContour.class), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE); // 5ms
 
 				while(contour != null && !contour.isNull())
 				{
 					if(contour.elem_size() > 0)
 					{
 						double aire = cvContourArea(contour, CV_WHOLE_SEQ, 0);
+						//double aire = OpenCV.cvContourArea(contour, CV_WHOLE_SEQ, 0);
 
 						if(aire > 1000 && aire < 15000)
 						{
 							points = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.005, 0);
-							cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA);
+
+							cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA); // 20 000 ns
+							//OpenCV.cvDrawContours(imageDislay2, points, CvScalar.GREEN, CvScalar.GREEN, -1, 1, CV_AA); // 8 000 ns (inférieur car on ne trace que les points du CvContour)
 
 							CvPoint centre = getContourCenter3(points, storage);
 							cvCircle(imageDislay2, centre, 3, CvScalar.RED, -1, 8, 0);
@@ -315,40 +320,37 @@ public class Kinect implements Runnable
 
 		if(nbr == 0)
 		{
-/*			contour = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.02, 0);
-			cvDrawContours(imageDislay2, contour, CvScalar.RED, CvScalar.RED, -1, 1, CV_AA);
-
-			for(int i = 0; i < contour.total(); i++)
-			{
-				CvPoint point = new CvPoint(cvGetSeqElem(contour, i));
-				CvPoint prev;
-				CvPoint next;
-
-				if(i == contour.total() - 1)
-				{
-					next = new CvPoint(cvGetSeqElem(contour, 0));
-				}
-				else
-				{
-					next = new CvPoint(cvGetSeqElem(contour, i+1));
-				}
-
-				if(i == 0)
-				{
-					prev = new CvPoint(cvGetSeqElem(contour, contour.total() - 1));
-				}
-				else
-				{
-					prev = new CvPoint(cvGetSeqElem(contour, i-1));
-				}
-
-				if(getAngle(prev, point, next) < 40)
-				{
-					cvCircle(imageDislay2, point, 5, CvScalar.CYAN, -1, 8, 0);
-				}
-			}
-
-			hull = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 0);*/
+			/*
+			 * contour = cvApproxPoly(contour, Loader.sizeof(CvContour.class), storage, CV_POLY_APPROX_DP, cvContourPerimeter(contour) * 0.02, 0);
+			 * cvDrawContours(imageDislay2, contour, CvScalar.RED, CvScalar.RED, -1, 1, CV_AA);
+			 * for(int i = 0; i < contour.total(); i++)
+			 * {
+			 * CvPoint point = new CvPoint(cvGetSeqElem(contour, i));
+			 * CvPoint prev;
+			 * CvPoint next;
+			 * if(i == contour.total() - 1)
+			 * {
+			 * next = new CvPoint(cvGetSeqElem(contour, 0));
+			 * }
+			 * else
+			 * {
+			 * next = new CvPoint(cvGetSeqElem(contour, i+1));
+			 * }
+			 * if(i == 0)
+			 * {
+			 * prev = new CvPoint(cvGetSeqElem(contour, contour.total() - 1));
+			 * }
+			 * else
+			 * {
+			 * prev = new CvPoint(cvGetSeqElem(contour, i-1));
+			 * }
+			 * if(getAngle(prev, point, next) < 40)
+			 * {
+			 * cvCircle(imageDislay2, point, 5, CvScalar.CYAN, -1, 8, 0);
+			 * }
+			 * }
+			 * hull = cvConvexHull2(contour, storage, CV_COUNTER_CLOCKWISE, 0);
+			 */
 			defect = cvConvexityDefects(contour, hull, storage);
 
 			while(defect != null)
@@ -361,18 +363,19 @@ public class Kinect implements Runnable
 					{
 						if(getAngle(convexityDefect.end(), convexityDefect.depth_point(), convexityDefect.start()) < 150)
 						{
-							/*CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.5, 1);
-							cvPutText(imageDislay2, Integer.toString(i), convexityDefect.start(), font, CvScalar.MAGENTA);
-							cvCircle(imageDislay2, convexityDefect.start(), 3, CvScalar.MAGENTA, -1, 8, 0);
-							cvCircle(imageDislay2, convexityDefect.depth_point(), 3, CvScalar.WHITE, -1, 8, 0);
-							cvCircle(imageDislay2, convexityDefect.end(), 3, CvScalar.CYAN, -1, 8, 0);
-*/
+							/*
+							 * CvFont font = new CvFont(CV_FONT_HERSHEY_COMPLEX, 0.5, 1);
+							 * cvPutText(imageDislay2, Integer.toString(i), convexityDefect.start(), font, CvScalar.MAGENTA);
+							 * cvCircle(imageDislay2, convexityDefect.start(), 3, CvScalar.MAGENTA, -1, 8, 0);
+							 * cvCircle(imageDislay2, convexityDefect.depth_point(), 3, CvScalar.WHITE, -1, 8, 0);
+							 * cvCircle(imageDislay2, convexityDefect.end(), 3, CvScalar.CYAN, -1, 8, 0);
+							 */
 							if(convexityDefect.start().y() < fingers[2])
 							{
 								fingers[1] = convexityDefect.start().x();
 								fingers[2] = convexityDefect.start().y();
 							}
-	
+
 							if(convexityDefect.end().y() < fingers[2])
 							{
 								fingers[1] = convexityDefect.end().x();
@@ -414,7 +417,8 @@ public class Kinect implements Runnable
 					{
 						addToClotherHand(centerList, fingersList, centreLeft, mainPositionLeft);
 					}
-					else // On a perdu la gauche
+					else
+					// On a perdu la gauche
 					{
 						addToClotherHand(centerList, fingersList, centreRight, mainPositionRight);
 					}
@@ -565,7 +569,7 @@ public class Kinect implements Runnable
 	{
 		ByteBuffer srcBuffer = src.getByteBuffer();
 		int pixelIndex = 2 * point.x() + 2 * 640 * point.y();
-		int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
+		int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex + 1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
 
 		return value;
 	}
@@ -574,7 +578,7 @@ public class Kinect implements Runnable
 	{
 		ByteBuffer srcBuffer = src.getByteBuffer();
 		int pixelIndex = 2 * fingersList[1] + 2 * 640 * fingersList[2];
-		int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex+1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
+		int value = OpenCV.getUnsignedByte(srcBuffer, pixelIndex + 1) * 256 + OpenCV.getUnsignedByte(srcBuffer, pixelIndex);
 
 		return value;
 	}
