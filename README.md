@@ -1,4 +1,3 @@
-AirDJ
-=====
+# AirDJ
 
-http://pact.enst.fr/projet-2012-54/
+http://perso.telecom-paristech.fr/~dufourd/pact_archives/projet-2012-54/
